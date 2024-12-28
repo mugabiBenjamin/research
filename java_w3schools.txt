@@ -1,0 +1,1735 @@
+#################################### Intro
+
+  public class Main {
+    public static void main(String[] args) {
+      System.out.println("Hello World");
+    }
+  }
+
+  C:\Users\Your Name>javac Main.java
+  C:\Users\Your Name>java Main
+  >>>> Hello World
+
+  type variableName = value;
+
+
+
+  
+#################################### Final variables and other types
+
+  public class Main {
+  public static void main(String[] args) {
+    // final or constant are the same
+    final int myFavouriteNumber = 15;
+    System.out.println("My favouritr number is: " + myFavouriteNumber);
+
+    // int myNum = 5;
+    // float myFloatNum = 5.99f;
+    // float myFloatNum = 35e3f;    // 35000.0
+    // double myDoubleNum = 12E4d;    //120000.0 
+    // char myLetter = 'D';
+    // boolean myBool = true;
+    // String myText = "Hello";
+  }
+}
+
+
+
+  
+#################################### Primitive and Non-primitve
+
+  Primitive data types - includes byte, short, int, long, float, double, boolean and char
+  Non-primitive data types - such as String, Arrays and Classes
+
+  - Primitive types are predefined (already defined) in Java. Non-primitive types are created by the programmer and is not defined by Java (except for String).
+  - Non-primitive types can be used to call methods to perform certain operations, while primitive types cannot.
+  - A primitive type has always a value, while non-primitive types can be null.
+  - A primitive type starts with a lowercase letter, while non-primitive types starts with an uppercase letter
+
+
+
+  
+#################################### ASCII values
+
+  char myVar1 = 65, myVar2 = 66, myVar3 = 67;
+  System.out.println(myVar1);       // A
+  System.out.println(myVar2);       // B
+  System.out.println(myVar3);       // C
+
+
+
+  
+#################################### Type Casting
+
+>>>> Widening Casting (automatically)
+  public class Main {
+    public static void main(String[] args) {
+      int myInt = 9;
+      double myDouble = myInt; // Automatic casting: int to double
+  
+      System.out.println(myInt);      // Outputs 9
+      System.out.println(myDouble);   // Outputs 9.0
+    }
+  }
+
+>>>> Narrowing Casting (manually)
+  public class Main {
+  public static void main(String[] args) {
+    double myDouble = 9.78d;
+    int myInt = (int) myDouble; // Manual casting: double to int
+
+    System.out.println(myDouble);   // Outputs 9.78
+    System.out.println(myInt);      // Outputs 9
+  }
+}
+
+
+
+  
+#################################### Strings
+
+  String firstName = "John ";
+  String lastName = "Doe";
+  System.out.println(firstName.concat(lastName))
+
+
+
+  
+#################################### Math
+
+  public class Main {
+    public static void main(String[] args) {
+      int randomNum = (int)(Math.random() * 101);  // 0 to 100
+      System.out.println(randomNum);
+    }
+  }
+
+
+
+  
+#################################### Ternary Operator
+
+  int time = 20;
+  String result = (time < 18) ? "Good day." : "Good evening.";
+  System.out.println(result);
+
+
+
+  
+#################################### While loop
+
+  public class Main {
+    public static void main(String[] args) {
+      int dice = 1;
+
+      while (dice <= 6) {
+        if (dice < 6) {
+          System.out.println("No Yatzy. " + dice);
+        } else {
+          System.out.println("Elyo Keene");
+        }
+        dice += 1;
+      }
+    }
+  }
+    
+
+
+  
+#################################### For loop
+
+  public class Main {
+    public static void main(String[] args) { 
+      int number = 2;
+
+      // Print the multiplication table for the number 2
+      for (int i = 1; i <= 10; i++) {
+        System.out.println(number + " x " + i + " = " + (number * i));
+      }
+    }
+  }
+
+  
+
+
+#################################### Nested For loop
+
+  // Outer loop
+  for (int i = 1; i <= 2; i++) {
+    System.out.println("Outer: " + i); // Executes 2 times
+    
+    // Inner loop
+    for (int j = 1; j <= 3; j++) {
+      System.out.println(" Inner: " + j); // Executes 6 times (2 * 3)
+    }
+  }
+  
+
+
+  
+#################################### For Each
+
+  String[] cars = {"Volvo", "BMW", "Ford", "Mazda"};
+  for (String i : cars) {
+    System.out.println(i);
+  }
+  
+
+
+  
+#################################### Break and Continue
+
+  public class Main {
+    public static void main(String[] args) {
+      for (int i = 0; i < 10; i++) {
+        if (i == 4) {
+          break;        // stops the loop when i is equal to 4 tho (i < 4) is better, no need of break
+        }
+        System.out.println(i);
+      }  
+    }
+  }
+
+  -----
+
+    public class Main {
+    public static void main(String[] args) {
+      int i = 0;
+      while (i < 10) {
+        System.out.println(i);
+        i++;
+        if (i == 4) {
+          break;
+        }
+      }  
+    }
+  }
+
+  -----
+
+  for (int i = 0; i < 10; i++) {
+    if (i == 4) {
+      continue;       // skips the value of 4 
+    }
+    System.out.println(i);
+  }
+
+-----
+
+int i = 0;
+while (i < 10) {
+  if (i == 4) {
+    i++;
+    continue;
+  }
+  System.out.println(i);
+  i++;
+}
+  
+
+
+  
+#################################### Arrays
+
+  String[] cars = {"Volvo", "BMW", "Ford", "Mazda"};
+  for (int i = 0; i < cars.length; i++) {
+    System.out.println(cars[i]);
+  }
+
+-----
+
+  String[] cars = {"Volvo", "BMW", "Ford", "Mazda"};
+  for (String i : cars) {
+    System.out.println(i);
+  }
+
+----- Average age
+
+public class Main {
+  public static void main(String[] args) {
+    int ages[] = {20, 22, 18, 35, 48, 26, 87, 70};
+
+    float avg, sum = 0;
+    int length = ages.length;
+
+    for (int age : ages) {
+      sum += age;
+    }
+    avg = sum / length;
+    System.out.println("The average age is: " + avg);
+  }
+}
+
+----- Lowest age
+
+public class Main {
+  public static void main(String[] args) {
+    int ages[] = {20, 22, 18, 35, 48, 26, 87, 70};
+    
+    int lowestAge = ages[0];
+
+    for (int age : ages) {
+      if (lowestAge > age) {
+        lowestAge = age;
+      }
+    }
+    System.out.println("The lowest age in the array is: " + lowestAge);
+  }
+}
+  
+
+
+  
+#################################### Multidimensional Arrays
+
+  int[][] myNumbers = { {1, 2, 3, 4}, {5, 6, 7} };
+
+  int[][] myNumbers = { {1, 2, 3, 4}, {5, 6, 7} };
+  System.out.println(myNumbers[1][2]); // Outputs 7
+
+----- Iterating through Multidimensional Array with For loop
+
+  int[][] myNumbers = { {1, 2, 3, 4}, {5, 6, 7} };
+  for (int i = 0; i < myNumbers.length; ++i) {
+    for (int j = 0; j < myNumbers[i].length; ++j) {
+      System.out.println(myNumbers[i][j]);
+    }
+  }
+
+----- Iterating through Multidimensional Array with For Each loop
+
+  int[][] myNumbers = { {1, 2, 3, 4}, {5, 6, 7} };
+  for (int[] row : myNumbers) {
+    for (int i : row) {
+      System.out.println(i);
+    }
+  }
+
+
+
+  
+#################################### Methods
+
+  A method is a block of code which only runs when it is called and they are also known as functions
+
+  public class Main {
+  static void myMethod() {
+    // code to be executed
+  }
+}
+  >>>> static means that the method belongs to the Main class and not an object of the Main class
+  >>>> void means that this method does not have a return value
+
+----- Calling Methods
+
+  public class Main {
+    static void myMethod() {
+      System.out.println("I just got executed!");
+    }
+
+    public static void main(String[] args) {
+      myMethod();     // I just got executed
+    }
+  }
+
+----- Parameters
+
+  public class Main {
+    static void myMethod(String fname) {
+      System.out.println(fname + " Refsnes");
+    }
+
+    public static void main(String[] args) {
+      myMethod("Liam");     // Liam
+      myMethod("Jenny");      // Jenny 
+      myMethod("Anja");     // Anja
+    }
+  }
+
+-----
+
+  public class Main {
+    static void myMethod(String fname, int age) {
+      System.out.println(fname + " is " + age + " years");
+    }
+
+    public static void main(String[] args) {
+      myMethod("Liam", 5);    // Laim is 5 years
+      myMethod("Jenny", 8);   // Jenny is 8 years
+      myMethod("Anja", 31);   // Anja is 31 years
+    }
+  }
+
+-----
+
+  public class Main {
+    static void checkAge(int age) {
+      if (age < 18) {
+        System.out.println("Access denied - You are not old enough!");
+      } else {
+        System.out.println("Access granted - You are old enough!");
+      }
+    }
+
+    public static void main(String[] args) {
+      checkAge(20);       // Access granted - You are old enough!
+    }
+  }
+
+
+
+  
+#################################### Return value
+
+----- Easy to understand and maintain
+
+  public class Main {
+    static int myMethod(int x, int y) {
+      return x + y;
+    }
+
+    public static void main(String[] args) {
+      int sum = myMethod(5, 3);
+      System.out.println(sum);
+    }
+  }
+
+
+
+  
+#################################### Method Overloading
+
+public class Main {
+    static int plusMethodInt(int x, int y) {
+      return x + y;
+    }
+    
+    static double plusMethodDouble(double x, double y) {
+      return x + y;
+    }
+    
+    public static void main(String[] args) {
+      int myNum1 = plusMethodInt(8, 5);
+      double myNum2 = plusMethodDouble(4.3, 6.26);
+      System.out.println("int: " + myNum1);
+      System.out.println("double: " + myNum2);
+    }
+  }
+
+----- Overloading is better than the above
+
+  public class Main {
+    static int plusMethod(int x, int y) {
+      return x + y;
+    }
+    
+    static double plusMethod(double x, double y) {
+      return x + y;
+    }
+    
+    public static void main(String[] args) {
+      int myNum1 = plusMethod(8, 5);
+      double myNum2 = plusMethod(4.3, 6.26);
+      System.out.println("int: " + myNum1);
+      System.out.println("double: " + myNum2);
+    }
+  }
+
+
+
+  
+#################################### Scope
+
+public class Main {
+  public static void main(String[] args) {
+
+    // Code here CANNOT use x
+
+    int x = 100;
+
+    // Code here can use x
+    System.out.println(x);
+  }
+}
+>>>>> A block of code refers to all of the code between curly braces {}
+
+
+
+  
+#################################### Java Scope
+
+>>>> Recursion is the technique of making a function call itself
+
+  public class Main {
+    public static int sum(int k) {
+          if (k > 0) {
+            return k + sum(k - 1);
+          } else {
+            return 0;
+          }
+    }
+    public static void main(String[] args) {
+      int result = sum(10);
+      System.out.println(result);
+    }
+  }
+
+----- Explanation
+
+When the sum() function is called, it adds parameter k to the sum of all numbers smaller than k and returns the result. When k becomes 0, the function just returns 0. When running, the program follows these steps
+10 + sum(9)
+10 + ( 9 + sum(8) )
+10 + ( 9 + ( 8 + sum(7) ) )
+...
+10 + 9 + 8 + 7 + 6 + 5 + 4 + 3 + 2 + 1 + sum(0)
+10 + 9 + 8 + 7 + 6 + 5 + 4 + 3 + 2 + 1 + 0
+
+
+
+  
+#################################### Halting Condition
+
+  public class Main {
+    public static int sum(int start, int end) {
+      if (end > start) {
+        return end + sum(start, end - 1);
+      } else {
+        return end;
+      }
+    }
+    public static void main(String[] args) {
+      int result = sum(5, 10);
+      System.out.println("Sum from 5 to 10: " + result);
+    }
+  }
+
+
+
+  
+####################################
+####################################
+#################################### Classes/ Objects
+
+>>>>> To create an object of Main, specify the class name, followed by the object name, and use the keyword new
+
+public class Testing {
+    int x = 10;
+        public static void main(String[] args) {
+            Testing myNum1 = new Testing();
+            Testing myNum2 = new Testing();
+            System.out.println(myNum1.x);
+            System.out.println(myNum2.x);
+    }
+}
+
+----- Multiple classes
+
+// Main.java
+public class Main {
+  int x = 5;
+}
+
+// Second.java
+class Second {
+  public static void main(String[] args) {
+    Main myObj = new Main();
+    System.out.println(myObj.x);
+  }
+}
+
+
+
+  
+#################################### Attributes
+
+  public class Main {
+    String fname = "John";
+    String lname = "Doe";
+    int age = 24;
+
+    public static void main(String[] args) {
+      Main myObj = new Main();
+      System.out.println("Name: " + myObj.fname + " " + myObj.lname);
+      System.out.println("Age: " + myObj.age);
+    }
+  }
+
+
+
+ 
+#################################### Methods
+
+---- Static vs public
+
+  public class Main {
+    // Static method
+    static void myStaticMethod() {
+      System.out.println("Static methods can be called without creating objects");
+    }
+
+    // Public method
+    public void myPublicMethod() {
+      System.out.println("Public methods must be called by creating objects");
+    }
+
+    // Main method
+    public static void main(String[] args) {
+      myStaticMethod();
+
+      Main myObj = new Main();
+      myObj.myPublicMethod();
+    }
+  }
+
+----- Acessing methods with an object
+
+  public class Main {
+    public void fullThrottle() {
+      System.out.println("The car is going as fast as it can!");
+    }
+
+    public void speed(int maxSpeed) {
+      System.out.println("Max speed is: " + maxSpeed);
+    }
+
+    public static void main(String[] args) {
+      Main myCar = new Main(); 
+      myCar.fullThrottle();      // The car is going as fast as it can!
+      myCar.speed(200);          // Max speed is: 200
+    }
+  }
+
+
+
+ 
+#################################### Constructor
+
+>>>> Constructor name same as class name
+
+  public class Main {
+    int modelYear;
+    String modelName;
+
+    public Main(int year, String name) {
+      modelYear = year;
+      modelName = name;
+    }
+
+    public static void main(String[] args) {
+      Main myCar = new Main(1969, "Mustang");
+      System.out.println(myCar.modelYear + " " + myCar.modelName); // Outputs 1969 Mustang
+    }
+  }
+
+
+
+ 
+#################################### Modifiers
+
+>>>> Access Modifiers (public and default)
+  With default the class is only accessible by classes in the same package. This is used when you don't specify a modifier
+
+----- public 
+  public class Main {
+    public static void main(String[] args) {
+      System.out.println("Hello World");
+    }
+  }
+
+----- default
+class MyClass {
+  public static void main(String[] args) {
+    System.out.println("Hello World");
+  }
+}
+
+----- abstract _The class cannot be used to create objects. To access an abstract class, it must be inherited from another class
+
+// Main.java
+// abstract class
+abstract class Main {
+  public String fname = "John";
+  public int age = 24;
+  public abstract void study(); // abstract method
+}
+
+// Subclass (inherit from Main)
+class Student extends Main {
+  public int graduationYear = 2018;
+  public void study() { // the body of the abstract method is provided here
+    System.out.println("Studying all day long");
+  }
+}
+
+// Second.java
+class Second {
+  public static void main(String[] args) {
+    Student myObj = new Student();
+    System.out.println("Name: " + myObj.fname);
+    System.out.println("Age: " + myObj.age);
+    System.out.println("Graduation Year: " + myObj.graduationYear);
+    myObj.study(); // call abstract method
+  }
+}
+
+
+
+ 
+#################################### Encapsulation
+>>>>  Is to make sure that "sensitive" data is hidden from users
+
+  public class Person {
+    private String name; // private = restricted access
+
+    // Getter
+    public String getName() {
+      return name;
+    }
+
+    // Setter
+    public void setName(String newName) {
+      this.name = newName;
+    }
+
+    public static void main(String[] args) {
+    Person myObj = new Person();
+    myObj.setName("John"); // Set the value of the name variable to "John"
+    System.out.println(myObj.getName());
+  }
+}
+
+
+
+ 
+#################################### Packages/ APIs
+
+import java.util.Scanner;
+
+class Main {
+  public static void main(String[] args) {
+    Scanner myObj = new Scanner(System.in);
+    System.out.println("Enter username");
+
+    String userName = myObj.nextLine();
+    System.out.println("Username is: " + userName);
+
+    myObj.close();
+  }
+}
+
+----- Packages
+
+  package mypack;
+
+  class MyPackageClass { 
+    public static void main(String[] args) { 
+      System.out.println("This is my package!"); 
+    } 
+  }
+
+
+
+ 
+#################################### Inheritance Subclass - child and Superclass - parent
+
+>>>> Save file as Car.java
+
+  class Vehicle {
+    protected String brand = "Ford";
+    public void honk() {
+      System.out.println("Tuut, tuut!");
+    }
+  }
+
+  class Car extends Vehicle {
+    private String modelName = "Mustang";
+    public static void main(String[] args) {  
+      Car myCar = new Car();
+      myCar.honk();
+      System.out.println(myCar.brand + " " + myCar.modelName);
+    }
+  }
+
+
+
+ 
+#################################### Polymorphism
+
+>>>>> save file as Main.java
+
+  class Animal {
+    public void animalSound() {
+      System.out.println("The animal makes a sound);
+    }
+  }
+
+  class Pig extends Animal {
+    public void animalSound() {
+      System.out.println("The pig says: Oink");
+    }
+  }
+
+  class Dog extends Animal {
+    public void animalSound() {
+      System.out.println("The dog says: Roow roow ");
+    }
+  }
+
+  class Main {
+    public static void main(String[] args) {
+      Animal myAnimal = new Animal();
+      Animal myPig = new Pig();
+      Animal myDog = new Dog();
+    }
+  }
+
+
+
+ 
+#################################### Inner classes (Nested classes)
+
+  class OuterClass {
+    int x = 10;
+
+    class InnerClass {
+      int y = 5;
+    }
+  }
+
+  public class Main {
+    public static void main(String[] args) {
+      OuterClass myOuter = new OuterClass();
+      OuterClass.InnerClass myInner = myOuter.new InnerClass();
+      System.out.println(myInner.y + myOuter.x);    // 15
+    }
+  }
+
+----- Acessing outer class from Inner class
+
+class OuterClass {
+  int x = 10;
+
+  class InnerClass {
+    public int myInnerMethod() {
+      return x;
+    }
+  }
+}
+
+public class Main {
+  public static void main(String[] args) {
+    OuterClass myOuter = new OuterClass();
+    OuterClass.InnerClass myInner = myOuter.new InnerClass();
+    System.out.println(myInner.myInnerMethod());    // 10
+  }
+}
+
+
+
+ 
+#################################### Abstraction
+
+>>>> Is the process of hiding certain details and showing only essential info to the user
+
+Abstract class - Restricted class that cannot be used to create objects. It has both abstract and regular properties
+Abstract method - Can only be used in an abstract class, and it does not have a body. the body is provided by the subclass (inherited from)
+
+When and why to use Abstract classes and methods
+>>>> To achieve security - hide certain details and only show the important details of an object
+
+  // Abstract class
+  abstract class Animal {
+    public abstract void animalSound();     // Abstract method has no body
+    public void sleep() {         // Regular method
+      System.out.println("Zzz");
+    } 
+  }
+
+  // Subclass (inherited from animal)
+  class Pig extends Animal {
+    public void animalSound() {
+      System.out.println("The pig says: wee wee");
+    }
+  }
+
+  class Main {
+    public static void main(String[] args) {
+      Pig myPig = new Pig();
+      myPig.animalSound();      // The pig says: wee wee
+      myPig.sleep();      // Zzz
+    }
+  }
+
+
+
+ 
+#################################### Interface
+
+  >>>> An interface is an abstract class that is used to group related  methods with empty bodies. This is a way to achieve abstraction
+  >>>> Java supports multiple inheritance through interfaces
+
+  interface Animal {
+    public void animalSound();      // Interface method has (doesnot have a body)
+    public void sleep();      // Interface method has (doesnot have a body)
+  }
+
+  class Pig implements Animal {
+    public void animalSound() {
+      System.out.println("The pig says: wee wee");
+    }
+    public void sleep() {
+      System.out.println("Zzz");
+    }
+  }
+
+  class Main {
+    public static void main(String[] args) {
+      Pig myPig = new Pig();
+      myPig.animalSound();      // The pig says: wee wee
+      myPig.sleep();      // Zzz
+    }
+  }
+
+    > Like abstract classes, interfaces cannot be used to ceate objects
+    > Interface methods donot have a body, the body is provided by the implement class
+    > On implementation of an interface,you must override all of its methods
+    > Interface methods are by default abstract and public
+    > Interface attributes are by default public, static and final
+    > An interface cannot contain a constructor (as it cannot be used to create objects)
+
+----- Multiple interfaces
+
+  interface FirstInterface {
+    public void myMethod();
+  }
+
+  interface SecondInterface {
+    public void myOtherMethod();
+  }
+
+  class DemoClass implements FirstInterface, SecondInterface {
+    public void myMethod() {
+      System.out.println("Some text..");
+    }
+    public void myOtherMethod() {
+      System.out.println("Some other text..");
+    }
+  }
+
+  class Main {
+    public static void main(String[] args) {
+    DemoClass myObj = new DemoClass();
+      myObj.myMethod();      // Some text..
+      myObj.myOtherMethod();      // Some other text..
+    }
+  }
+
+
+
+ 
+#################################### Enums
+
+  >>> Enums cannot be used to create objects and cannot extend other classes but can implement interfaces
+  >>> Use enums when you have values that you know aren't going to change, like days, months
+
+  public class Main {
+    enum Level {
+      LOW,
+      MEDIUM,
+      HIGH
+    }
+
+    public static void main(String[] args) {
+      Level myVar = Level.MEDIUM;
+      System.out.println(myVar);    // MEDIUM
+    }
+  }
+
+----- enum in a switch statement
+
+enum Level {
+  LOW,
+  MEDIUM,
+  HIGH
+}
+
+public class Main {
+  public static void main(String[] args) {
+    Level myVar = Level.MEDIUM;
+
+    switch (myVar) {
+      case LOW:
+        System.out.println("Low level");
+        break;
+      case MEDIUM:
+        System.out.println("Medium level");
+        break;
+      case HIGH:
+        System.out.println("High level");
+        break;
+    }
+  }
+}
+
+----- Loop through an enum
+
+  enum Level {
+    LOW,
+    MEDIUM,
+    HIGH
+  }
+
+  public class Main {
+    public static void main(String[] args) {
+      for (Level myLevel : Level.values()) {
+        System.out.println(myLevel);
+      }
+    }
+  }
+
+
+
+ 
+#################################### User Input (Scanner)
+
+import java.util.Scanner;
+
+class Main {
+  public static void main(String[] args) {
+    Scanner myObj = new Scanner(System.in);
+    System.out.println("Enter username");
+
+    String userName = myObj.nextLine();
+    System.out.println("Username is: " + userName);
+
+    myObj.close();
+  }
+}
+
+-----
+
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
+class Main {
+  public static void main(String[] args) {
+    try (Scanner scanner = new Scanner(System.in)) {
+      System.out.println("Enter your name:");
+      String name = scanner.nextLine();
+
+      System.out.println("Enter your age:");
+      int age = scanner.nextInt();
+      scanner.nextLine(); // Consume newline left-over
+
+      System.out.println("Enter your salary:");
+      double salary = scanner.nextDouble();
+
+      System.out.println("\nYour Details:");
+      System.out.println("Name: " + name);
+      System.out.println("Age: " + age);
+      System.out.println("Salary: " + salary);
+    } catch (InputMismatchException e) {
+      System.out.println("Invalid input. Please enter a valid number.");
+    }
+  }
+}
+
+
+
+ 
+#################################### Date and time
+
+----- Current Date
+
+  import java.time.LocalDate;
+
+  public class Main {
+    public static void main(String[] args) {
+      LocalDate myObj = LocalDate.now();
+      System.out.println(myObj);      // 2024-07-28, by then
+    }
+  }
+
+----- Current time
+
+  import java.time.LocalTime;
+
+  public class Main {
+    public static void main(String[] args) {
+      LocalTime myObj = LocalTime.now();
+      System.out.println(myObj);      // 16:37:32.312214, by then
+    }
+  }
+
+----- Current Date and time
+
+  import java.time.LocalDateTime;
+
+  public class Main {
+    public static void main(String[] args) {
+      LocalDateTime myObj = LocalDateTime.now();
+      System.out.println(myObj);      // 2024-07-28T16:39:06.646066600, by then
+    }
+  }
+
+----- Formatting date and time
+
+  import java.time.LocalDateTime;
+  import java.time.format.DateTimeFormatter;
+
+  public class Main {
+    public static void main(String[] args) {
+      LocalDateTime myDateObj = LocalDateTime.now();
+      System.out.println("Before formatting: " + myDateObj); // Before formatting: 2024-07-28T16:47:09.719296600
+      DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("E,MMM-dd-yyyy HH:mm:ss");
+
+      String formattedDate = myDateObj.format(myFormatObj);
+      System.out.println("After formatting: " + formattedDate); // After formatting: 28-07-2024 16:47:09
+    }
+  }
+
+  >>>> yyyy-MM-dd       "1988-09-29"
+  >>>> dd/MM/yyyy       "29/09/1988" 
+  >>>> dd-MMM-yyyy      "29-Sep-1988" 
+  >>>> E,MMM-dd-yyyy    "Thu, Sep 29 1988" 
+
+
+
+ 
+#################################### ArrayList
+
+----- Add items
+
+  import java.util.ArrayList;
+
+  public class Main {
+    public static void main(String[] args) {
+      ArrayList<String> cars = new ArrayList<>();
+      cars.add("Volvo");
+      cars.add("BMW");
+      cars.add("Ford");
+      cars.add("Mazda");
+      System.out.println(cars);     // [Volvo, BMW, Ford, Mazda]
+    }
+  }
+
+-----
+
+import java.util.ArrayList;
+
+public class Main {
+  public static void main(String[] args) {
+    ArrayList<String> cars = new ArrayList<>();
+    cars.add("Volvo");
+    cars.add("BMW");
+    cars.add("Ford");
+
+    cars.add(0, "Mazda");       // Insert element at the beginning of the list
+    System.out.println(cars);     // [Mazda, Volvo, BMW, Ford]
+  }
+}
+
+----- Accessing an item
+
+  cars.get(0);
+
+----- Change an item
+
+  cars.set(0, "Opel");
+
+----- Remove an item
+
+  cars.remove(0);
+  cars.clear();       // Remove all items
+
+----- ArrayList Size
+
+  cars.size();
+
+----- Loop though an ArrayList with "for" 
+
+import java.util.ArrayList;
+
+public class Main {
+  public static void main(String[] args) {
+    ArrayList<String> cars = new ArrayList<>();
+    cars.add("Volvo");
+    cars.add("BMW");
+    cars.add("Ford");
+    cars.add("Mazda");
+    for (int i = 0; i < cars.size(); i++) {
+      System.out.println(cars.get(i));
+    }
+  }
+}
+
+----- Loop though an ArrayList with "for each" 
+
+  import java.util.ArrayList;
+
+  public class Main {
+    public static void main(String[] args) {
+      ArrayList<String> cars = new ArrayList<>();
+      cars.add("Volvo");
+      cars.add("BMW");
+      cars.add("Ford");
+      cars.add("Mazda");
+      for (String list : cars) {
+        System.out.println(list);
+      }
+    }
+  }
+
+----- Other types
+
+  import java.util.ArrayList;
+
+  public class Main {
+    public static void main(String[] args) {
+      ArrayList<Integer> myNumbers = new ArrayList<>();
+      myNumbers.add(10);
+      myNumbers.add(15);
+      myNumbers.add(20);
+      myNumbers.add(25);
+      for (int list : myNumbers) {
+        System.out.println(list);
+      }
+    }
+  }
+
+----- Sort an ArrayList (String)
+
+  import java.util.ArrayList;
+  import java.util.Collections;
+
+  public class Main {
+    public static void main(String[] args) {
+      ArrayList<String> cars = new ArrayList<>();
+      cars.add("Volvo");
+      cars.add("BMW");
+      cars.add("Ford");
+      cars.add("Mazda");
+
+      Collections.sort(cars); // Sort cars
+      for (String i : cars) {
+        System.out.println(i);
+      }
+    }
+  }
+
+----- Sort an ArrayList (Integers)
+
+import java.util.ArrayList;
+import java.util.Collections;
+
+public class Main {
+  public static void main(String[] args) {
+    ArrayList<Integer> myNumbers = new ArrayList<>();
+    myNumbers.add(33);
+    myNumbers.add(15);
+    myNumbers.add(20);
+    myNumbers.add(34);
+    myNumbers.add(8);
+    myNumbers.add(12);
+
+    Collections.sort(myNumbers); // Sort numbers
+    for (int i : myNumbers) {
+      System.out.println(i);
+    }
+  }
+}
+
+
+
+ 
+#################################### LinkedList
+
+  import java.util.LinkedList;
+
+  public class Main {
+    public static void main(String[] args) {
+      LinkedList<String> cars = new LinkedList<>();
+      cars.add("Volvo");
+      cars.add("BMW");
+      cars.add("Ford");
+      cars.add("Mazda");
+      System.out.println(cars);       // [Volvo, BMW, Ford, Mazda]
+    }
+  }
+
+ArrayList vs LinkedList
+
+>>>> Use an ArrayList for storing and accessing data, and LinkedList to manipulate data
+
+
+
+ 
+#################################### List sorting
+
+  import java.util.ArrayList;
+  import java.util.Collections;
+
+  public class Main {
+    public static void main(String[] args) {
+      ArrayList<String> cars = new ArrayList<>();
+      cars.add("Volvo");
+      cars.add("BMW");
+      cars.add("Ford");
+      cars.add("Mazda");
+
+      Collections.sort(cars, Collections.reverseOrder());
+      for (String i : cars) {
+        System.out.println(i);
+      }
+    }
+  }
+
+-----
+
+  import java.util.ArrayList;
+  import java.util.Collections;
+
+  public class Main {
+    public static void main(String[] args) {
+      ArrayList<Integer> myNumbers = new ArrayList<>();
+      myNumbers.add(33);
+      myNumbers.add(15);
+      myNumbers.add(20);
+      myNumbers.add(34);
+      myNumbers.add(8);
+      myNumbers.add(12);
+
+      Collections.sort(myNumbers, Collections.reverseOrder());
+      for (int i : myNumbers) {
+        System.out.println(i);
+      }
+    }
+  }
+
+
+
+ 
+#################################### HashMap
+
+>>>>  Stores items in key value pairs 
+
+  import java.util.HashMap;
+
+  public class Main {
+    public static void main(String[] args) {
+      HashMap<String, String> capitalCities = new HashMap<>();
+      capitalCities.put("England", "London");
+      capitalCities.put("Germany", "Berlin");
+      capitalCities.put("Norway", "Onslo");
+      capitalCities.put("USA", "Washington DC");
+      System.out.println(capitalCities);      // {USA=Washington DC, Norway=Onslo, England=London, Germany=Berlin}
+    }
+  }
+
+----- Accessing an item
+
+  capitalCities.get("England");
+
+----- Removing an item
+
+  capitalCities.remove("England");
+
+----- Removing all items
+
+  capitalCities.clear();
+
+----- HashMap size
+
+  capitalCities.size();
+
+----- Loop through HashMap
+
+  import java.util.HashMap;
+
+  public class Main {
+    public static void main(String[] args) {
+      HashMap<String, String> capitalCities = new HashMap<>();
+      capitalCities.put("England", "London");
+      capitalCities.put("Germany", "Berlin");
+      capitalCities.put("Norway", "Onslo");
+      capitalCities.put("USA", "Washington DC");
+
+      for (String i : capitalCities.keySet()) {
+        System.out.println(i);      // Keys
+      }
+    }
+  }
+
+-----
+
+      for (String i : capitalCities.values()) {
+      System.out.println(i);        // Values;
+    }
+
+-----
+
+  import java.util.HashMap;
+
+  public class Main {
+    public static void main(String[] args) {
+      HashMap<String, String> capitalCities = new HashMap<>();
+      capitalCities.put("England", "London");
+      capitalCities.put("Germany", "Berlin");
+      capitalCities.put("Norway", "Onslo");
+      capitalCities.put("USA", "Washington DC");
+
+      for (String i : capitalCities.keySet()) {
+        System.out.println("Key: " + i + "\t\tValue: " + capitalCities.get(i));       // Keys and values
+      }
+    }
+  }
+
+----- Other types
+
+  import java.util.HashMap;
+
+  public class Main {
+    public static void main(String[] args) {
+      HashMap<String, Integer> people = new HashMap<>();
+      people.put("John", 32);
+      people.put("Steve", 30);
+      people.put("Angie", 33);
+
+      for (String i : people.keySet()) {
+        System.out.println("Key: " + i + "\t\tValue: " + people.get(i));
+      }
+    }
+  }
+
+
+
+ 
+#################################### HashSet
+
+>>>> Is a collection of items where every item is unique
+>>>> BMW is added twice it only appears once in the set because every item in a set has to be unique
+
+  import java.util.HashSet;
+
+  public class Main {
+    public static void main(String[] args) {
+      HashSet<String> cars = new HashSet<>();
+      cars.add("Volvo");
+      cars.add("BMW");
+      cars.add("Ford");
+      cars.add("BMW");
+      cars.add("Mazda");
+      System.out.println(cars);     // [Volvo, Mazda, Ford, BMW]
+    }
+  }
+
+----- Check if items exist
+
+  cars.contains("Mazda")      // true
+
+----- Remove an item
+
+  cars.remove("Volvo");
+
+----- Remove all items
+
+  cars.clear();
+
+----- HashSet size
+
+  cars.size();
+
+----- Loop through HashSet
+
+  for (String i : cars) {
+    System.out.println(i);
+  }
+
+----- Other types
+
+  import java.util.HashSet;
+
+  public class Main {
+    public static void main(String[] args) {
+      HashSet<Integer> numbers = new HashSet<>();
+      numbers.add(4);
+      numbers.add(7);
+      numbers.add(8);
+
+      // Show which numbers betwwen 1 and 10 are in the set
+      for (int i = 1; i <= 10; i++) {
+        if (numbers.contains(i)) {
+          System.out.println(i + " was found in the set");
+        } else {
+          System.out.println(i + " was not found in the set");
+        }
+      }
+    }
+  }
+
+
+
+ 
+#################################### Iterator
+
+>>>> Used to loop through collections like ArrayList and HashSet
+
+  import java.util.ArrayList;
+  import java.util.Iterator;
+
+  public class Main{
+    public static void main(String[] args) {
+      ArrayList<String> cars = new ArrayList<>();
+      cars.add("Volvo");
+      cars.add("BMW");
+      cars.add("Ford");
+      cars.add("Mazda");
+
+      Iterator<String> it = cars.iterator();
+      // Print the first item
+      System.out.println(it.next());    // Volvo
+    }
+  }
+
+----- Loop through a collection
+
+  import java.util.ArrayList;
+  import java.util.Iterator;
+
+  public class Main {
+    public static void main(String[] args) {
+      ArrayList<String> cars = new ArrayList<>();
+      cars.add("Volvo");
+      cars.add("BMW");
+      cars.add("Ford");
+      cars.add("Mazda");
+
+      Iterator<String> it = cars.iterator();
+      while (it.hasNext()) {
+        System.out.println(it.next());
+      }
+    }
+  }
+
+----- Removing items from collection
+
+  import java.util.ArrayList;
+  import java.util.Iterator;
+
+  public class Main {
+    public static void main(String[] args) {
+      ArrayList<Integer> numbers = new ArrayList<>();
+      numbers.add(12);
+      numbers.add(8);
+      numbers.add(2);
+      numbers.add(23);
+
+      Iterator<Integer> it = numbers.iterator();
+      while (it.hasNext()) {
+        Integer i = it.next();
+        if (i < 10) {
+          it.remove();
+        }
+      }
+      System.out.println(numbers);     // [12, 23]
+    }
+  }
+
+
+
+ 
+#################################### Wrapper classes
+
+>>>> Wrapper classes provide a way to use primitive data types (int, boolean, etc..) as objects
+
+  public class Main {
+    public static void main(String[] args) {
+      Integer myInt = 5;
+      Double myDouble = 5.99;
+      Character myChar = 'A';
+      System.out.println(myInt.intValue());       // 5
+      System.out.println(myDouble.doubleValue());       // 5.99
+      System.out.println(myChar.charValue());       // A
+    }
+  }
+
+-----
+
+public class Main { 
+  public static void main(String[] args) { 
+    Integer myInt = 100; 
+    String myString = myInt.toString();
+    System.out.println(myString.length());      // 3
+  }
+}
+
+
+
+ 
+#################################### Exceptions
+
+>>>>  The try statement allows you to define a block of code to be tested for errors while it is being executed.
+>>>>  The catch statement allows you to define a block of code to be executed, if an error occurs in the try block.
+
+  public class Main {
+    public static void main(String[ ] args) {
+      try {
+        int[] myNumbers = {1, 2, 3};
+        System.out.println(myNumbers[10]);
+      } catch (Exception e) {
+        System.out.println("Something went wrong.");
+      }
+    }
+  }
+
+>>>> The finally statement lets you execute code, after try...catch, regardless of the result
+
+  public class Main {
+    public static void main(String[] args) {
+      try {
+        int[] myNumbers = {1, 2, 3};
+        System.out.println(myNumbers[10]);
+      } catch (Exception e) {
+        System.out.println("Something went wrong.");
+      } finally {
+        System.out.println("The 'try catch' is finished.");
+      }
+    }
+  }
+
+>>>> The throw statement allows you to create a custom error
+
+import java.util.Scanner;
+
+public class Main {
+
+  static void checkAge(int age) {
+    if (age < 18) {
+      throw new IllegalArgumentException("Access denied - You must be at least 18 years old.");
+    } else {
+      System.out.println("Access granted - You are old enough!");
+    }
+  }
+
+  public static void main(String[] args) {
+    // Using try-with-resources to ensure the scanner is closed automatically
+    try (Scanner scanner = new Scanner(System.in)) {
+      System.out.print("Enter your age: ");
+      while (!scanner.hasNextInt()) {
+        System.out.print("Invalid input. Please enter a valid age: ");
+        scanner.next(); // Clear the invalid input
+      }
+
+      int age = scanner.nextInt();
+
+      try {
+        checkAge(age);
+      } catch (IllegalArgumentException e) {
+        System.out.println(e.getMessage());
+      }
+    }
+  }
+}
+
+
+
+ 
+#################################### Regex (Regular Expressions)
+
+>>>> A regular expression is a sequence of characters that forms a search pattern
+
+  import java.util.regex.Matcher;
+  import java.util.regex.Pattern;
+
+  public class Main {
+    public static void main(String[] args) {
+      Pattern pattern = Pattern.compile("w3schools", Pattern.CASE_INSENSITIVE);
+      Matcher matcher = pattern.matcher("Visit W3Schools!");
+      boolean matchFound = matcher.find();
+      if(matchFound) {
+        System.out.println("Match found");      // Match found
+      } else {
+        System.out.println("Match not found");
+      }
+    }
+  }
+
+  >>  Pattern.CASE_INSENSITIVE - The case of letters will be ignored when performing a search.
+  >>  Pattern.LITERAL - Special characters in the pattern will not have any special meaning and will be treated as ordinary characters when performing a search.
+  >>  Pattern.UNICODE_CASE - Use it together with the CASE_INSENSITIVE flag to also ignore the case of letters outside of the English alphabet
+
+
+
+ 
+#################################### Threads
+
+  >>>> Threads allows a program to operate more efficiently by doing multiple things at the same time
+
+----- Extend
+
+  public class Main extends Thread {
+    public static void main(String[] args) {
+      Main thread = new Main();
+      thread.start();
+      System.out.println("This code is outside of the thread");
+    }
+    public void run() {
+      System.out.println("This code is running in a thread");
+    }
+  }
+
+----- Implement
+
+  public class Main implements Runnable {
+    public static void main(String[] args) {
+      Main obj = new Main();
+      Thread thread = new Thread(obj);
+      thread.start();
+      System.out.println("This code is outside of the thread");
+    }
+    public void run() {
+      System.out.println("This code is running in a thread");
+    }
+  }
+
+--- Use isAlive() to prevent concurrency problems
+
+  public class Main extends Thread {
+    public static int amount = 0;
+
+    public static void main(String[] args) {
+      Main thread = new Main();
+      thread.start();
+      // Wait for the thread to finish
+      while(thread.isAlive()) {
+        System.out.println("Waiting...");
+      }
+      // Update amount and print its value
+      System.out.println("Main: " + amount);
+      amount++;
+      System.out.println("Main: " + amount);
+    }
+    public void run() {
+      amount++;
+    }
+  }
+
+
+
+ 
+#################################### Lambda expression
+
+>>>> A lambda expression is a short block of code which takes in parameters and returns a value
+
+import java.util.ArrayList;
+
+public class Main {
+  public static void main(String[] args) {
+    ArrayList<Integer> numbers = new ArrayList<>();
+    numbers.add(5);
+    numbers.add(9);
+    numbers.add(8);
+    numbers.add(1);
+    numbers.forEach( (n) -> { System.out.println(n); } );     // Prints all items in the list
+  }
+}

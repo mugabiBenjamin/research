@@ -1,0 +1,377 @@
+>>>> Git is a free and open source version control system
+>>>> Version control manages changes to documents, computer programs, large web sites, and other collections of information
+
+
+>>>> Terms
+
+1. directory => folder
+2. terminal/ CLI(Command Line Interface)=> interface for text commands
+3. cd => change directory
+4. code Editor => place to write code
+5. repository => project, or the folder/place where your project is kept
+6. github => a website to host your repositories online
+7. git => tool that tracks changes in your code over time
+
+
+>>>> Git commands
+
+clone => Bring a repository that is hosted somewhere like github into a folder on your local machine
+add => track your files and changes in git
+commit => save your files in git
+push  => upload git commands to a remote repo, like github
+pull => download changes from remote repo to your local  machine, the opposite of push
+
+-----
+
+>>>> git push -u origin main
+>>>> git pull ==> pulls changes (files) added through github to working dir on local machine
+>>>> git clone git@github.com:<username>/git101-repo.git fruit ==> pulls a repo and creates a folder called fruit
+>>>> git fetch ==> pulls changes (files) added through github to local machine and not in local dir, type "git merge" after to pull changes to working dir
+
+
+
+
+############################# Through the git website
+
+>>>> [plus sign next to a dropdown] or [green new button]
+>>>> A repository is basically a project. It's all of your coding files and folders for whatever kind of application you are building
+>>>> After creating repo >>> create a new file inside that repo
+>>>> (#) symbol => for main header
+
+>>>> => To see the entire history of changes
+   Go to commits >
+>>>> green with plus means that line was added
+>>>> red with minus means that line was deleted
+>>>> white lines mean it stayed the same
+
+>>>> .md means mock down
+
+
+
+
+############################# On the local machine
+
+>>>> git -v ==> to check the installed version of git
+>>>> git clone git@github.com:<username>/demo-repo.git
+>>>> cd demo-repo
+>>>> echo Some content > README.md
+>>>> git status
+>>>> git add . ==> tracks all the files listed in both untracked and modified section
+>>>> git commit -m "Added README file" -m "some description"
+   -m is a flag for message
+   the first -m is for the title and the second -m is for the description
+
+
+
+
+############################# SSH keys
+
+>>>> ssh-keygen -t rsa -b 4096 -C "your-email"			**** easier to use ***
+>>>> ssh-keygen -t ed25519 -C "your-email"
+>>>> just press enter
+>>>> Enter file in which to save the key (/home/adduser/.ssh/id_rsa):
+>>>> Incase you change the name of the key, the terminal saves the key in the current folder and not in /.ssh/
+
+>>>> cd
+>>>> ls -la
+>>>> cd .ssh
+>>>> ls -l
+>>>> more id_rsa.pub
+>>>> copy the id_rsa.pub key and paste in on githhub via SSH key in settings
+>>>> eval "$(ssh-agent -s)"
+>>>> ssh-add ~/.ssh/id_rsa
+
+-----
+
+>>>> ssh-keygen -t ed25519 -C "your-email"
+>>>> Enter (/home/adduser/.ssh/ed25519): git101
+>>>> cat git101.pub 
+>>>> eval "$(ssh-agent -s)"
+>>>> ssh-add ~desktop/git/git101
+
+
+
+
+
+############################# Git push
+
+>>>> git push => push to remote repository where code is hosted
+>>>> git push -u origin main
+	origin stands for the location of the git repository
+	main is the branch we want to push to
+	-u is an upstring. It sets the push location to be the default so the next time you just "git push"
+
+
+
+
+############################# Adding a file to GitHub from local machine
+
+>>>> vim newFile.txt
+>>>> git status = untracked
+>>>> git add newFile / .
+>>>> git status = staged
+>>>> git commit -m "2nd commit of the day"
+>>>> git status = Your branch is ahead of 'origin/master' by 1 commit
+>>>> git push origin main
+
+
+
+
+############################# Starting a repo locally
+
+>>>> mkdir new-repo
+>>>> cd new-repo
+>>>> git init				// *initiates
+>>>> echo "# My New Repo" > README.md
+>>>> git add .
+>>>> git commit -m "Initial commit"
+>>>> git remote add origin https://github.com/<username>/new.git		***Use HTTPs not SSH link
+	remote means somewhere else and not on local machine
+>>>> git push -u origin master
+
+-----
+
+>>>> git clone git@github.com:<username>/git101.git
+>>>> git branch -M main ==> change branch name
+>>>> git remote add origin git@github.com:<username>/git101.git
+
+>>>> git remote -v ==> to see the origin
+origin  git@github.com:<username>/git101-repo.git (fetch)
+origin  git@github.com:<username>/git101-repo.git (push)
+
+
+
+############################# Git branching
+
+>>>> git branch => to see what branch you are on
+>>>> git checkout => used to switch between branches
+>>>> git checkout -b ==> create and switch to the new branch in one command
+>>>> decorate flag makes git log display all of the references (e.g., branches, tags, etc) that point to each commit
+>>>> oneline tag prints a single commit in a single line as output when the git log command is executed using this option.
+
+   git checkout -b feature-readme-instructions
+   git branch			// *feature-readme-instructions
+   git log --oneline --decorate
+>>>>>> (HEAD -> main, origin/main, feature-readme-instructions)
+
+   git checkout main
+   git branch			// *main
+   git log --oneline --decorate
+>>>>>> (HEAD -> feature-readme-instructions, origin/main, main)
+
+   git checkout feature-readme-instructions
+   git branch			// *feature-readme-instructions
+   echo new new dev_file.txt
+   git add .
+   git status = on branch feature-readme-instructions, staged
+
+   git commit -m "updated readme"
+*>   git push origin feature-readme-instructions
+
+-----
+
+   git checkout main
+>>>> changes made on feature-readme-instructions do not reflect here
+
+   git diff feature-readme-instructions
+>>>> git diff => shows changes
+fetch
+   git checkout feature-readme-instructions
+   git push origin feature-readme-instructions
+
+>>>> After setting pull on github
+
+
+
+
+############################# Merging branches
+
+>>>> git checkout master
+>>>> git branch 			//*master
+>>>> git merge develop
+>>>> git status = on master branch, working tree clean
+>>>> git push origin master
+
+
+
+
+############################# Merge conflict
+
+   git checkout -b quick-test
+   touch index.html file
+
+   git commit -am "added world"
+>>>> -am adds and commits at the same time, only works with modified file but not created files
+
+also add text to index.html file in the main branch in the same line as in quick-test
+   git checkout quick-test
+
+>>>> Warning
+
+   git status
+   git commit -am "added there"
+   git checkout quick-test
+
+   git diff main
+   git merge main
+
+>>>> Conflict
+Work on conflict in VsCode manually
+   git status
+   git diff
+   git commit -am "updated with main"
+  
+
+
+
+############################# Undoing in Git
+
+   git checkout quick-test
+   echo Some text > README.md
+   git add README.md
+   git status
+
+>>>> to _undo_
+   git reset or git reset README.md
+   git status 			// *unstaged
+
+   git add README.md
+   git commit -m "added install step"
+   git status 			// *staged
+
+   git reset HEAD~1 => HEAD~1 commits one step backward
+   git status
+   git diff
+   git log >>>> see log of commits in reverse chronological order  
+
+>>>> git log ==> see all commit performed on repo
+>>>> git log --patch -1 ==> number of logs to display
+>>>> git log -p -1
+
+>>>> vim Test.txt
+>>>> git add Test.txt ==> brings file from modified to staged stage
+>>>> git status = staged stage
+
+>>>> git restore --staged Test.txt ==> brings file from staged to modified stage (unstages)
+>>>> git status = unstaged state
+>>>> git restore Test.txt ==> get rid of all the changes
+>>>> git status = working tree clean
+
+
+
+
+############################# Deleting remote branch
+
+>>>> git checkout main
+>>>> git push origin --delete branch-name
+
+
+
+
+############################# Deleting local branch that has been merged
+
+>>>> git checkout main
+>>>> git branch -d branch-name
+
+
+
+
+############################# Deleting local branch that has not been merged
+
+>>>> git checkout main
+>>>> git branch -D branch-name
+
+
+
+
+############################# Branching
+
+git branch branch_name		create branch
+git checkout -b branch_name	create and switch to the new branch in one command
+
+
+
+
+############################# Merging branches
+
+cd /path/to/your/project
+git fetch origin	ensure repo is up-to-date
+git checkout main
+git merge feature-branch
+
+git add file_with_conflict	Resolve any merge conflicts
+git commit
+
+git push origin main	push merge changes to remote repo
+
+
+
+
+############################# Creating local repo
+
+git init 
+git push --set-upstream origin master
+
+
+
+
+############################# 
+
+git log
+git log --oneline 	summary
+
+
+
+
+############################# Undoing things with checkout, revert, reset
+
+git checkout <SHA code>		 its readonly. for preview
+git checkout main/master to get to present day
+
+git revert <SHA code> 		undo that particular commit
+
+-----
+
+git reset <SHA code>
+
+---- To recover reset
+
+git add .
+git commit -m "undo reset"
+
+git reset <SHA code> --hard	removes commits, can't be gotten back
+
+
+
+
+############################# Setting default branch
+
+Open git
+git config --global init.defaultBranch main
+git config --global --get init.defaultBranch	to verify
+
+
+
+
+############################# Renaming local branch
+
+git checkout master		Switch to the branch you want to rename (if you're not already on it):
+git branch -m main		renaming branch
+git branch 		to verify
+
+----- Renaming remote branch
+
+git push origin main
+git push origin --delete master			deleting old branch
+git push --set-upstream origin main		reset upstream branch
+
+
+
+git rm -rf --cached .		clear cache incase changes don't reflect on GitHub, then:
+git add .
+git commit -m "message"
+git push
+
+
+git log --all --graph
+

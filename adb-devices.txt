@@ -1,0 +1,160 @@
+# ADB (Android Debug Bridge)
+
+sudo apt install adb
+
+Enable USB Debugging on Your Phone:
+- Go to Settings > About phone > Tap Build number 7 times to enable Developer Mode.
+- Go to Developer Options and enable USB Debugging.
+-----------------------------------------------------------
+
+
+
+
+adb devices -> to verify connection
+
+>>> Output
+List of devices attached
+0123456789ABCDEF  device
+
+States:
+device -> Connected and ready for commands.
+unauthorized -> Device not authorized. Approve the connection on the phone.
+offline ->  Device not properly connected.
+-----------------------------------------------------------
+
+
+
+adb shell -> to navigate the phone's file system
+
+To copy from phone to PC:
+Copies a file or directory from your Android device to your computer.
+adb pull /sdcard/path/to/file /path/on/pc
+
+To copy from PC to phone:
+Copies a file or directory from your Computer device to your android device.
+adb push /path/on/pc /sdcard/path/on/phone
+-----------------------------------------------------------
+
+
+
+adb reboot
+Restarts the connected device.
+
+adb reboot bootloader
+Boots into the bootloader (useful for flashing).
+
+adb reboot recovery
+Boots into recovery mode.
+
+adb shell
+Opens a shell on the device for executing commands.
+adb shell <command>
+adb shell ls /sdcard
+
+Exit Shell:
+Press Ctrl+D or type exit.
+-----------------------------------------------------------
+
+
+
+Install an APK:
+adb install <apk-file-path>
+adb install /path/to/app.apk
+
+Uninstall an App:
+adb uninstall <package-name>
+adb uninstall com.example.app
+-----------------------------------------------------------
+
+
+
+
+Capture a Bug Report:
+adb bugreport
+Saves a detailed bug report for debugging.
+
+Take a Screenshot:
+adb shell screencap /sdcard/screenshot.png
+adb pull /sdcard/screenshot.png /path/on/pc
+
+Record the Screen:
+adb shell screenrecord /sdcard/screenrecord.mp4
+adb pull /sdcard/screenrecord.mp4 /path/on/pc
+-----------------------------------------------------------
+
+
+
+Forward a Port:
+adb forward <local-port> <remote-port>
+adb forward tcp:8080 tcp:8080
+
+Reverse Port Forwarding:
+adb reverse <remote-port> <local-port>
+adb reverse tcp:3000 tcp:3000
+-----------------------------------------------------------
+
+
+
+Backup Device Data:
+adb backup -apk -shared -all -f <backup-file-path>
+adb backup -apk -shared -all -f backup.ab
+
+Restore Device Data:
+adb restore <backup-file-path>
+adb restore backup.ab
+-----------------------------------------------------------
+
+
+
+## Wireless ADB
+Enable Wireless Debugging: If your device runs Android 11 or later:
+
+Go to Developer Options > Wireless Debugging.
+Toggle Wireless Debugging to ON.
+Set Up Wireless ADB: Run the following commands:
+adb tcpip 5555
+
+Find the Device's IP Address: On your Android device:
+Go to Settings > Wi-Fi.
+Tap on the connected network to view its IP address (e.g., 192.168.1.100).
+Connect to the Device Wirelessly: Run the following command, replacing <IP_ADDRESS> with your device's IP:
+adb connect <IP_ADDRESS>:5555
+adb connect 192.168.1.100:5555
+
+Verify the Connection: Run:
+adb devices
+You should see your device listed with its IP address.
+
+Unplug the USB Cable: Once the wireless connection is established, you can unplug the USB cable.
+-----------------------------------------------------------
+
+
+
+Device Not Recognized:
+Ensure both devices are on the same Wi-Fi network.
+Restart ADB:
+adb kill-server
+adb start-server
+
+Reconnect with:
+adb connect <IP_ADDRESS>:5555
+-----------------------------------------------------------
+
+
+
+Advanced: Direct Wireless Debugging (Without USB)
+If your device supports QR Code Pairing (Android 11+):
+
+Go to Developer Options > Wireless Debugging.
+Tap Pair Device with QR Code or Pair with Code.
+On your computer, open the command line and run:
+adb pair <IP_ADDRESS>:<PORT>
+
+Enter the pairing code shown on the device.
+-----------------------------------------------------------
+
+
+To disconnect:
+adb disconnect <IP_ADDRESS>:5555
+
+
