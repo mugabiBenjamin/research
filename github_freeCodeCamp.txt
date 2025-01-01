@@ -514,7 +514,7 @@ Step 7. Keep Your Fork Updated (Optional)
 Step 8. Delete Local Branch
 
    git branch -d <feature_branch_name>    # Delete feature branch locally
-   git branch -D <feature_branch_name>    # Delete feature branch locally
+   git branch -D <feature_branch_name>    # Delete feature branch locally forcefully regardless of whether it has been merged or not.
       # Sync again only if further changes are made upstream after your initial sync.
 
 
