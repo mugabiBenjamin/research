@@ -1,62 +1,145 @@
->>>> Git is a free and open source version control system
->>>> Version control manages changes to documents, computer programs, large web sites, and other collections of information
+############################# Git commands
 
-
->>>> Terms
-
-1. directory => folder
-2. terminal/ CLI(Command Line Interface)=> interface for text commands
-3. cd => change directory
-4. code Editor => place to write code
-5. repository => project, or the folder/place where your project is kept
-6. github => a website to host your repositories online
-7. git => tool that tracks changes in your code over time
-
-
->>>> Git commands
-
-clone => Bring a repository that is hosted somewhere like github into a folder on your local machine
-add => track your files and changes in git
-commit => save your files in git
-push  => upload git commands to a remote repo, like github
-pull => download changes from remote repo to your local  machine, the opposite of push
+clone    # Bring a repository that is hosted somewhere like github into a folder on your local machine
+add      # Track your files and changes in git
+commit   # Save your files in git
+push     # Upload git commands to a remote repo, like github
+pull     # download changes from remote repo to your local  machine, the opposite of push
 
 -----
 
 >>>> git push -u origin main
->>>> git pull ==> pulls changes (files) added through github to working dir on local machine
->>>> git clone git@github.com:<username>/git101-repo.git fruit ==> pulls a repo and creates a folder called fruit
->>>> git fetch ==> pulls changes (files) added through github to local machine and not in local dir, type "git merge" after to pull changes to working dir
+>>>> git pull                 # Pulls changes (files) added through github to working dir on local machine
+>>>> git clone <url> fruit    # Pulls a repo and creates a folder called "fruit"
+>>>> git fetch                # Pulls changes (files) added through github to local machine and not in local dir, type "git merge" after to pull changes to working dir
 
 
 
 
-############################# Through the git website
+############################# README file Formatting and Indentation
 
->>>> [plus sign next to a dropdown] or [green new button]
->>>> A repository is basically a project. It's all of your coding files and folders for whatever kind of application you are building
->>>> After creating repo >>> create a new file inside that repo
->>>> (#) symbol => for main header
+>>>> 1. Headers
 
->>>> => To see the entire history of changes
-   Go to commits >
->>>> green with plus means that line was added
->>>> red with minus means that line was deleted
->>>> white lines mean it stayed the same
+# Main Title
+## Subtitle
+### Sub-subtitle
+#### Level 4 Heading
+##### Level 5 Heading
+###### Level 6 Heading
 
->>>> .md means mock down
+- Headers are used to structure the README into sections like "Introduction," "Features," "Installation," etc.
+-------------------------------------------------------
+
+
+>>>> 2. Lists
+
+- -, * or + for unordered lists
+- 1., 2., 3. for ordered lists
+
+- Unordered lists: Features, dependencies, or bullet points.
+- Ordered lists: Steps in a procedure or ranked items.
+-------------------------------------------------------
+
+
+>>>> 3. Indentation
+
+- > for blockquotes
+- Use block quotes for important notes, tips, or referencing external content.
+
+```bash
+# This is a bash command and a comment specifically
+npm install
+```
+
+Use single backticks (`) for inline code.
+Run the `npm install` command to install dependencies.
+
+- Code blocks: Commands, configuration files, or code snippets.
+- Inline code: Highlighting filenames, commands, or specific code segments.
+-------------------------------------------------------
+
+
+>>>> 4. Other
+
+**Bold Text**
+*Italic Text*
+***Bold and Italic***
+
+- ~~strikethrough text~~ for strikethrough text       # Use to mark completed tasks or deprecated content
+
+- --- or *** for horizontal lines
+
+- Use horizontal rules to separate major sections or topics in a long README.
+-------------------------------------------------------
+
+
+>>>> 5. Links 
+
+- [Visit Google](https://google.com)      <!-- Normal Link -->
+- [Jump to Installation Section](#installation)      <!-- Anchor Link, #installation is a section-title -->
+- [Link Text](https://example.com "Optional Title")   <!-- Link with title -->
+-------------------------------------------------------
+
+
+>>>> 6. Images
+
+![GitHub Logo](https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png)    # Hosted images
+![My Screenshot](./assets/screenshot.png)       # Local images
+
+Task list (checkbox)
+
+- [ ] Task not done
+- [x] Task completed
+
+- Use for project roadmaps, to-do lists, or PR checklists.
+-------------------------------------------------------
+
+
+>>>> 7. Escaping charcaters
+
+\*This will not italicize.*            # Won't italicize
+\# This will not create a header.      # Won't create a header
+-------------------------------------------------------
+
+
+>>>> 8. Tables
+
+| Column 1 | Column 2 | Column 3 |
+|----------|----------|----------|
+| Row 1    | Data 1   | Data 2   |
+| Row 2    | Data 3   | Data 4   |
+-------------------------------------------------------
+
+
+>>>> 9. Footnotes
+
+Here is a statement with a footnote.[^1]
+
+[^1]: This is the footnote text.
+-------------------------------------------------------
+
+
+>>>> 10. Collapsible sections
+
+<details>
+  <summary>Click to expand</summary>
+  Hidden content goes here.
+</details>
+
+- Use for lengthy logs, explanations, or optional content.
+-------------------------------------------------------
 
 
 
 
 ############################# On the local machine
 
->>>> git -v ==> to check the installed version of git
->>>> git clone git@github.com:<username>/demo-repo.git
+>>>> git -v       # To check the installed version of git
+>>>> git clone <url>
 >>>> cd demo-repo
 >>>> echo Some content > README.md
 >>>> git status
->>>> git add . ==> tracks all the files listed in both untracked and modified section
+>>>> git add .    # This tracks all the files listed in both untracked and modified section
 >>>> git commit -m "Added README file" -m "some description"
    -m is a flag for message
    the first -m is for the title and the second -m is for the description
@@ -66,7 +149,7 @@ pull => download changes from remote repo to your local  machine, the opposite o
 
 ############################# SSH keys
 
->>>> ssh-keygen -t rsa -b 4096 -C "your-email"			**** easier to use ***
+>>>> ssh-keygen -t rsa -b 4096 -C "your-email"			# Easier to use
 >>>> ssh-keygen -t ed25519 -C "your-email"
 >>>> just press enter
 >>>> Enter file in which to save the key (/home/adduser/.ssh/id_rsa):
@@ -95,7 +178,7 @@ pull => download changes from remote repo to your local  machine, the opposite o
 
 ############################# Git push
 
->>>> git push => push to remote repository where code is hosted
+>>>> git push        # Push to remote repository where code is hosted
 >>>> git push -u origin main
 	origin stands for the location of the git repository
 	main is the branch we want to push to
@@ -121,21 +204,21 @@ pull => download changes from remote repo to your local  machine, the opposite o
 
 >>>> mkdir new-repo
 >>>> cd new-repo
->>>> git init				// *initiates
+>>>> git init				# Initiates
 >>>> echo "# My New Repo" > README.md
 >>>> git add .
 >>>> git commit -m "Initial commit"
->>>> git remote add origin https://github.com/<username>/new.git		***Use HTTPs not SSH link
+>>>> git remote add origin https://github.com/<username>/new.git		   # Use HTTPs not SSH link
 	remote means somewhere else and not on local machine
 >>>> git push -u origin master
 
 -----
 
->>>> git clone git@github.com:<username>/git101.git
->>>> git branch -M main ==> change branch name
->>>> git remote add origin git@github.com:<username>/git101.git
+>>>> git clone <url>
+>>>> git branch -M main       # Change branch name
+>>>> git remote add origin <url>
 
->>>> git remote -v ==> to see the origin
+>>>> git remote -v      # To see the origin
 origin  git@github.com:<username>/git101-repo.git (fetch)
 origin  git@github.com:<username>/git101-repo.git (push)
 
@@ -143,30 +226,31 @@ origin  git@github.com:<username>/git101-repo.git (push)
 
 ############################# Git branching
 
->>>> git branch => to see what branch you are on
->>>> git checkout => used to switch between branches
->>>> git checkout -b ==> create and switch to the new branch in one command
+>>>> git branch         # Used to see what branch you are on
+>>>> git checkout       # Used to switch between branches
+>>>> git checkout -b          # Used create and switch to the new branch in one command
+
 >>>> decorate flag makes git log display all of the references (e.g., branches, tags, etc) that point to each commit
 >>>> oneline tag prints a single commit in a single line as output when the git log command is executed using this option.
 
    git checkout -b feature-readme-instructions
-   git branch			// *feature-readme-instructions
+   git branch			      # *feature-readme-instructions
    git log --oneline --decorate
 >>>>>> (HEAD -> main, origin/main, feature-readme-instructions)
 
    git checkout main
-   git branch			// *main
+   git branch			      # *main
    git log --oneline --decorate
 >>>>>> (HEAD -> feature-readme-instructions, origin/main, main)
 
    git checkout feature-readme-instructions
-   git branch			// *feature-readme-instructions
+   git branch			      # *feature-readme-instructions
    echo new new dev_file.txt
    git add .
    git status = on branch feature-readme-instructions, staged
 
    git commit -m "updated readme"
-*>   git push origin feature-readme-instructions
+>   git push origin feature-readme-instructions
 
 -----
 
@@ -174,7 +258,7 @@ origin  git@github.com:<username>/git101-repo.git (push)
 >>>> changes made on feature-readme-instructions do not reflect here
 
    git diff feature-readme-instructions
->>>> git diff => shows changes
+>>>> git diff              # Shows changes
 fetch
    git checkout feature-readme-instructions
    git push origin feature-readme-instructions
@@ -187,7 +271,7 @@ fetch
 ############################# Merging branches
 
 >>>> git checkout master
->>>> git branch 			//*master
+>>>> git branch 			   # *master
 >>>> git merge develop
 >>>> git status = on master branch, working tree clean
 >>>> git push origin master
@@ -233,28 +317,28 @@ Work on conflict in VsCode manually
 
 >>>> to _undo_
    git reset or git reset README.md
-   git status 			// *unstaged
+   git status 			# *unstaged
 
    git add README.md
    git commit -m "added install step"
-   git status 			// *staged
+   git status 			# *staged
 
    git reset HEAD~1 => HEAD~1 commits one step backward
    git status
    git diff
    git log >>>> see log of commits in reverse chronological order  
 
->>>> git log ==> see all commit performed on repo
->>>> git log --patch -1 ==> number of logs to display
+>>>> git log                              # See all commit performed on repo
+>>>> git log --patch -1                   # Number of logs to display
 >>>> git log -p -1
 
 >>>> vim Test.txt
->>>> git add Test.txt ==> brings file from modified to staged stage
+>>>> git add Test.txt                     # Brings file from modified to staged stage
 >>>> git status = staged stage
 
->>>> git restore --staged Test.txt ==> brings file from staged to modified stage (unstages)
+>>>> git restore --staged Test.txt        # Brings file from staged to modified stage (unstages)
 >>>> git status = unstaged state
->>>> git restore Test.txt ==> get rid of all the changes
+>>>> git restore Test.txt                 # Get rid of all the changes
 >>>> git status = working tree clean
 
 
@@ -286,8 +370,8 @@ Work on conflict in VsCode manually
 
 ############################# Branching
 
-git branch branch_name		create branch
-git checkout -b branch_name	create and switch to the new branch in one command
+git branch branch_name		   # Create branch
+git checkout -b branch_name	# Create and switch to the new branch in one command
 
 
 
@@ -295,14 +379,14 @@ git checkout -b branch_name	create and switch to the new branch in one command
 ############################# Merging branches
 
 cd /path/to/your/project
-git fetch origin	ensure repo is up-to-date
+git fetch origin	                # Ensure repo is up-to-date
 git checkout main
 git merge feature-branch
 
-git add file_with_conflict	Resolve any merge conflicts
+git add file_with_conflict	      # Resolve any merge conflicts
 git commit
 
-git push origin main	push merge changes to remote repo
+git push origin main		         # Push merge changes to remote repo
 
 
 
@@ -310,7 +394,7 @@ git push origin main	push merge changes to remote repo
 ############################# Creating local repo
 
 git init 
-git push --set-upstream origin master
+git push -u origin master
 
 
 
@@ -318,7 +402,7 @@ git push --set-upstream origin master
 ############################# 
 
 git log
-git log --oneline 	summary
+git log --oneline 	# Oneline summary
 
 
 
@@ -367,11 +451,79 @@ git push --set-upstream origin main		reset upstream branch
 
 
 
-git rm -rf --cached .		clear cache incase changes don't reflect on GitHub, then:
+git rm -rf --cached .		# Clear cache incase changes don't reflect on GitHub, then:
 git add .
 git commit -m "message"
 git push
 
 
-git log --all --graph
+git log --all --graph		# Graphical view
+
+
+
+############################# Forking to pull request
+
+Step 1. Fork repo
+
+
+Step 2. Clone repo 
+
+   git clone <repository_url>
+   cd <repository_name>
+
+
+Step 3.  Set the Original Repository as an Upstream Remote
+
+   git remote add upstream <original_repository_url>     # Add the original repository as a remote
+   git remote -v     # Verify remotes
+
+
+Step 4. Create a New Branch
+
+   git checkout -b <featurebranch_name>
+   git add <file_name>     # For specific files
+   git add .               # To stage all changes
+
+
+Step 5. Create a Pull Request
+
+   git push origin <feature_branch_name>
+   git push --set-upstream origin <feature_branch_name>
+   git push -u origin <feature_branch_name>              # To set upstream
+
+
+Step 6. Create Pull Request on GitHub
+
+   - Go to the original repository on GitHub.
+   - Click Pull Requests > New Pull Request.
+   - Choose your forked repository and the branch you worked on.
+   - Add a title and description for your PR. Include details about the changes and any issue it addresses (e.g., "Fixes #123").
+   - Submit the pull request.
+      
+
+Step 7. Keep Your Fork Updated (Optional)
+
+   git checkout main          # Switch to the main branch
+
+   git fetch upstream         # Fetch changes from the original repository
+   git merge upstream/main
+
+   git push origin main       # Push changes to the main branch of the fork   
+
+
+Step 8. Delete Local Branch
+
+   git branch -d <feature_branch_name>    # Delete feature branch locally
+   git branch -D <feature_branch_name>    # Delete feature branch locally
+      # Sync again only if further changes are made upstream after your initial sync.
+
+
+Step 9. Delete Remote Branch
+
+   git push origin --delete <feature_branch_name>    # Delete feature branch remotely
+
+
+Step 10. Delete Fork
+
+   Delete the fork on GitHub. 
 
