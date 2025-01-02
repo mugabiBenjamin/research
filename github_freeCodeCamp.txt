@@ -551,4 +551,10 @@ Step 10. Delete Fork
    cd new-folder-name
    git init
 
-############################# Renaming local repo -> remote
+############################# 
+
+   git reset --hard HEAD~1    # Undo last commit to github
+
+   git reset --hard ORIG_HEAD    # Undo "git reset --hard HEAD~1echo "Cloning repository..." 
+
+   git commit --amend    # Rename last commit
