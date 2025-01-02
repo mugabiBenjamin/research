@@ -488,8 +488,6 @@ Step 4. Create a New Branch
 
 Step 5. Create a Pull Request
 
-   git push origin <feature_branch_name>
-   git push --set-upstream origin <feature_branch_name>
    git push -u origin <feature_branch_name>              # To set upstream
 
 
