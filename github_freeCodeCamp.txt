@@ -461,6 +461,7 @@ git log --all --graph		# Graphical view
 
 
 
+
 ############################# Forking to pull request
 
 Step 1. Fork repo
@@ -532,3 +533,22 @@ Step 10. Delete Fork
 
    Delete the fork on GitHub. 
 
+
+
+
+############################# Renaming remote repo -> local
+
+   git remote -v     # To verify
+
+   git remote set-url origin https://github.com/username/new-name.git
+
+   git remote -v     # To verify change
+
+   git status        # Test connection
+
+   # From parent directory
+   mv old-folder-name new-folder-name
+   cd new-folder-name
+   git init
+
+############################# Renaming local repo -> remote
