@@ -521,8 +521,6 @@ Step 9. Delete Local Branch
    git branch -D <feature_branch_name>    # Delete feature branch locally forcefully regardless of whether it has been merged or not.
    
    git fetch --all      # Fetch the latest state from the remote repository
-   git fetch --prune    # Prune stale references and update your repository
-   git branch -r        # List remote branches
 
    git push origin --delete branch-name      # After fetching try delete branch remotelt again
 
@@ -556,3 +554,26 @@ Step 10. Delete Fork
    git reset --hard ORIG_HEAD    # Undo "git reset --hard HEAD~1echo "Cloning repository..." 
 
    git commit --amend    # Rename last commit
+
+
+
+
+############################# Cloning more than one repo (main and feature branch)
+
+   git clone <URL-of-your-forked-repo>
+
+   cd <repository-name>
+
+   git fetch --all                        # Fetch all branches
+   
+   git branch                             # List all local branches
+
+   git branch -a                          # List all remote branches
+
+   git checkout <feature_branch_name>     # Switch to feature branch
+
+   git checkout main
+   git pull origin main
+
+   git checkout <feature_branch_name>
+   git pull origin <feature_branch_name>
