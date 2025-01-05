@@ -412,11 +412,13 @@ git log --oneline 	# Oneline summary
 git checkout <SHA code>		 its readonly. for preview
 git checkout main/master to get to present day
 
-git revert <SHA code> 		undo that particular commit
+git revert <SHA code> 		               # Creates a new commit that undoes the changes introduced by the specified commit.
+
+git revert <SHA-of-the-revert-commit>     # Undo git revert
 
 -----
 
-git reset <SHA code>
+git reset <SHA code>             # Moves the HEAD pointer to a specific commit (<SHA>), altering your commit history.
 
 ---- To recover reset
 
@@ -424,6 +426,9 @@ git add .
 git commit -m "undo reset"
 
 git reset <SHA code> --hard	removes commits, can't be gotten back
+
+- Use git revert for shared branches (e.g., main) to avoid disrupting history.
+- Use git reset for local branches or when you’re sure no one else relies on the branch, as it rewrites history.
 
 
 
