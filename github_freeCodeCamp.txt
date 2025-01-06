@@ -425,7 +425,12 @@ git reset <SHA code>             # Moves the HEAD pointer to a specific commit (
 git add .
 git commit -m "undo reset"
 
+----
+
 git reset <SHA code> --hard	removes commits, can't be gotten back
+
+Run git push --force                
+   git push --force-with-lease      # Option is safer—it checks that no one else has pushed changes to the remote branch since your last pull
 
 - Use git revert for shared branches (e.g., main) to avoid disrupting history.
 - Use git reset for local branches or when you’re sure no one else relies on the branch, as it rewrites history.
