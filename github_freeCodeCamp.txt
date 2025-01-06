@@ -520,19 +520,17 @@ Step 7. Keep Your Fork Updated (Optional)
    git push origin main       # Push changes to the main branch of the fork   
 
 
-Step 8. Delete Remote Branch
-
-   git push origin --delete <feature_branch_name>    # Delete feature branch remotely
-
-
-Step 9. Delete Local Branch
+Step 8. Delete Local Branch
 
    git branch -d <feature_branch_name>    # Delete feature branch locally
    git branch -D <feature_branch_name>    # Delete feature branch locally forcefully regardless of whether it has been merged or not.
    
    git fetch --all      # Fetch the latest state from the remote repository
 
-   git push origin --delete branch-name      # After fetching try delete branch remotelt again
+
+Step 9. Delete Remote Branch
+
+   git push origin --delete <feature_branch_name>    # Delete feature branch remotely
 
 
 Step 10. Delete Fork
