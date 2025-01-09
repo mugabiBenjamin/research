@@ -83,8 +83,8 @@ Run the `npm install` command to install dependencies.
 
 >>>> 6. Images
 
-![GitHub Logo](https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png)    # Hosted images
-![My Screenshot](./assets/screenshot.png)       # Local images
+![GitHub Logo](https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png?raw=true)    # Hosted images
+![My Screenshot](./assets/screenshot.png?raw=true)       # Local images
 
 Task list (checkbox)
 
