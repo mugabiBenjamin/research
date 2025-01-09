@@ -8,10 +8,9 @@ pull     # download changes from remote repo to your local  machine, the opposit
 
 -----
 
->>>> git push -u origin main
->>>> git pull                 # Pulls changes (files) added through github to working dir on local machine
->>>> git clone <url> fruit    # Pulls a repo and creates a folder called "fruit"
->>>> git fetch                # Pulls changes (files) added through github to local machine and not in local dir, type "git merge" after to pull changes to working dir
+   git pull                    # Pulls changes (files) added through github to working dir on local machine
+   git clone <url> fruit       # Pulls a repo and creates a folder called <fruit>
+   git fetch                   # Pulls changes (files) added through github to local machine and not in local dir, type "git merge" after to pull changes to working dir
 
 
 
@@ -20,454 +19,207 @@ pull     # download changes from remote repo to your local  machine, the opposit
 
 >>>> 1. Headers
 
-# Main Title
-## Subtitle
-### Sub-subtitle
-#### Level 4 Heading
-##### Level 5 Heading
-###### Level 6 Heading
+   # Main Title
+   ## Subtitle
+   ### Sub-subtitle
+   #### Level 4 Heading
+   ##### Level 5 Heading
+   ###### Level 6 Heading
 
-- Headers are used to structure the README into sections like "Introduction," "Features," "Installation," etc.
+   - Headers are used to structure the README into sections like "Introduction," "Features," "Installation," etc.
 -------------------------------------------------------
 
 
 >>>> 2. Lists
 
-- -, * or + for unordered lists
-- 1., 2., 3. for ordered lists
+   - -, * or + for unordered lists
+   - 1., 2., 3. for ordered lists
 
-- Unordered lists: Features, dependencies, or bullet points.
-- Ordered lists: Steps in a procedure or ranked items.
+   - Unordered lists: Features, dependencies, or bullet points.
+   - Ordered lists: Steps in a procedure or ranked items.
 -------------------------------------------------------
 
 
 >>>> 3. Indentation
 
-- > for blockquotes
-- Use block quotes for important notes, tips, or referencing external content.
+   - > for blockquotes
+   - Use block quotes for important notes, tips, or referencing external content.
 
-```bash
-# This is a bash command and a comment specifically
-npm install
-```
+   ```bash
+   # This is a bash command and a comment specifically
+   npm install
+   ```
 
-Use single backticks (`) for inline code.
-Run the `npm install` command to install dependencies.
+   Use single backticks (`) for inline code.
+   Run the `npm install` command to install dependencies.
 
-- Code blocks: Commands, configuration files, or code snippets.
-- Inline code: Highlighting filenames, commands, or specific code segments.
+   - Code blocks: Commands, configuration files, or code snippets.
+   - Inline code: Highlighting filenames, commands, or specific code segments.
 -------------------------------------------------------
 
 
 >>>> 4. Other
 
-**Bold Text**
-*Italic Text*
-***Bold and Italic***
+   **Bold Text**
+   *Italic Text*
+   ***Bold and Italic***
 
-- ~~strikethrough text~~ for strikethrough text       # Use to mark completed tasks or deprecated content
+   - ~~strikethrough text~~ for strikethrough text       # Use to mark completed tasks or deprecated content
 
-- --- or *** for horizontal lines
+   - --- or *** for horizontal lines
 
-- Use horizontal rules to separate major sections or topics in a long README.
+   - Use horizontal rules to separate major sections or topics in a long README.
 -------------------------------------------------------
 
 
 >>>> 5. Links 
 
-- [Visit Google](https://google.com)      <!-- Normal Link -->
-- [Jump to Installation Section](#installation)      <!-- Anchor Link, #installation is a section-title -->
-- [Link Text](https://example.com "Optional Title")   <!-- Link with title -->
+   - [Visit Google](https://google.com)                  <!-- Normal Link -->
+   - [Jump to Installation Section](#installation)       <!-- Anchor Link, #installation is a section-title -->
+   - [Link Text](https://example.com "Optional Title")   <!-- Link with title -->
 -------------------------------------------------------
 
 
 >>>> 6. Images
 
-![GitHub Logo](https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png?raw=true)    # Hosted images
-![My Screenshot](./assets/screenshot.png?raw=true)       # Local images
+   ![GitHub Logo](https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png?raw=true)    # Hosted images
+   ![My Screenshot](./assets/screenshot.png?raw=true)       # Local images
 
-Task list (checkbox)
+   Task list (checkbox)
 
-- [ ] Task not done
-- [x] Task completed
+   - [ ] Task not done
+   - [x] Task completed
 
-- Use for project roadmaps, to-do lists, or PR checklists.
+   - Use for project roadmaps, to-do lists, or PR checklists.
 -------------------------------------------------------
 
 
 >>>> 7. Escaping charcaters
 
-\*This will not italicize.*            # Won't italicize
-\# This will not create a header.      # Won't create a header
+   \*This will not italicize.*            # Won't italicize
+   \# This will not create a header.      # Won't create a header
 -------------------------------------------------------
 
 
 >>>> 8. Tables
 
-| Column 1 | Column 2 | Column 3 |
-|----------|----------|----------|
-| Row 1    | Data 1   | Data 2   |
-| Row 2    | Data 3   | Data 4   |
+   | Column 1 | Column 2 | Column 3 |
+   |----------|----------|----------|
+   | Row 1    | Data 1   | Data 2   |
+   | Row 2    | Data 3   | Data 4   |
 -------------------------------------------------------
 
 
 >>>> 9. Footnotes
 
-Here is a statement with a footnote.[^1]
+   Here is a statement with a footnote.[^1]
 
-[^1]: This is the footnote text.
+   [^1]: This is the footnote text.
 -------------------------------------------------------
 
 
 >>>> 10. Collapsible sections
 
-<details>
-  <summary>Click to expand</summary>
-  Hidden content goes here.
-</details>
+   <details>
+   <summary>Click to expand</summary>
+   Hidden content goes here.
+   </details>
 
-- Use for lengthy logs, explanations, or optional content.
+   - Use for lengthy logs, explanations, or optional content.
 -------------------------------------------------------
-
-
-
-
-############################# On the local machine
-
->>>> git -v       # To check the installed version of git
->>>> git clone <url>
->>>> cd demo-repo
->>>> echo Some content > README.md
->>>> git status
->>>> git add .    # This tracks all the files listed in both untracked and modified section
->>>> git commit -m "Added README file" -m "some description"
-   -m is a flag for message
-   the first -m is for the title and the second -m is for the description
 
 
 
 
 ############################# SSH keys
 
->>>> ssh-keygen -t rsa -b 4096 -C "your-email"			# Easier to use
->>>> ssh-keygen -t ed25519 -C "your-email"
->>>> just press enter
->>>> Enter file in which to save the key (/home/adduser/.ssh/id_rsa):
->>>> Incase you change the name of the key, the terminal saves the key in the current folder and not in /.ssh/
+   > ssh-keygen -t rsa -b 4096 -C "your-email"			# Easier to use
+   > ssh-keygen -t ed25519 -C "your-email"
+   > just press enter
+   > Enter file in which to save the key (/home/adduser/.ssh/id_rsa):
+   > Incase you change the name of the key, the terminal saves the key in the current folder and not in /.ssh/
 
->>>> cd
->>>> ls -la
->>>> cd .ssh
->>>> ls -l
->>>> more id_rsa.pub
->>>> copy the id_rsa.pub key and paste in on githhub via SSH key in settings
->>>> eval "$(ssh-agent -s)"
->>>> ssh-add ~/.ssh/id_rsa
+   > cd
+   > ls -la
+   > cd .ssh
+   > ls -l
+   > more id_rsa.pub
+   > copy the id_rsa.pub key and paste in on githhub via SSH key in settings
+   > eval "$(ssh-agent -s)"
+   > ssh-add ~/.ssh/id_rsa
 
 -----
 
->>>> ssh-keygen -t ed25519 -C "your-email"
->>>> Enter (/home/adduser/.ssh/ed25519): git101
->>>> cat git101.pub 
->>>> eval "$(ssh-agent -s)"
->>>> ssh-add ~desktop/git/git101
-
-
-
-
-
-############################# Git push
-
->>>> git push        # Push to remote repository where code is hosted
->>>> git push -u origin main
-	origin stands for the location of the git repository
-	main is the branch we want to push to
-	-u is an upstring. It sets the push location to be the default so the next time you just "git push"
-
-
-
-
-############################# Adding a file to GitHub from local machine
-
->>>> vim newFile.txt
->>>> git status = untracked
->>>> git add newFile / .
->>>> git status = staged
->>>> git commit -m "2nd commit of the day"
->>>> git status = Your branch is ahead of 'origin/master' by 1 commit
->>>> git push origin main
+   > ssh-keygen -t ed25519 -C "your-email"
+   > Enter (/home/adduser/.ssh/ed25519): git101
+   > cat git101.pub 
+   > eval "$(ssh-agent -s)"
+   > ssh-add ~desktop/git/git101
 
 
 
 
 ############################# Starting a repo locally
 
->>>> mkdir new-repo
->>>> cd new-repo
->>>> git init				# Initiates
->>>> echo "# My New Repo" > README.md
->>>> git add .
->>>> git commit -m "Initial commit"
->>>> git remote add origin https://github.com/<username>/new.git		   # Use HTTPs not SSH link
-	remote means somewhere else and not on local machine
->>>> git push -u origin master
-
------
-
->>>> git clone <url>
->>>> git branch -M main       # Change branch name
->>>> git remote add origin <url>
-
->>>> git remote -v      # To see the origin
-origin  git@github.com:<username>/git101-repo.git (fetch)
-origin  git@github.com:<username>/git101-repo.git (push)
-
-
-
-############################# Git branching
-
->>>> git branch         # Used to see what branch you are on
->>>> git checkout       # Used to switch between branches
->>>> git checkout -b          # Used create and switch to the new branch in one command
-
->>>> decorate flag makes git log display all of the references (e.g., branches, tags, etc) that point to each commit
->>>> oneline tag prints a single commit in a single line as output when the git log command is executed using this option.
-
-   git checkout -b feature-readme-instructions
-   git branch			      # *feature-readme-instructions
-   git log --oneline --decorate
->>>>>> (HEAD -> main, origin/main, feature-readme-instructions)
-
-   git checkout main
-   git branch			      # *main
-   git log --oneline --decorate
->>>>>> (HEAD -> feature-readme-instructions, origin/main, main)
-
-   git checkout feature-readme-instructions
-   git branch			      # *feature-readme-instructions
-   echo new new dev_file.txt
-   git add .
-   git status = on branch feature-readme-instructions, staged
-
-   git commit -m "updated readme"
->   git push origin feature-readme-instructions
-
------
-
-   git checkout main
->>>> changes made on feature-readme-instructions do not reflect here
-
-   git diff feature-readme-instructions
->>>> git diff              # Shows changes
-fetch
-   git checkout feature-readme-instructions
-   git push origin feature-readme-instructions
-
->>>> After setting pull on github
-
-
-
-
-############################# Merging branches
-
->>>> git checkout master
->>>> git branch 			   # *master
->>>> git merge develop
->>>> git status = on master branch, working tree clean
->>>> git push origin master
-
-
-
-
-############################# Merge conflict
-
-   git checkout -b quick-test
-   touch index.html file
-
-   git commit -am "added world"
->>>> -am adds and commits at the same time, only works with modified file but not created files
-
-also add text to index.html file in the main branch in the same line as in quick-test
-   git checkout quick-test
-
->>>> Warning
-
-   git status
-   git commit -am "added there"
-   git checkout quick-test
-
-   git diff main
-   git merge main
-
->>>> Conflict
-Work on conflict in VsCode manually
-   git status
-   git diff
-   git commit -am "updated with main"
-  
-
-
-
-############################# Undoing in Git
-
-   git checkout quick-test
-   echo Some text > README.md
-   git add README.md
-   git status
-
->>>> to _undo_
-   git reset or git reset README.md
-   git status 			# *unstaged
-
-   git add README.md
-   git commit -m "added install step"
-   git status 			# *staged
-
-   git reset HEAD~1 => HEAD~1 commits one step backward
-   git status
-   git diff
-   git log >>>> see log of commits in reverse chronological order  
-
->>>> git log                              # See all commit performed on repo
->>>> git log --patch -1                   # Number of logs to display
->>>> git log -p -1
-
->>>> vim Test.txt
->>>> git add Test.txt                     # Brings file from modified to staged stage
->>>> git status = staged stage
-
->>>> git restore --staged Test.txt        # Brings file from staged to modified stage (unstages)
->>>> git status = unstaged state
->>>> git restore Test.txt                 # Get rid of all the changes
->>>> git status = working tree clean
-
-
-
-
-############################# Deleting remote branch
-
->>>> git checkout main
->>>> git push origin --delete branch-name
-
-
-
-
-############################# Deleting local branch that has been merged
-
->>>> git checkout main
->>>> git branch -d branch-name
-
-
-
-
-############################# Deleting local branch that has not been merged
-
->>>> git checkout main
->>>> git branch -D branch-name
-
-
-
-
-############################# Branching
-
-git branch branch_name		   # Create branch
-git checkout -b branch_name	# Create and switch to the new branch in one command
-
-
-
-
-############################# Merging branches
-
-cd /path/to/your/project
-git fetch origin	                # Ensure repo is up-to-date
-git checkout main
-git merge feature-branch
-
-git add file_with_conflict	      # Resolve any merge conflicts
-git commit
-
-git push origin main		         # Push merge changes to remote repo
-
-
-
-
-############################# Creating local repo
-
-git init 
-git push -u origin master
-
-
-
-
-############################# 
-
-git log
-git log --oneline 	# Oneline summary
+   > mkdir <new-repo> && cd <new-repo>
+   > git init				         
+   > Make changes
+   > git add .
+   > git commit -m "Initial commit"
+   > git branch -M main
+   > git remote add origin <repo-url>
+   > git push -u origin master
 
 
 
 
 ############################# Undoing things with checkout, revert, reset
 
-git checkout <SHA code>		 its readonly. for preview
-git checkout main/master to get to present day
+   git checkout <SHA code>		   # Switch to the specified commit
+   git checkout main			      # Switch back to get to present
 
-git revert <SHA code> 		               # Creates a new commit that undoes the changes introduced by the specified commit.
+   git revert <SHA code> 		               # Creates a new commit that undoes the changes introduced by the specified commit.
+   git revert <SHA-of-the-revert-commit>     # To undo a git revert
 
-git revert <SHA-of-the-revert-commit>     # Undo git revert
+   -----
 
------
+   git reset <SHA code>                   # Moves the HEAD pointer to a specific commit (<SHA>), altering your commit history.
 
-git reset <SHA code>             # Moves the HEAD pointer to a specific commit (<SHA>), altering your commit history.
+   ---- To recover git reset
 
----- To recover reset
+   git add .
+   git commit -m "undo reset"
 
-git add .
-git commit -m "undo reset"
+   ----
 
-----
+   git reset <SHA code> --hard	            # Removes commits, can't be gotten back
 
-git reset <SHA code> --hard	removes commits, can't be gotten back
+   git push --force                
+   git push --force-with-lease               # Safer, checks that no one else has pushed changes to the remote branch since your last pull
 
-Run git push --force                
-   git push --force-with-lease      # Option is safer—it checks that no one else has pushed changes to the remote branch since your last pull
-
-- Use git revert for shared branches (e.g., main) to avoid disrupting history.
-- Use git reset for local branches or when you’re sure no one else relies on the branch, as it rewrites history.
+   - Use git revert for shared branches (e.g., main) to avoid disrupting history.
+   - Use git reset for local branches or when you’re sure no one else relies on the branch, as it rewrites history.
 
 
 
 
 ############################# Setting default branch
 
-Open git
-git config --global init.defaultBranch main
-git config --global --get init.defaultBranch	to verify
+   git config --global init.defaultBranch main
+   git config --global --get init.defaultBranch	to verify
 
 
 
 
-############################# Renaming local branch
+############################# Including file in gitignore that initially wasn't
 
-git checkout master		Switch to the branch you want to rename (if you're not already on it):
-git branch -m main		renaming branch
-git branch 		to verify
-
------ Renaming remote branch
-
-git push origin main
-git push origin --delete master			deleting old branch
-git push --set-upstream origin main		reset upstream branch
+   git rm -rf --cached .		# Clear cache incase changes don't reflect on GitHub, then:
+   git add .
+   git commit -m "message"
+   git push
 
 
-
-git rm -rf --cached .		# Clear cache incase changes don't reflect on GitHub, then:
-git add .
-git commit -m "message"
-git push
-
-
-git log --all --graph		# Graphical view
+   git log --all --graph		# Graphical view
 
 
 
@@ -480,88 +232,96 @@ Step 1. Fork repo
 Step 2. Clone repo 
 
    git clone <repository_url>
-   cd <repository_name>
+-----------------------------------------------------
 
 
 Step 3.  Set the Original Repository as an Upstream Remote
 
    git remote add upstream <original_repository_url>     # Add the original repository as a remote
-   git remote -v     # Verify remotes
+   git remote -v                                         # Verify remotes
+-----------------------------------------------------
 
 
 Step 4. Create a New Branch
 
    git checkout -b <featurebranch_name>
-   git add <file_name>     # For specific files
-   git add .               # To stage all changes
+   git add .                                             # To stage all changes
+-----------------------------------------------------
 
 
-Step 5. Create a Pull Request
+Step 5. Push to the feature branch
 
    git push -u origin <feature_branch_name>              # To set upstream
+-----------------------------------------------------
 
 
 Step 6. Create Pull Request on GitHub
 
    - Go to the original repository on GitHub.
-   - Click Pull Requests > New Pull Request.
-   - Choose your forked repository and the branch you worked on.
-   - Add a title and description for your PR. Include details about the changes and any issue it addresses (e.g., "Fixes #123").
-   - Submit the pull request.
+   - Click Compare & Create Pull Request.
+   - Add a title and description for your PR.
+   - Create pull request.
+-----------------------------------------------------
       
 
 Step 7. Keep Your Fork Updated (Optional)
 
-   git checkout main          # Switch to the main branch
+   git checkout main                                     # Switch to the main branch
 
-   git fetch upstream         # Fetch changes from the original repository
+   git fetch upstream                                    # Fetch changes from the original repository
    git merge upstream/main
 
-   git push origin main       # Push changes to the main branch of the fork   
+   git push origin main                                  # Push changes to the main branch of the fork 
+-----------------------------------------------------
 
 
 Step 8. Delete Local Branch
 
-   git branch -d <feature_branch_name>    # Delete feature branch locally
-   git branch -D <feature_branch_name>    # Delete feature branch locally forcefully regardless of whether it has been merged or not.
+   git branch -d <feature_branch_name>                   # Delete feature branch locally
+   git branch -D <feature_branch_name>                   # Delete feature branch locally forcefully regardless of whether it has been merged or not.
    
-   git fetch --all      # Fetch the latest state from the remote repository
+   git fetch --all                                       # Fetch the latest state from the remote repository
+-----------------------------------------------------
 
 
 Step 9. Delete Remote Branch
 
-   git push origin --delete <feature_branch_name>    # Delete feature branch remotely
+   git push origin --delete <feature_branch_name>       # Delete feature branch remotely
+-----------------------------------------------------
 
 
 Step 10. Delete Fork
 
-   Delete the fork on GitHub. 
+   Delete the fork on GitHub.
+-----------------------------------------------------
 
 
 
 
 ############################# Renaming remote repo -> local
 
-   git remote -v     # To verify
+   git remote -v                       # To verify
 
-   git remote set-url origin https://github.com/username/new-name.git
+   git remote set-url origin <url>
 
-   git remote -v     # To verify change
+   git remote -v                       # To verify change
 
-   git status        # Test connection
+   git status                          # Test connection
+
+-----------------------------------------------------
 
    # From parent directory
-   mv old-folder-name new-folder-name
-   cd new-folder-name
-   git init
+      mv old-folder-name new-folder-name
+      cd new-folder-name
+      git init
 
-############################# 
+-----------------------------------------------------
 
-   git reset --hard HEAD~1    # Undo last commit to github
+   git reset --hard HEAD~1                # Undo last commit to github
 
-   git reset --hard ORIG_HEAD    # Undo "git reset --hard HEAD~1echo "Cloning repository..." 
+   git reset --hard ORIG_HEAD             # Undo "git reset --hard HEAD~1echo "Cloning repository..." 
 
-   git commit --amend    # Rename last commit
+   git commit --amend                     # Rename last commit
 
 
 
@@ -570,18 +330,16 @@ Step 10. Delete Fork
 
    git clone <URL-of-your-forked-repo>
 
-   cd <repository-name>
-
-   git fetch --all                        # Fetch all branches
+   git fetch --all                           # Fetch all branches
    
-   git branch                             # List all local branches
+   git branch                                # List all local branches
 
-   git branch -a                          # List all remote branches
+   git branch -a                             # List all remote branches
 
-   git checkout <feature_branch_name>     # Switch to feature branch
+   git checkout <feature_branch_name>        # Switch to feature branch
 
    git checkout main
    git pull origin main
 
    git checkout <feature_branch_name>
-   git pull origin <feature_branch_name>
+   git pull origin <feature_branch_name>   
