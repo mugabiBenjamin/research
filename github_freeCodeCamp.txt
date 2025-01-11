@@ -317,12 +317,16 @@ Step 10. Delete Fork
 
 -----------------------------------------------------
 
-   git reset --hard HEAD~1                # Undo last commit to github
+   git reset --hard HEAD~1                         # Undo last commit to github
 
-   git reset --hard ORIG_HEAD             # Undo "git reset --hard HEAD~1echo "Cloning repository..." 
+   git reset --hard ORIG_HEAD                      # Undo "git reset --hard HEAD~1echo "Cloning repository..." 
 
-   git commit --amend                     # Rename last commit
+   git commit --amend -m "New commit message"      # Rename last commit to text in qoutes
+   git push -f
 
+   git rebase -i HEAD~2                            # Rename commit mesage 2 commits back
+   ESC > i > type reword > ESC > Ctrl + O > Enter > Ctrl + X   
+   Rewrite the commit message > ESC > Ctrl + O > Enter > Ctrl + X
 
 
 
