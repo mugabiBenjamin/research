@@ -124,18 +124,35 @@ void main () {
 
 ----- For loop
 
-void main () {
-  var numbers = [1, 2, 3, 4, 5];
-  for (var i = 0; i < numbers.length; i++) {
-    print(numbers[i]);
+  void main () {
+    var numbers = [1, 2, 3, 4, 5];
+    for (var i = 0; i < numbers.length; i++) {
+      print(numbers[i]);
+    }
+
+    for (var number in numbers) {
+      print(number);
+    }
   }
 
-  for (var number in numbers) {
-    print(number);
-  }
-
+  -
   numbers.forEach((number) => print(number));
-}
+
+  -
+  void main() {
+  List<int> numbers = [1, 2, 3, 4, 5];
+
+  numbers.where((number) => number % 2 == 0).forEach((number) => print(number));
+  }
+
+  -
+  void main() {
+    List<int> numbers = [1, 2, 3, 4, 5];
+
+    for (var number in numbers.where((number) => number % 2 == 0)) {
+      print(number); // 2, 4
+    }
+  }
 
 ----- While loop
 
