@@ -412,6 +412,8 @@ class Car extends Vehicle {
   double price;
 
   Car(String model, int year, this.price) : super(model, year);
+  // Car(super.model, super.year, this.price);
+
 
   void showOutput() {
     super.showOutput();
