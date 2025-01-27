@@ -1,6 +1,10 @@
 =============================================== Running the file
 
-    dart run main.dart      // In the terminal
+    dart create my_project
+
+    cd my_project
+
+    dart run /bin/my_project.dart      // In the terminal
 
     -
     void main() {
@@ -426,6 +430,55 @@ void main() {
   car1.showOutput();
 }
 
+---
+
+void main() {
+  var noodles = MenuList("Veg noodles", 9.99);
+  var pizza = Pizza(["mushrooms", "peppers"], "Veg volcano", 15.99);
+
+  // print(noodles.format() + '\n'); // Veg noodles --> 9.99
+  // print(pizza.format());
+
+  print(noodles);     // Veg noodles --> 9.99
+  print(pizza);       // Instance of Pizza: Veg volcano, 15.99, [mushrooms, peppers] 
+}
+
+class MenuList {
+  String title;
+  double price;
+
+  MenuList(this.title, this.price);
+
+  String format() {
+    return "$title --> $price";
+  }
+
+  @override
+  String toString() {
+    return format();
+  }
+}
+
+class Pizza extends MenuList {
+  List<String> toppings;
+
+  Pizza(this.toppings, super.title, super.price);
+
+  @override
+  String format() {
+    var formattedToppings = 'Contains:';
+
+    for (final t in toppings) {
+      formattedToppings = '$formattedToppings $t';
+    }
+    return '$title --> \$$price \n $formattedToppings';
+  }
+
+  @override
+  String toString() {
+    return 'Instance of Pizza: $title, $price, $toppings \n';
+  }
+}
 
 
 
@@ -460,3 +513,74 @@ void main() {
   letVerifyTheVale(10);
   letVerifyTheVale(0);
 }
+
+
+
+
+=============================================== Async, Await and Futures
+
+void main() async {
+  // Futures are like Promises in javaScript
+  // can have uncompleted or completed state
+
+  final post = await fetchPost();
+  print(post.title);
+  print(post.userID);
+}
+
+Future<Post> fetchPost() {
+  const delay = Duration(seconds: 5);
+
+  return Future.delayed(delay, () {
+    return Post('My Post', 123);
+  });
+}
+
+class Post {
+  String title;
+  int userID;
+
+  Post(this.title, this.userID);
+}
+
+
+
+
+=============================================== Fetching Data
+
+dart pub add http
+
+import 'dart:convert' as convert;  
+import 'package:http/http.dart' as http;  
+
+void main() async {  
+  try {  
+    final post = await fetchPost();  
+    print(post.title);  
+    print(post.userId);  
+  } catch (e) {  
+    print('Failed to fetch post: $e');  
+  }  
+}  
+
+Future<Post> fetchPost() async {  
+  var uri = Uri.https('jsonplaceholder.typicode.com', '/posts/2');  
+  
+  final response = await http.get(uri);  
+
+  // Check if the response was successful  
+  if (response.statusCode == 200) {  
+    Map<String, dynamic> data = convert.jsonDecode(response.body);  
+    return Post(data['title'], data['userId']);  
+  } else {  
+    throw Exception('Failed to load post');  
+  }  
+}  
+
+class Post {  
+  String title;  
+  int userId;
+
+  Post(this.title, this.userId);  
+}
+
