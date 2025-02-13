@@ -1,161 +1,164 @@
 ```bash
 # ADB (Android Debug Bridge)
 
+########################### Installation
+
+# Install ADB on Linux
 sudo apt install adb
 
 Enable USB Debugging on Your Phone:
-- Go to Settings > About phone > Tap Build number 7 times to enable Developer Mode.
-- Go to Developer Options and enable USB Debugging.
------------------------------------------------------------
+1. Go to Settings > About phone.
+2. Tap Build number 7 times to enable Developer Mode.
+3. Go to Developer Options and enable USB Debugging.
 
 
 
 
-adb devices -> to verify connection
+########################### Verifcation
 
->>> Output
+# List connected devices
+adb devices  
+
+# Output
 List of devices attached
 0123456789ABCDEF  device
 
-States:
-device -> Connected and ready for commands.
-unauthorized -> Device not authorized. Approve the connection on the phone.
-offline ->  Device not properly connected.
------------------------------------------------------------
 
-
-
-adb shell -> to navigate the phone's file system
-
-To copy from phone to PC:
-Copies a file or directory from your Android device to your computer.
-adb pull /sdcard/path/to/file /path/on/pc
-
-To copy from PC to phone:
-Copies a file or directory from your Computer device to your android device.
-adb push /path/on/pc /sdcard/path/on/phone
------------------------------------------------------------
-
-
-
-adb reboot
-Restarts the connected device.
-
-adb reboot bootloader
-Boots into the bootloader (useful for flashing).
-
-adb reboot recovery
-Boots into recovery mode.
-
-adb shell
-Opens a shell on the device for executing commands.
-adb shell <command>
-adb shell ls /sdcard
-
-Exit Shell:
-Press Ctrl+D or type exit.
------------------------------------------------------------
-
-
-
-Install an APK:
-adb install <apk-file-path>
-adb install /path/to/app.apk
-
-Uninstall an App:
-adb uninstall <package-name>
-adb uninstall com.example.app
------------------------------------------------------------
+# Device States:
+- `device` → Connected and ready for commands.
+- `unauthorized` → Approve the connection on the phone.
+- `offline` → Device not properly connected.
 
 
 
 
-Capture a Bug Report:
-adb bugreport
-Saves a detailed bug report for debugging.
+########################### Device Navigation & File Transfer
 
-Take a Screenshot:
-adb shell screencap /sdcard/screenshot.png
-adb pull /sdcard/screenshot.png /path/on/pc
+# Open terminal on the device
+adb shell  
 
-Record the Screen:
-adb shell screenrecord /sdcard/screenrecord.mp4
-adb pull /sdcard/screenrecord.mp4 /path/on/pc
------------------------------------------------------------
+# List files in /sdcard
+adb shell ls /sdcard  
 
+# Copy file from phone to PC
+adb pull /sdcard/path/to/file /path/on/pc  
 
-
-Forward a Port:
-adb forward <local-port> <remote-port>
-adb forward tcp:8080 tcp:8080
-
-Reverse Port Forwarding:
-adb reverse <remote-port> <local-port>
-adb reverse tcp:3000 tcp:3000
------------------------------------------------------------
+# Copy file from PC to phone
+adb push /path/on/pc /sdcard/path/on/phone  
 
 
 
-Backup Device Data:
-adb backup -apk -shared -all -f <backup-file-path>
-adb backup -apk -shared -all -f backup.ab
 
-Restore Device Data:
-adb restore <backup-file-path>
-adb restore backup.ab
------------------------------------------------------------
+########################### Reboot commands
 
+# Restart device
+adb reboot  
 
+# Boot into bootloader mode
+adb reboot bootloader  
 
-## Wireless ADB
-Enable Wireless Debugging: If your device runs Android 11 or later:
-
-Go to Developer Options > Wireless Debugging.
-Toggle Wireless Debugging to ON.
-Set Up Wireless ADB: Run the following commands:
-adb tcpip 5555
-
-Find the Device's IP Address: On your Android device:
-Go to Settings > Wi-Fi.
-Tap on the connected network to view its IP address (e.g., 192.168.1.100).
-Connect to the Device Wirelessly: Run the following command, replacing <IP_ADDRESS> with your device's IP:
-adb connect <IP_ADDRESS>:5555
-adb connect 192.168.1.100:5555
-
-Verify the Connection: Run:
-adb devices
-You should see your device listed with its IP address.
-
-Unplug the USB Cable: Once the wireless connection is established, you can unplug the USB cable.
------------------------------------------------------------
+# Boot into recovery mode
+adb reboot recovery  
 
 
 
-Device Not Recognized:
-Ensure both devices are on the same Wi-Fi network.
-Restart ADB:
-adb kill-server
+
+########################### App management
+
+# Install an APK
+adb install /path/to/app.apk  
+
+# Uninstall an app
+adb uninstall com.example.app  
+
+
+
+
+########################### Debugging & screen capture
+
+# Capture a bug report
+adb bugreport  
+
+# Take a screenshot
+adb shell screencap /sdcard/screenshot.png  
+
+# Transfer screenshot to PC
+adb pull /sdcard/screenshot.png /path/on/pc  
+
+# Record screen
+adb shell screenrecord /sdcard/screenrecord.mp4 
+
+# Transfer screen recording to PC
+adb pull /sdcard/screenrecord.mp4 /path/on/pc  
+
+
+
+
+########################### Port forwarding
+
+# Forward a local port to a remote port
+adb forward tcp:8080 tcp:8080  
+
+# Reverse forward a remote port to local
+adb reverse tcp:3000 tcp:3000  
+
+
+
+
+########################### Backup & restore
+
+# Backup device data
+adb backup -apk -shared -all -f backup.ab  
+
+# Restore backup
+adb restore backup.ab  
+
+
+
+
+########################### Wireless ADB (Without USB)
+
+1. Enable Wireless Debugging (Android 11+)
+2. Go to Developer Options > Wireless Debugging.
+3. Toggle Wireless Debugging ON.
+
+# Set device to listen for TCP/IP connections
+adb tcpip 5555  
+
+Find Device IP
+1. Go to Settings > Wi-Fi.
+2. Tap the connected network to view IP (e.g., 192.168.1.100).
+
+# Replace <IP_ADDRESS> with actual IP
+adb connect <IP_ADDRESS>:5555  
+
+# Verify connection
+adb devices 
+
+# Once connected, you can unplug the USB cable.
+
+# Restart ADB
+adb kill-server  
 adb start-server
 
-Reconnect with:
-adb connect <IP_ADDRESS>:5555
------------------------------------------------------------
+# Reconnect to device
+adb connect <IP_ADDRESS>:5555  
+
+# Ensure both devices are on the same Wi-Fi network.
 
 
 
-Advanced: Direct Wireless Debugging (Without USB)
-If your device supports QR Code Pairing (Android 11+):
 
-Go to Developer Options > Wireless Debugging.
-Tap Pair Device with QR Code or Pair with Code.
-On your computer, open the command line and run:
-adb pair <IP_ADDRESS>:<PORT>
+########################### Pairing Without USB (QR Code / Pairing Code)
 
-Enter the pairing code shown on the device.
------------------------------------------------------------
+1. Go to Developer Options > Wireless Debugging
+2. Tap Pair Device with QR Code or Pair with Code.
+3. On your computer, run:
 
+# Enter pairing code from the device
+adb pair <IP_ADDRESS>:<PORT>  
 
-To disconnect:
-adb disconnect <IP_ADDRESS>:5555
+# Disconnect from device
+adb disconnect <IP_ADDRESS>:5555  
 
 ```
