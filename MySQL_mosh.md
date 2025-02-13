@@ -1,3 +1,4 @@
+```sql
 CREATE DATABASE sql_hr;
 
 CREATE DATABASE sql_inventory;
@@ -960,3 +961,4 @@ SELECT REPLACE('Kindergarten', 'garten', 'garDen');
 SELECT NOW(), CURDATE(), CURTIME();
 SELECT YEAR(NOW()), MONTH(NOW()), DAY(NOW()), HOUR(NOW()), MINUTE(NOW()), SECOND(NOW());
 SELECT MONTHNAME(NOW()), DAYNAME(NOW())
+```

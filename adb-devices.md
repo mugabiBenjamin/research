@@ -1,3 +1,4 @@
+```bash
 # ADB (Android Debug Bridge)
 
 sudo apt install adb
@@ -157,4 +158,4 @@ Enter the pairing code shown on the device.
 To disconnect:
 adb disconnect <IP_ADDRESS>:5555
 
-
+```

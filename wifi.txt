@@ -1,5 +1,0 @@
-nmcli c show --active		# show active wifi
-
-nmcli c				# show all connected wifis
-
-sudo nmcli -s -g 802-11-WIRELESS-SECURITY.PSK connection show "VC"	# show wifi password of wifi

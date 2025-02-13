@@ -1,3 +1,4 @@
+```sql
 ####################################### CREATE a table
 
     CREATE TABLE employee (
@@ -1208,3 +1209,4 @@ SELECT * FROM trigger_test;
     Click on the Import tab.
     Choose the previously exported .sql file and click Go.
 
+```

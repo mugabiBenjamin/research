@@ -1,4 +1,5 @@
-=============================================== Running the file
+```dart
+////////////////////////////////////// Running the file
 
     dart create my_project
 
@@ -16,7 +17,7 @@
 
 
 
-=============================================== Receiving input from the user
+////////////////////////////////////// Receiving input from the user
 
     import 'dart:io';
 
@@ -29,7 +30,7 @@
 
 
 
-=============================================== Data types
+////////////////////////////////////// Data types
 
     int
     double
@@ -48,7 +49,7 @@
 
 
 
-=============================================== Strings
+////////////////////////////////////// Strings
 
     void main() {
         var s = r'Hello, \n World!';    // r is used to create a raw string
@@ -74,7 +75,7 @@
 
 
 
-=============================================== Type conversion
+////////////////////////////////////// Type conversion
 
 ------ String to integer
 
@@ -109,7 +110,7 @@
 
 
 
-=============================================== Constants
+////////////////////////////////////// Constants
 
 void main () {
   const constNum = 1;
@@ -124,7 +125,7 @@ void main () {
 
 
 
-=============================================== Loops
+////////////////////////////////////// Loops
 
 ----- For loop
 
@@ -177,7 +178,7 @@ void main () {
 
 
 
-=============================================== Break & Continue
+////////////////////////////////////// Break & Continue
 
 void main () {
   for (var i = 0; i <= 10; i++) {
@@ -194,7 +195,7 @@ void main () {
 
 
 
-=============================================== Collections
+////////////////////////////////////// Collections
 
 ----- Lists
 
@@ -275,7 +276,7 @@ void main() {
 
 
 
-=============================================== Functions
+////////////////////////////////////// Functions
 
 void main() {
   showMessage(square(2));     // 4
@@ -359,7 +360,7 @@ dynamic sum(var num1, [var num2]) => num1 + (num2 ?? 0);
 
 
 
-=============================================== Classes
+////////////////////////////////////// Classes
 
 class Person {
   String name;
@@ -398,7 +399,7 @@ void main() {
 
 
 
-=============================================== Inheritance
+////////////////////////////////////// Inheritance
 
 class Vehicle {
   String model;
@@ -483,7 +484,7 @@ class Pizza extends MenuList {
 
 
 
-=============================================== Exception handling
+////////////////////////////////////// Exception handling
 
 int mustVreaterThanZero(int val) {
   if (val <= 0) {
@@ -517,7 +518,7 @@ void main() {
 
 
 
-=============================================== Async, Await and Futures
+////////////////////////////////////// Async, Await and Futures
 
 void main() async {
   // Futures are like Promises in javaScript
@@ -546,7 +547,7 @@ class Post {
 
 
 
-=============================================== Fetching Data
+////////////////////////////////////// Fetching Data
 
 dart pub add http
 
@@ -584,3 +585,4 @@ class Post {
   Post(this.title, this.userId);  
 }
 
+```

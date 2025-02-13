@@ -1,3 +1,4 @@
+```bash
 #################################### Working with directories
 
    man -> manual
@@ -237,3 +238,4 @@ adduser@DESKTOP-UQ666I0:/$ ls -l
 #################################### Pipes
 
 
+```

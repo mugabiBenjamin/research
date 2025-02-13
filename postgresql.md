@@ -1,3 +1,5 @@
+```sql
+
 --- Switch to the PostgreSQL User: 
 sudo -i -u postgres
 
@@ -911,3 +913,4 @@ DROP DATABASE <dbname>;
     WHERE car.* IS NULL;
 
 -------------------------------------------------------
+```

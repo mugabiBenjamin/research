@@ -1,4 +1,5 @@
-Switch cmd to ease of access 
+```bash
+# Switch cmd to ease of access 
 
 c:
 cd windows/system32
@@ -44,3 +45,4 @@ Settings > Accounts > Sign-in options > Password > Change
 
 net localgroup administrators temp /delete	-- remove admin rights
 net user temp /delete	-- delete user account
+```

@@ -1,3 +1,4 @@
+```php
 ####################################### Starting a local web server
 
 Type the following in cmd
@@ -1319,26 +1320,6 @@ $buyProduct->pay($paymentType);
 
 
 
-####################################### Connecting to a database
-
-
-
-
-####################################### Querying a database
-
-
-
-
-####################################### 
-
-
-
-
-####################################### 
-
-
-
-
 ####################################### OOP Traits
 
 <?php
@@ -1390,3 +1371,4 @@ $buyProduct->pay($paymentType);
     $human1 = new Human();
     echo $human1->speaking() . "<br>";
     echo $human1->eating();
+```
