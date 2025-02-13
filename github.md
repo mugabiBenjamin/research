@@ -34,6 +34,9 @@ git commit -m "Commit message here"
 git push
 # First push in a local repo use git push -u origin main
 
+# Stages and commits existing tracked files (does apply after adding a file, use `git add` first)
+git commit -am "Commit message"
+
 
 
 
@@ -50,6 +53,7 @@ git reset <SHA-code>
 
 # Forcefully reset to a previous commit, losing all changes after that commit
 git reset --hard <SHA-code>
+git push --force
 
 
 
@@ -361,7 +365,7 @@ git reset --hard ORIG_HEAD
 
 # Rename commit mesage 2 commits back
 git rebase -i HEAD~2                            
-ESC > i > type reword > ESC > Ctrl + O > Enter > Ctrl + X   
+ESC > i > type `reword` > ESC > Ctrl + O > Enter > Ctrl + X   
 Rewrite the commit message > ESC > Ctrl + O > Enter > Ctrl + X
 
 
@@ -388,5 +392,16 @@ git pull origin main
 
 git checkout <feature_branch_name>
 git pull origin <feature_branch_name>
+
+
+
+
+############################# Setting new remote urls
+
+# Change origin url
+git remote set-url origin <new-origin-url>
+
+# Chnage upstream url
+git remote set-url upstream <new-upstream-url>
 
 ```
