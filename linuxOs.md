@@ -1,241 +1,168 @@
 ```bash
-#################################### Working with directories
-
-   man -> manual
-
-man gives you information about whatever comman you are trying to run
------------------------------------------------------------
-
-   pwd -> print name of current/working directory
------------------------------------------------------------
-
-   cd -> change directory	{has no manual}
-
-relative path -> an assumed path ie 
-absolute path -> full location to a file or directory ie 
-cd takes you back to home directory no matter where you are
-cd - toggles between paths
------------------------------------------------------------
-
-
-   ls -> list directory contents
-
-linux uses a period(.) for hidden files
-
-   /mnt/c/users/admin/desktop$ ls Testcp/
-   /mnt/c/users/admin$ ls desktop/test
-   /mnt/c/users$ ls admin/desktop/test
-
-   ls -a => shows all files whether hidden or not
-   ls -l => shows files in long list format
-
-running more than one flag -> ls -la
-
-   ls -h => shows content in human readble format
-   ls -lah => shows size of files and folders in human readable format {the sizeof the files}
------------------------------------------------------------
-
-
-   mkdir -> make directories
-
-If you try to create the same directory in the same location; 
---- mkdir: cannot create directory ‘Test’: File exists
-
-mkdir Test
-   cd Test > mkdir Test2
-
-directoy tree
-   mkdir -p Linux/Ubuntu/Benjn
------------------------------------------------------------
-
-   rmdir -> remove empty directories
-
-deleting a directory with contents
-   rmdir -p linux/ubuntu/benjn
------------------------------------------------------------
-
-
-
-
-#################################### Working with directories Working with files
-
-- files are not case sensitive unlike in windows
-- directories are considered as files
-- linuxOs doesn't determine a file type by a file extention
-
-   file —> determine file type
-
-   file 'Mosa money pot.png'
-Mosa money pot.png: PNG image data, 716 x 920, 8-bit/color RGBA, non-interlaced
-
-   file Mosa.ai
-Mosa.ai: PDF document, version 1.6, 1 pages
-
-   file mosa.jpg
-mosa.jpg: JPEG image data, JFIF standard 1.02, resolution (DPI), density 300x300, segment length 16, baseline, precision 8, 1181x1181, components 3
------------------------------------------------------------
-
-   touch -> create empty files
-
-   touch file.txt -> creates a new txt file called file1
-
-creating multiple files
-   touch file2.txt file3.txt
------------------------------------------------------------
-
-   rm -> remove files or directories
-
-   rm file1.txt
-
-   rm -i => interactive mode, prompt before every removal
-   rm -i file2.txt file3.txt
-
-  rm -r => remove directories and their contents recursively
-  rm -f => ignore nonexistent files and arguments, never prompt
-
-removing a directory with rm
-  rm -rf Test
------------------------------------------------------------
-
-  cp -> copy files and directories
-
-copying file in the same directory
-   cp file1.txt file1cp.txt
-
-copying file to a specific directory
-   cp file1.txt /c/users/admin/desktop/		*didn't work
-
-copying a directory into the same directory
-   cp -r Test Testcp
-----------------------------------------------------------
-
-   mv -> move (rename) files
-
-using move command to rename files
-   mv file1.txt file2.txt
-
-moving file to another directory using absolute path
-moving and renaming at the same time
-
-  /mnt/c/Users/Admin/Desktop$ mv file2.txt test/file3.txt
-  ls -l test/		{to display}
-
-renaming folder with mv
-  mv testcp testpc
------------------------------------------------------------
-
-
-
-
-#################################### Working with file content
-
-   head -> output the first part of files
-
-Pulls the first 10 lines
-   /mnt/c/Users/Admin/Desktop/javascript$ head freeCodeCamp_javascript.txt
-To test whether js runs on your machine, create html file --
-<script>
-    console.log("Hello world");
-</script>
-
-In the browser, press Ctrl + Shift + I or More tools > Developer tools
-
-
-------------------------------------------- Data types and Variables
-
-   head -5 freeCodeCamp_javascript.txt => To shows the first 5 lines of a file
-
-To test whether js runs on your machine, create html file --
-<script>
-    console.log("Hello world");
-</script>
------------------------------------------------------------
-
-   tail -> output the last part of files (10 lines by default)
-
-   tail freeCodeCamp_javascript.txt
-------------------------------------------- Import a default export
-
-    // default export don't {}
-    import subtract from "math_functions"
-
-    subtract(7, 4);
-
-------------------------------------------- END
--------------------------------------------
--------------------------------------------
------------------------------------------------------------
-
-   cat -> concatenate files and print on the standard output
-prints thw whole file content
-
-  cat new.txt
------------------------------------------------------------
-
-   echo -> display a line of text
-
-Also creates a new file and adds content to it
-   /mnt/c/Users/Admin/Desktop$ echo A file was created with echo command and this text was added simultaneously > new.txt
------------------------------------------------------------
-
-   echo The > text1.txt
-   echo big > text2.txt
-   echo apple > text3.txt
-
-   cat text1.txt text2.txt text3.txt
-The
-big
-apple
-
-To ouput the content in a file instead of the terminal
-   cat test1.txt test2.txt test3.txt > all.txt
-
-To create a file add content to it
-   cat > file1.txt
- _ then type some text
-after press Ctrl + D to save
-
-copying a file and naming it something else
-   cat file1.txt > file2.txt
------------------------------------------------------------
-
-   more -> file perusal filter for crt viewing
-shows content of a file page by page
------------------------------------------------------------
-
-   less -> opposite of more
------------------------------------------------------------
-
-
-
-
-/////////////////// Linux File Structure
-
-adduser@DESKTOP-UQ666I0:~$ cd
-adduser@DESKTOP-UQ666I0:~$ cd /
-adduser@DESKTOP-UQ666I0:/$ pwd
-/
-adduser@DESKTOP-UQ666I0:/$ ls -l
-
-
-
-
-/////////////////// System Information
-
-   uptime - Tell how long the system has been running.
-   free - Display amount of free and used memory in the system
-   ps - report a snapshot of the current processes
-   df - report file system disk space usage
-
-
-
-
-####################################  Networking
-
-
-
-
-#################################### Pipes
-
+#################################### Working with Directories  
+
+# Shows help documentation for a specified command.  
+man – Displays the manual for a command. 
+# Displays the manual for the 'ls' command.  
+- Example: `man ls` 
+
+# Outputs the path of the current directory.  
+pwd – Prints the current working directory. 
+
+# Changes the current directory to a specified path.  
+cd – Changes directory. 
+# Navigates to the user's home directory.  
+- `cd` (without arguments) returns to the home directory. 
+# Switches back to the previous directory.  
+- `cd -` toggles between the last two directories. 
+# Can use full paths or paths relative to the current directory.  
+- Supports absolute and relative paths. 
+
+# Displays files and directories within the current directory.  
+ls – Lists directory contents. 
+# Lists all files, including those starting with a dot.  
+- `ls -a` – Show all files, including hidden ones. 
+# Provides detailed information about each file.  
+- `ls -l` – Long listing format. 
+# Displays file sizes in a human-readable format.  
+- `ls -h` – Human-readable sizes. 
+# Shows all files with detailed information and readable sizes.  
+- `ls -lah` – Combines all options above. 
+
+# Creates a new directory or directories.  
+mkdir – Creates directories. 
+# Creates a directory named 'Test'.  
+- `mkdir Test` 
+# Creates a nested directory structure.  
+- `mkdir -p Linux/Ubuntu/Benjn` (creates nested directories). 
+
+# Deletes empty directories.  
+rmdir – Removes empty directories. 
+# Removes directories and their parents if they are empty.  
+- `rmdir -p linux/ubuntu/benjn` (removes multiple levels). 
+
+For directories with content, use:  
+# Deletes a directory and all its contents.  
+- `rm -r directory_name` (recursively removes contents). 
+# Forcefully deletes a directory and its contents without confirmation.  
+- `rm -rf directory_name` (forces deletion without prompts). 
+
+
+
+
+#################################### Working with Files  
+
+# File names must match exactly, including case.  
+- Files are case-sensitive (unlike Windows). 
+# Directories are a type of file in Linux.  
+- Directories are treated as files. 
+# File types are identified by their content, not their names.  
+- Linux does not determine file type based on extensions. 
+
+# Displays the type of a specified file.  
+file – Identifies file type. 
+# Shows the file type of 'image.png'.  
+Example: `file image.png` 
+
+# Creates new empty files or updates timestamps of existing files.  
+touch – Creates empty files. 
+# Creates an empty file named 'file.txt'.  
+- `touch file.txt` 
+# Creates multiple empty files.  
+- `touch file1.txt file2.txt` (creates multiple files). 
+
+# Deletes specified files or directories.  
+rm – Removes files and directories. 
+# Removes 'file.txt'.  
+- `rm file.txt` – Deletes a file. 
+# Prompts for confirmation before deleting.  
+- `rm -i file.txt` – Interactive mode (asks for confirmation). 
+# Deletes a directory and its contents without confirmation.  
+- `rm -rf directory_name` – Forcefully deletes directories and files. 
+
+# Duplicates files or directories.  
+cp – Copies files and directories. 
+# Copies 'file1.txt' to 'file2.txt'.  
+- `cp file1.txt file2.txt` (copies a file). 
+# Copies a directory and its contents.  
+- `cp -r directory_name directory_copy` (copies a directory). 
+
+# Moves files or directories to a new location or renames them.  
+mv – Moves or renames files. 
+# Renames 'file1.txt' to 'file2.txt'.  
+- `mv file1.txt file2.txt` (renames a file). 
+# Moves 'file.txt' to the specified destination.  
+- `mv file.txt /destination/` (moves a file). 
+# Renames a directory.  
+- `mv directory_old directory_new` (renames a directory). 
+
+
+
+
+#################################### Viewing File Contents  
+
+# Shows the beginning of a file.  
+head – Displays the first lines of a file. 
+# Displays the first 10 lines of 'filename.txt'.  
+- `head filename.txt` (shows first 10 lines by default). 
+# Displays the first 5 lines.  
+- `head -5 filename.txt` (shows first 5 lines). 
+
+# Shows the end of a file.  
+tail – Displays the last lines of a file. 
+# Displays the last 10 lines of 'filename.txt'.  
+- `tail filename.txt` (shows last 10 lines by default). 
+# Displays the last 5 lines.  
+- `tail -5 filename.txt` (shows last 5 lines). 
+
+# Outputs the contents of one or more files.  
+cat – Concatenates and displays file contents. 
+# Displays the entire content of 'file.txt'.  
+- `cat file.txt` (prints the whole file). 
+# Displays contents of both files sequentially.  
+- `cat file1.txt file2.txt` (prints multiple files). 
+# Copies content from 'file1.txt' to 'file2.txt'.  
+- `cat file1.txt > file2.txt` (copies content to another file). 
+
+# Outputs text to the terminal or into a file.  
+echo – Displays text and writes to a file. 
+# Writes "Hello World" into 'file.txt'.  
+- `echo "Hello World" > file.txt` (creates and writes text). 
+# Appends "Text" to 'file.txt'.  
+- `echo "Text" >> file.txt` (appends text). 
+
+# Allows viewing large files in segments.  
+more / less – View file contents page by page. 
+# Displays 'file.txt' one screen at a time.  
+- `more file.txt` 
+# Displays 'file.txt' with backward scrolling capability.  
+- `less file.txt` (allows scrolling back). 
+
+
+
+
+#################################### Linux File System Structure  
+
+Navigate the root directory:  
+# Changes to the root directory.  
+cd / 
+# Displays '/' (the root directory).  
+pwd   
+# Lists files and directories in the root.  
+ls -l 
+
+
+
+
+#################################### System Information  
+
+# Displays how long the system has been running.  
+- `uptime` – Shows system runtime. 
+# Shows current memory usage statistics.  
+- `free` – Displays memory usage. 
+# Lists currently running processes.  
+- `ps` – Shows running processes. 
+# Shows disk space usage for file systems.
+- `df` – Displays disk usage. 
 
 ```
