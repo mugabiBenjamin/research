@@ -346,4 +346,28 @@ Step 10. Delete Fork
    git pull origin main
 
    git checkout <feature_branch_name>
-   git pull origin <feature_branch_name>   
+   git pull origin <feature_branch_name>
+
+
+
+############################# Different usecases of git add
+
+>>> git add .
+
+   - Adds tracks modified, deleted, new, hidden and subdirectories
+
+>>> git add --all
+
+   - Adds tracks modified, deleted, new, hidden and subdirectories
+
+>>> git add <filename>
+
+   - Adds tracks specific modified, deleted, new, hidden and not subdirectories
+
+>>> git add -u
+
+   - Adds tracks modified, subdirectories, new, hidden and not deleted
+
+>>> git add *
+
+   - Adds tracks modified, deleted, new and not hidden and not subdirectories
