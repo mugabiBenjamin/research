@@ -165,4 +165,69 @@ ls -l
 # Shows disk space usage for file systems.
 - `df` – Displays disk usage. 
 
+
+
+
+#################################### 
+
+# Modifies the access permissions of files or directories.  
+chmod – Changes file permissions. 
+# Sets the permissions of 'script.sh' to read, write, and execute for the owner, and read and execute for others.  
+- Example: `chmod 755 script.sh` 
+
+# Changes the owner and/or group of a file or directory.  
+chown – Changes file owner and group. 
+# Changes the owner of 'file.txt' to 'user' and the group to 'group'.  
+- Example: `chown user:group file.txt` 
+
+# Finds specific text in files or output.  
+grep – Searches for a pattern in files. 
+# Searches 'file.txt' for 'search_term'.  
+- Example: `grep "search_term" file.txt` 
+
+# Locates files and directories based on specified criteria.  
+find – Searches for files in a directory hierarchy. 
+# Finds all .txt files in the specified path.  
+- Example: `find /path/to/search -name "*.txt"` 
+
+# Combines multiple files or directories into a tarball for easier distribution.  
+tar – Archives files into a single file. 
+# Creates a tar file 'archive.tar' containing the specified directory.  
+- Example: `tar -cvf archive.tar /path/to/directory` 
+
+# Retrieves files from the internet via the command line.  
+wget – Downloads files from the web. 
+# Downloads 'file.zip' from the specified URL.  
+- Example: `wget http://example.com/file.zip` 
+
+# Allows secure remote access to another computer over a network.  
+ssh – Secure shell for logging into a remote machine. 
+# Connects to 'hostname' as 'user' via SSH.  
+- Example: `ssh user@hostname` 
+
+# Lists active processes in the system.  
+ps – Displays currently running processes. 
+# Shows detailed information about all running processes.  
+- Example: `ps aux` 
+
+# Terminates or sends signals to processes based on their PID.  
+kill – Sends a signal to a process. 
+# Sends the default TERM signal to the process with the specified PID.  
+- Example: `kill PID` 
+
+# Allows users to run commands with elevated permissions.  
+sudo – Executes a command with superuser privileges. 
+# Runs the command to update package lists with administrative privileges.  
+- Example: `sudo apt-get update` 
+
+# Shows how much disk space is used and available on the mounted file systems.  
+df – Displays disk space usage. 
+# Shows disk usage in a human-readable format.  
+- Example: `df -h` 
+
+# Reports the amount of disk space used by files or directories.  
+du – Displays disk usage of files and directories. 
+# Shows the total disk usage of the specified directory in a human-readable format.
+- Example: `du -sh /path/to/directory` 
+
 ```
