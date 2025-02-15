@@ -212,7 +212,7 @@ git add .
 git commit -m "Feature added"
 
 # 5. Push to the feature branch
-git push -u origin feature/<feature_branch_name>
+git push origin feature/<feature_branch_name>
 
 # 6. Create pull request from original repo
 
