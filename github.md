@@ -42,6 +42,8 @@ git commit -am "Commit message"
 # Works if you haven't push changes to remote repo
 git commit --amend --no-edit
 
+# Switches to the previous branch you were on.
+git checkout -
 
 
 
