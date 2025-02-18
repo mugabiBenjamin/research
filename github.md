@@ -478,4 +478,42 @@ git merge upstream/main
 
 # 10. Push the updated main branch to your forked repository  
 git push origin main
+
+
+
+
+############################# Git Stash Commands  
+
+# Stash your current changes (modified tracked files and the index)  
+git stash  
+
+# Stash changes with a message for later reference  
+git stash push -m "Your message here"  
+
+# List all stashed changes along with their identifiers  
+git stash list  
+
+# Apply the most recent stash to your working directory  
+git stash apply  
+
+# Apply a specific stash by referencing its index (e.g., second stash)  
+git stash apply stash@{1}  
+
+# Remove a specific stash from the list (e.g., remove the first stash)  
+git stash drop stash@{0}  
+
+# Clear all stashes from your stash list  
+git stash clear  
+
+# Apply the most recent stash and remove it from the stash list  
+git stash pop  
+
+# Stash untracked files in addition to tracked files  
+git stash push -u  
+
+# Stash all files, including ignored files  
+git stash push -a  
+
+# Create a new branch from the latest stash and apply it  
+git stash branch new-branch-name
 ```
