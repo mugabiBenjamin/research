@@ -404,4 +404,78 @@ git remote set-url origin <new-origin-url>
 # Chnage upstream url
 git remote set-url upstream <new-upstream-url>
 
+
+
+
+############################# Change text editor that git uses for commits
+
+# Sets the default text editor for git to VS Code.
+git config --global core.editor "code --wait"
+
+# Open your global git configuration file in the default text editor
+git config --global --edit 
+
+
+
+
+############################# Pulling changes from repo
+
+# 1. 
+git pull --rebase
+
+# 2. If you get a merge conflict
+git rebase --abort
+
+# 3. 
+git pull
+
+
+
+
+############################# git pull vs git pull --rebase
+
+# If Your Local Branch is Up to Date or Has No Conflicts: 
+# If you haven't made any changes to your local branch since you last pulled
+git pull --rebase
+
+# If You Have Uncommitted Changes or Want Merge Context:
+# If your local branch has changes or you want to see a clear merge history
+git pull
+
+
+
+
+############################# Creating, Rebasing, and Syncing a Feature Branch in Git
+
+# 1. Create a new branch for your feature or changes  
+git checkout -b my-feature-branch  
+
+# 2. Staging and committing changes 
+git add .  
+git commit -m "Describe your changes here"  
+
+# 3. Fetch the latest changes from the upstream repository  
+git fetch upstream  
+
+# 4. Rebase your current branch on top of the latest changes from upstream/main  
+git rebase upstream/main  
+
+# 5. If you encounter conflicts during the rebase process, stage the resolved files  
+git add <file-with-conflicts>  
+
+# 6. Continue the rebase process after resolving conflicts  
+git rebase --continue  
+
+# 7. Push the rebased changes to your forked repository, forcing the update  
+git push origin my-feature-branch --force  
+
+# 8. Switch back to the main branch  
+git checkout main  
+
+# 9. Fetching and merging changes into your local main branch
+git fetch upstream  
+git merge upstream/main  
+
+# 10. Push the updated main branch to your forked repository  
+git push origin main
 ```
