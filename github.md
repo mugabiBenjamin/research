@@ -412,6 +412,12 @@ git remote set-url upstream <new-upstream-url>
 # Sets the default text editor for git to VS Code.
 git config --global core.editor "code --wait"
 
+# Sets the default text editor for git to vim
+git config --global core.editor "vim"
+
+# Retrieve the currently configured default text editor for git
+git config --global --get core.editor
+
 # Open your global git configuration file in the default text editor
 git config --global --edit 
 
