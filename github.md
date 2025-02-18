@@ -37,6 +37,11 @@ git push
 # Stages and commits existing tracked files (does apply after adding a file, use `git add` first)
 git commit -am "Commit message"
 
+# Modifies the most recent commit in your git repository without changing the commit message
+# Use when you have made changes but forgot to include them in your last commit.
+# Works if you haven't push changes to remote repo
+git commit --amend --no-edit
+
 
 
 
