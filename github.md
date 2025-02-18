@@ -418,17 +418,17 @@ git config --global --edit
 
 
 
-############################# Pulling changes from repo
+############################# Pulling Changes from the Repository  
 
-# 1. 
-git pull --rebase
+# 1. Pull changes from the remote repository, rebasing any local commits on top of the updated code  
+git pull --rebase  
 
-# 2. If you get a merge conflict
-git rebase --abort
+# 2. If you encounter a merge conflict during the rebase process, abort the rebase.  
+# This will return your branch to the state before the rebase was initiated.  
+git rebase --abort  
 
-# 3. 
+# 3. Alternatively, if rebasing is not your preferred method or you want to incorporate changes without rebasing.
 git pull
-
 
 
 
