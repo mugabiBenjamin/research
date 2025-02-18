@@ -40,7 +40,9 @@ git commit -am "Commit message"
 # Modifies the most recent commit in your git repository without changing the commit message
 # Use when you have made changes but forgot to include them in your last commit.
 # Works if you haven't push changes to remote repo
+git add .
 git commit --amend --no-edit
+git push --force
 
 # Switches to the previous branch you were on.
 git checkout -
@@ -529,4 +531,25 @@ git stash push -a
 
 # Create a new branch from the latest stash and apply it  
 git stash branch new-branch-name
+
+
+
+
+############################# Git Squash
+
+# Replace n with the number of commits you want to squash.This command will open an interactive editor showing the last n commits.
+git rebase -i HEAD~n
+
+# In the editor, you will see a list of commits. Change the word pick to `squash` (or simply s) for the commits you want to squash into the one
+
+# After saving and closing the editor, another editor will open, prompting you to edit the commit messages.
+
+# --------------- Squah during merge
+
+git merge --squash <branch_name>
+
+# Squashes commits when merging a feature branch into the main branch,
+git commit -m "Your squashed commit message"
+
+# If you're working with a publicly shared branch, like main or develop, be cautious about squashing, as it affects everyone’s history.
 ```
