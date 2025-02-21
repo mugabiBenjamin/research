@@ -552,4 +552,28 @@ git merge --squash <branch_name>
 git commit -m "Your squashed commit message"
 
 # If you're working with a publicly shared branch, like main or develop, be cautious about squashing, as it affects everyone’s history.
+
+
+
+
+############################# Git worktree
+
+# Creating a new worktree
+git worktree add <path> <branch>
+git worktree add ../new-feature feature/awesome-feature
+
+#  Listing Worktrees
+git worktree list
+
+# Removing a Worktree
+git worktree remove <path>
+git worktree remove ~/Desktop/Projects/new-feature
+
+# Steps
+git checkout -b feature/new-feature
+git checkout main
+git worktree add ../feature-worktree feature/new-feature
+cd ../feature-worktree
+git add modified-file.php  
+git commit -m "Adding new logic to feature"
 ```
