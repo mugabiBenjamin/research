@@ -41,7 +41,7 @@ git commit -am "Commit message"
 # Use when you have made changes but forgot to include them in your last commit.
 # Works if you haven't push changes to remote repo
 git add .
-git commit --amend --no-edit
+git commit --amend --no-edit                       # Rewrites history
 git push --force
 
 # Switches to the previous branch you were on.
