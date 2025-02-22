@@ -39,9 +39,9 @@ git commit -am "Commit message"
 
 # Modifies the most recent commit in your git repository without changing the commit message
 # Use when you have made changes but forgot to include them in your last commit.
-# Works if you haven't push changes to remote repo
-git add .
-git commit --amend --no-edit                       # Rewrites history
+# Works best if you haven't push changes to remote repo
+
+git commit -a --amend --no-edit           # Rewrites history if changes had already been pushed
 git push --force
 
 # Switches to the previous branch you were on.
@@ -64,6 +64,8 @@ git reset <SHA-code>
 git reset --hard <SHA-code>
 git push --force
 
+# Unstage changes in a specific file that have been staged.
+git reset HEAD <file>
 
 
 
@@ -544,7 +546,7 @@ git rebase -i HEAD~n
 
 # After saving and closing the editor, another editor will open, prompting you to edit the commit messages.
 
-# --------------- Squah during merge
+# --------------- Squash during merge
 
 git merge --squash <branch_name>
 
@@ -562,6 +564,10 @@ git commit -m "Your squashed commit message"
 git worktree add <path> <branch>
 git worktree add ../new-feature feature/awesome-feature
 
+# The `feature/awesome-feature` branch must already exist in your repository
+# You can run this command while on any branch (including main), 
+# as long as the `feature/awesome-feature` branch has already been created in your Git repository.
+
 #  Listing Worktrees
 git worktree list
 
@@ -570,10 +576,10 @@ git worktree remove <path>
 git worktree remove ~/Desktop/Projects/new-feature
 
 # Steps
-git checkout -b feature/new-feature
-git checkout main
+git checkout feature/new-feature
 git worktree add ../feature-worktree feature/new-feature
 cd ../feature-worktree
-git add modified-file.php  
+git add .
 git commit -m "Adding new logic to feature"
+git push origin feature/new-feature
 ```
