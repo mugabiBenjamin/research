@@ -582,4 +582,36 @@ cd ../feature-worktree
 git add .
 git commit -m "Adding new logic to feature"
 git push origin feature/new-feature
+
+
+
+
+############################# Git diff
+
+# To see changes in your working directory that are not yet staged for commit
+git diff
+
+# To see changes that have been staged but are not yet committed
+git diff --staged
+
+# -w means ignore white spaces
+git diff -w --staged
+
+# To compare changes between two commits
+git diff commit1 commit2
+
+# To see differences between your current branch and another branch
+git diff branch_name
+
+# Shows only the names of files that have changed, without showing the actual content differences
+git diff --name-only
+
+# Gives a summary of changes, showing how many lines were added or deleted for each file
+git diff --stat
+
+# compare the contents of two files or directories that are not part of a Git repository
+git diff --no-index fileA.txt fileB.txt
+
+# Highlight differences at the word level instead of line level
+git diff --word-diff
 ```
