@@ -614,4 +614,7 @@ git diff --no-index fileA.txt fileB.txt
 
 # Highlight differences at the word level instead of line level
 git diff --word-diff
+
+# Show differences between the current branch and the previous commit
+git diff HEAD~1
 ```
