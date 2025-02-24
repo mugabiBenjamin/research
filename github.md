@@ -645,4 +645,33 @@ git apply my_changes.patch
 
 # To apply a patch and also create a new commit
 git am my_changes.patch
+
+
+
+
+############################# Git cherry-pick
+
+# To cherry-pick a commit
+git cherry-pick <commit_hash>
+
+# To cherry-pick a commit and also create a new commit
+git cherry-pick <commit_hash> -c
+
+# To cherry-pick a commit and also create a new commit with a custom commit message
+git cherry-pick <commit_hash> -c -m "Custom commit message"
+
+# To cherry-pick a commit and also create a new commit with a custom commit message and author
+git cherry-pick <commit_hash> -c -m "Custom commit message" -a "Custom author"
+
+# To cherry-pick multiple commits
+git cherry-pick <commit-hash1> <commit-hash2>
+
+# To cherry-pick a range of commits
+git cherry-pick <start-hash>^..<end-hash>
+
+# To continue cherry-picking after resolving conflicts
+git cherry-pick --continue
+
+# To abort cherry-picking
+git cherry-pick --abort
 ```
