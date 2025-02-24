@@ -300,6 +300,15 @@ git add -u
 # Add only non-hidden files
 git add *
 
+# Allows you to interactively stage changes from your working directory
+git add --patch or git add -p
+
+# y (yes): Stage this hunk.
+# n (no): Do not stage this hunk.
+# s (split): Split the hunk into smaller hunks, allowing you to stage parts of it.
+# e (edit): Manually edit the hunk in your text editor.
+# q (quit): Exit the patching process.
+# ?: Display help for the interactive options.
 
 
 
