@@ -617,4 +617,24 @@ git diff --word-diff
 
 # Show differences between the current branch and the previous commit
 git diff HEAD~1
+
+
+
+
+############################# Git patch
+
+# To create a patch file
+git diff > my_changes.patch
+
+# To create a patch file of staged changes
+git diff --cached > my_changes.patch
+
+# To create individual patch files for the last three commits
+git format-patch HEAD~3..HEAD
+
+# To apply a patch
+git apply my_changes.patch
+
+# To apply a patch and also create a new commit
+git am my_changes.patch
 ```
