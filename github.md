@@ -65,7 +65,7 @@ git reset --hard <SHA-code>
 git push --force
 
 # Unstage changes in a specific file that have been staged.
-git reset HEAD <file>
+git reset <file>
 
 
 
@@ -365,7 +365,6 @@ git commit -m "undo reset"
 
 # Removes commits, can't be gotten back
 git reset <SHA code> --hard	            
-
 git push --force                
 
 # Safer, checks that no one else has pushed changes to the remote branch since your last pull
