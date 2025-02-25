@@ -354,10 +354,10 @@ git push -u origin main
 
 ############################# Undoing things with checkout, revert, reset
 
-# Switch to the specified commit
+# 1. Switch to the specified commit
 git checkout <SHA code>		 
 
-# Switch back to get to present
+# 2. Switch back to get to present
 git checkout main			      
 
 # Creates a new commit that undoes the changes introduced by the specified commit.
@@ -395,11 +395,6 @@ git reset --hard HEAD~1
 
 # Undo "git reset --hard HEAD~1echo "Cloning repository..." 
 git reset --hard ORIG_HEAD                      
-
-# Rename commit mesage 2 commits back
-git rebase -i HEAD~2                            
-ESC > i > type `reword` > ESC > Ctrl + O > Enter > Ctrl + X   
-Rewrite the commit message > ESC > Ctrl + O > Enter > Ctrl + X
 
 
 
@@ -548,10 +543,14 @@ git stash branch new-branch-name
 git rebase -i HEAD~n
 
 # In the editor, you will see a list of commits. Change the word pick to `squash` (or simply s) for the commits you want to squash into the one
-
 # After saving and closing the editor, another editor will open, prompting you to edit the commit messages.
 
-# --------------- Squash during merge
+# Rename commit mesage 2 commits back (using Nano)
+git rebase -i HEAD~2                            
+ESC > i > type `reword` > ESC > Ctrl + O > Enter > Ctrl + X   
+Rewrite the commit message > ESC > Ctrl + O > Enter > Ctrl + X
+
+# ======================================= Squash during merge
 
 git merge --squash <branch_name>
 
