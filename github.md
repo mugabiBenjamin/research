@@ -100,6 +100,24 @@ git config --global init.defaultBranch main
 # Verify the default branch setting
 git config --global --get init.defaultBranch
 
+# Sets the default text editor for git to VS Code.
+git config --global core.editor "code --wait"
+
+# Sets the default text editor for git to vim
+git config --global core.editor "vim"
+
+# Retrieve the currently configured default text editor for git
+git config --global --get core.editor
+
+# Open your global git configuration file in the default text editor
+git config --global --edit 
+
+# Set the user name
+git config --global user.name "Your Name"
+
+# Set the user email
+git config --global user.email example@gmail.com
+
 
 
 
@@ -422,23 +440,6 @@ git remote set-url origin <new-origin-url>
 
 # Chnage upstream url
 git remote set-url upstream <new-upstream-url>
-
-
-
-
-############################# Change text editor that git uses for commits
-
-# Sets the default text editor for git to VS Code.
-git config --global core.editor "code --wait"
-
-# Sets the default text editor for git to vim
-git config --global core.editor "vim"
-
-# Retrieve the currently configured default text editor for git
-git config --global --get core.editor
-
-# Open your global git configuration file in the default text editor
-git config --global --edit 
 
 
 
