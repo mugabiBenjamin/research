@@ -44,8 +44,13 @@ git commit -am "Commit message"
 git commit -a --amend --no-edit           # Rewrites history if changes had already been pushed
 git push --force
 
+# Rename the last commit message
+git commit --amend -m "New commit message"
+
 # Switches to the previous branch you were on.
 git checkout -
+
+
 
 
 
@@ -64,8 +69,6 @@ git reset <SHA-code>
 git reset --hard <SHA-code>
 git push --force
 
-# Unstage changes in a specific file that have been staged.
-git reset <file>
 
 
 
@@ -269,14 +272,7 @@ git push origin --delete <feature_branch_name>
 
 ############################# Renaming and reverting changes
 
-# Rename the last commit message
-git commit --amend -m "New commit message"
 
-# 1. Undo last commit (if not pushed)
-git reset --hard HEAD~1
-
-# 2. Force push to update commit history
-git push -f
 
 
 
@@ -382,7 +378,7 @@ git commit -m "undo reset"
 ----
 
 # Removes commits, can't be gotten back
-git reset <SHA code> --hard	            
+git reset --hard <SHA code>	            
 git push --force                
 
 # Safer, checks that no one else has pushed changes to the remote branch since your last pull
