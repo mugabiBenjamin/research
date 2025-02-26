@@ -670,4 +670,21 @@ git cherry-pick --continue
 
 # To abort cherry-picking
 git cherry-pick --abort
+
+
+
+
+############################# Git reflog
+
+# To see a list of actions that have updated the HEAD reference
+git reflog
+
+# Recovering a Lost Commit
+git checkout -b recovered-branch HEAD@{1}
+
+# Resets your current branch to the state it was in 2 entries ago in the reflog
+git reset --hard HEAD@{2}
+
+# Creates and switches to the feature branch at that commit, effectively branching off from that point in history
+git checkout -b feature-branch bfd054a 
 ```
