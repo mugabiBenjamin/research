@@ -391,7 +391,7 @@ git push --force-with-lease
 -----------------------------------------------------
 
 # Undo last commit to github
-git reset --hard HEAD~1                         
+git reset --hard HEAD~1 or git reset --hard HEAD^                     
 
 # Undo "git reset --hard HEAD~1echo "Cloning repository..." 
 git reset --hard ORIG_HEAD                      
