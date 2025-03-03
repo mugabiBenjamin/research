@@ -582,7 +582,7 @@ git worktree remove ~/Desktop/Projects/new-feature
 # Steps
 git checkout feature/new-feature
 git worktree add ../feature-worktree feature/new-feature
-cd ../feature-worktree
+code ../feature-worktree
 git add .
 git commit -m "Adding new logic to feature"
 git push origin feature/new-feature
