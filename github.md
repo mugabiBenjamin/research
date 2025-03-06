@@ -317,12 +317,19 @@ git add *
 # Allows you to interactively stage changes from your working directory
 git add --patch or git add -p
 
-# y (yes): Stage this hunk.
-# n (no): Do not stage this hunk.
-# s (split): Split the hunk into smaller hunks, allowing you to stage parts of it.
-# e (edit): Manually edit the hunk in your text editor.
-# q (quit): Exit the patching process.
-# ?: Display help for the interactive options.
+# y - Yes, stage this hunk
+# n - No, don't stage this hunk
+# q - Quit; don't stage this hunk or any remaining hunks
+# a - Stage this hunk and all later hunks in the file
+# d - Don't stage this hunk or any later hunks in the file
+# j - Leave this hunk undecided, see next undecided hunk
+# J - Leave this hunk undecided, see next hunk
+# g - Select a hunk to go to
+# / - Search for a hunk matching the given regex
+# s - Split the current hunk into smaller hunks
+# e - Manually edit the current hunk
+# p - Print the current hunk again
+# ? - Print help information about these commands
 
 
 
