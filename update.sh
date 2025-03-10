@@ -1,5 +1,5 @@
 #!/bin/bash
-# Enhanced Ubuntu System Update Script (Non-Interactive)
+# Fully Automated Ubuntu System Update Script
 # 
 # Instructions:
 # 1. Save this file as "update.sh"
@@ -53,10 +53,9 @@ echo "Kernel Version: $(uname -r)"
 print_section "Updating Package Lists"
 execute_cmd "apt update -y"
 
-# Check for system upgrades but don't prompt for reboot
-# We'll handle the reboot notification at the end
+# Upgrade packages without prompts
 print_section "Upgrading Installed Packages"
-execute_cmd "DEBIAN_FRONTEND=noninteractive apt upgrade -y"
+execute_cmd "DEBIAN_FRONTEND=noninteractive apt upgrade -y -o Dpkg::Options::=\"--force-confdef\" -o Dpkg::Options::=\"--force-confold\""
 execute_cmd "DEBIAN_FRONTEND=noninteractive apt full-upgrade -y -o Dpkg::Options::=\"--force-confdef\" -o Dpkg::Options::=\"--force-confold\""
 
 # Clean up unused packages
@@ -76,12 +75,21 @@ if command -v flatpak &> /dev/null; then
     execute_cmd "flatpak update -y"
 fi
 
-# Skip firmware updates - these require careful consideration
-# and shouldn't be done automatically for security reasons
-print_section "Firmware Updates"
-echo "Firmware updates skipped in automatic mode for security reasons."
-echo "To check for firmware updates, run: sudo fwupdmgr get-updates"
-echo "To apply firmware updates manually, run: sudo fwupdmgr update"
+# Handle firmware updates with automatic response to prompts
+if command -v fwupdmgr &> /dev/null; then
+    print_section "Checking Firmware Status (Information Only)"
+    # Use yes command to automatically answer 'n' to any prompts
+    # The || true prevents the script from exiting if the command returns non-zero
+    yes n | fwupdmgr refresh || true
+    
+    # Just check for updates but don't apply them
+    # This is safer as firmware updates should generally be done manually
+    print_section "Available Firmware Updates (Information Only)"
+    yes n | fwupdmgr get-updates || echo "No firmware updates available or error checking updates"
+    
+    echo "Note: Firmware updates should be reviewed and applied manually for system safety."
+    echo "To apply firmware updates manually: sudo fwupdmgr update"
+fi
 
 # Update locate database
 if command -v updatedb &> /dev/null; then
@@ -103,7 +111,7 @@ print_section "System Update Summary"
 echo "Update completed at: $(date)"
 echo "Log file saved to: $LOG_FILE"
 
-# Check if reboot is needed after updates but don't automatically reboot
+# Check if reboot is needed after updates
 if [ -f /var/run/reboot-required ]; then
     echo -e "${YELLOW}A system reboot is required to complete the update process.${NC}"
     echo "Please reboot your system when convenient using: sudo reboot"
