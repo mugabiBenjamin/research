@@ -1,5 +1,5 @@
 #!/bin/bash
-# Enhanced Ubuntu System Update Script
+# Enhanced Ubuntu System Update Script (Non-Interactive)
 # 
 # Instructions:
 # 1. Save this file as "update.sh"
@@ -53,22 +53,11 @@ echo "Kernel Version: $(uname -r)"
 print_section "Updating Package Lists"
 execute_cmd "apt update -y"
 
-# Check if reboot is required before starting
-if [ -f /var/run/reboot-required ]; then
-    echo -e "${YELLOW}A system reboot is required before proceeding.${NC}"
-    read -p "Would you like to reboot now? (y/n) " -n 1 -r
-    echo
-    if [[ $REPLY =~ ^[Yy]$ ]]; then
-        echo "System will reboot now..."
-        reboot
-        exit 0
-    fi
-fi
-
-# Upgrade packages
+# Check for system upgrades but don't prompt for reboot
+# We'll handle the reboot notification at the end
 print_section "Upgrading Installed Packages"
-execute_cmd "apt upgrade -y"
-execute_cmd "apt full-upgrade -y"
+execute_cmd "DEBIAN_FRONTEND=noninteractive apt upgrade -y"
+execute_cmd "DEBIAN_FRONTEND=noninteractive apt full-upgrade -y -o Dpkg::Options::=\"--force-confdef\" -o Dpkg::Options::=\"--force-confold\""
 
 # Clean up unused packages
 print_section "Cleaning Up Unused Packages"
@@ -87,20 +76,12 @@ if command -v flatpak &> /dev/null; then
     execute_cmd "flatpak update -y"
 fi
 
-# Check if firmware update utility is installed
-if command -v fwupdmgr &> /dev/null; then
-    print_section "Checking for Firmware Updates"
-    execute_cmd "fwupdmgr refresh"
-    execute_cmd "fwupdmgr get-updates || echo 'No firmware updates available'"
-    read -p "Apply firmware updates if available? (y/n) " -n 1 -r
-    echo
-    if [[ $REPLY =~ ^[Yy]$ ]]; then
-        execute_cmd "fwupdmgr update"
-    fi
-else
-    echo -e "${YELLOW}fwupdmgr is not installed. Skipping firmware updates.${NC}"
-    echo "To install: sudo apt install fwupd"
-fi
+# Skip firmware updates - these require careful consideration
+# and shouldn't be done automatically for security reasons
+print_section "Firmware Updates"
+echo "Firmware updates skipped in automatic mode for security reasons."
+echo "To check for firmware updates, run: sudo fwupdmgr get-updates"
+echo "To apply firmware updates manually, run: sudo fwupdmgr update"
 
 # Update locate database
 if command -v updatedb &> /dev/null; then
@@ -122,17 +103,10 @@ print_section "System Update Summary"
 echo "Update completed at: $(date)"
 echo "Log file saved to: $LOG_FILE"
 
-# Check if reboot is needed after updates
+# Check if reboot is needed after updates but don't automatically reboot
 if [ -f /var/run/reboot-required ]; then
     echo -e "${YELLOW}A system reboot is required to complete the update process.${NC}"
-    read -p "Would you like to reboot now? (y/n) " -n 1 -r
-    echo
-    if [[ $REPLY =~ ^[Yy]$ ]]; then
-        echo "System will reboot now..."
-        reboot
-    else
-        echo "Please remember to reboot your system later."
-    fi
+    echo "Please reboot your system when convenient using: sudo reboot"
 fi
 
 print_section "System Update and Maintenance Completed"
