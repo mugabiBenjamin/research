@@ -317,6 +317,12 @@ git add *
 # Allows you to interactively stage changes from your working directory
 git add --patch or git add -p
 
+# Unstaged particular changes
+git reset -p
+
+# Unstage all changes 
+git reset 
+
 # y - Yes, stage this hunk
 # n - No, don't stage this hunk
 # q - Quit; don't stage this hunk or any remaining hunks
