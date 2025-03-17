@@ -270,13 +270,6 @@ git push origin --delete <feature_branch_name>
 
 
 
-############################# Renaming and reverting changes
-
-
-
-
-
-
 ############################# Working with multiple repos
 
 # Clone a repository
