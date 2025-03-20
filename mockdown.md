@@ -1,87 +1,166 @@
-```sh
-############################# README file Formatting and Indentation
+# Headings
 
-Headers
+```
+# Heading level 1
 
-   # Main Title
-   ## Subtitle
-   ### Sub-subtitle
-   #### Level 4 Heading
-   ##### Level 5 Heading
-   ###### Level 6 Heading
+## Heading level 2
 
+### Heading level 3
 
-Lists
+#### Heading level 4
 
-   - Unordered list item
-   - Another item
-   + Another item
-   * Another item
+##### Heading level 5
 
-   1. Ordered list item
-   2. Another item
+###### Heading level 6
 ```
 
+# Heading Alternate Syntax
 
-Code blocks
+```
+# Heading level 1
 
-   Use single backticks (```) for code blocks.
-   ```bash
-   # This is a bash command and a comment specifically
-   npm install
-   ```
+## Heading level 2
+```
 
-```sh
-   Use single backticks (`) for inline code.
-   Run the `npm install` command to install dependencies.
+# Text formattings
 
-   ( > ) for blockquotes
+```
+**Bold text** or **Bold text**
 
+_Italic text_ or _Italic text_
 
-Links
+~~Strikethrough text~~
 
-   [Visit Google](https://google.com)
-   [Jump to Installation Section](#installation)
+**_Bold and Italic text_** or **_Bold and Italic text_** or **_Bold and Italic text_** or **_Bold and Italic text_**
 
+> for blockquotes
+```
 
-Images
+# Unordered lists
 
-   ![GitHub Logo](https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png?raw=true)
+```
+- First item
+- Second item
+- Third item
 
+* First item
+* Second item
+* Third item
 
-Task List
+- First item
+- Second item
+- Third item
+```
 
-   - [x] Completed task
-   - [ ] Incomplete task
+# Ordered lists
 
+```
+1. First item
+2. Second item
+3. Third item
+```
 
-Tables
+# Links
 
-   | Column 1 | Column 2 | Column 3 |
-   |----------|----------|----------|
-   | Row 1    | Data 1   | Data 2   |
-   | Row 2    | Data 3   | Data 4   |
+```
+<https://jsmasterypro.com>
 
+[Visit Google](https://google.com)
 
-Footnotes
+[JSM PRO](https://jsmasterypro.com "Blog") <!-- When you hover over the link, there's a tooltip -->
 
-   Here is a statement with a footnote.[^1]
+[Jump to Installation Section](#installation)
+```
 
-   [^1]: This is the footnote text.
+# Image
 
+```
+![GitHub Logo](https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png?raw=true)
+```
 
-Collapsible section
+# Image with link
 
-   <details>
-   <summary>Click to expand</summary>
-   Hidden content goes here.
-   </details>
+```
+[![Landscape Image](landscape.jpg)](https://images.pexels.com/photos/17863401/pexels-photo-17863401/free-photo-of-a-road-is-in-the-middle-of-a-snowy-mountain-range.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1)
+```
 
+# Inline code
 
-Escaping characters
+```
+Use single backticks for inline code.
+Run the `npm install` command to install dependencies.
+```
 
-   # Won't italicize
-   \*This will not italicize.*          
+# Code blocks
 
-   # Won't create a header
-   \# This will not create a header. 
+Use single backticks (```) for code blocks.
+
+```bash
+# This is a bash command and a comment specifically
+npm install
+```
+
+# Syntax highlighting
+
+```javascript
+function greet(name) {
+  alert(`Hello ${name}`);
+}
+```
+
+# Tables
+
+```
+| Column 1 | Column 2 | Column 3 |
+| -------- | :------: | -------: |
+| Row 1    |  Data 1  |   Data 2 |
+| Row 2    |  Data 3  |   Data 4 |
+```
+
+# Task List
+
+```
+- [x] Completed task
+- [ ] Incomplete task
+```
+
+# Footnotes
+
+```
+Here is a statement with a footnote.[^1]
+
+[^1]: This is the footnote text.
+```
+
+# Collapsible section
+
+```
+<details>
+<summary>Click to expand</summary>
+Hidden content goes here.
+</details>
+```
+
+# Escaping characters
+
+```
+<!-- Won't italicize -->
+
+\*This will not italicize.\*
+
+<!--Won't create a header -->
+
+\# This will not create a header.
+```
+
+# Horizontal rules
+
+```
+Javascript Mastery
+
+---
+
+Javascript Mastery
+
+---
+```
