@@ -1,6 +1,6 @@
-```sh
-############################# Cloning and fetching
+## Cloning and fetching
 
+```sh
 # Clone a repository into a folder on your local machine
 git clone <repository_url>
 
@@ -15,12 +15,11 @@ git fetch
 
 # Merge fetched updates into the working directory
 git merge
+```
 
+## Stagging and commiting changes
 
-
-
-############################# Stagging and commiting changes
-
+```sh
 # Track all changes (new, modified, deleted files)
 git add .
 
@@ -49,12 +48,11 @@ git commit --amend -m "New commit message"
 
 # Switches to the previous branch you were on.
 git checkout -
+```
 
+## Undoing changes
 
-
-
-
-############################# Undoing changes
+```sh
 
 # Switch to a specific commit
 git checkout <SHA-code>
@@ -68,12 +66,11 @@ git reset <SHA-code>
 # Forcefully reset to a previous commit, losing all changes after that commit
 git reset --hard <SHA-code>
 git push --force
+```
 
+## Branch management
 
-
-
-############################# Branch management
-
+```sh
 # Create a new branch
 git branch <branch-name>
 
@@ -91,12 +88,11 @@ git branch -d <branch-name>
 
 # Delete a branch remotely
 git push origin --delete <branch-name>
+```
 
+## Configuring the default branch
 
-
-
-############################# Configuring the default branch
-
+```sh
 # Set the default branch to 'main'
 git config --global init.defaultBranch main
 
@@ -113,7 +109,7 @@ git config --global core.editor "vim"
 git config --global --get core.editor
 
 # Open your global git configuration file in the default text editor
-git config --global --edit 
+git config --global --edit
 
 # Set the user name
 git config --global user.name "Your Name"
@@ -121,11 +117,11 @@ git config --global user.name "Your Name"
 # Set the user email
 git config --global user.email example@gmail.com
 
+```
 
+## SSH key setup
 
-
-############################# SSH key setup
-
+```sh
 # Generate an SSH key
 ssh-keygen -t rsa -b 4096 -C "your-email"
 
@@ -135,16 +131,16 @@ eval "$(ssh-agent -s)"
 # Add the SSH key to the agent
 ssh-add ~/.ssh/id_rsa
 
+```
 
+## Forking and pull request
 
-
-############################# Forking and pull request
-
+```sh
 # 1. Clone the forked repository
 git clone <repository_url>
 
 # 2. Add the original repository as a remote
-git remote add upstream <original_repository_url>     
+git remote add upstream <original_repository_url>
 git remote -v
 
 # 3. Create a new branch for the feature
@@ -160,29 +156,29 @@ git push origin feature/<feature_branch_name>
 # 6. Create pull request from original repo
 
 # 7. Switch to the main branch
-git checkout main                                     
+git checkout main
 
 # 8. Fetch changes from the original repository
-git fetch upstream                                    
+git fetch upstream
 git merge upstream/main
 
-# 9. Push changes to the main branch of the fork 
-git push origin main               
+# 9. Push changes to the main branch of the fork
+git push origin main
 
 # 10. Delete feature branch locally
-   git branch -d <feature_branch_name>              
+   git branch -d <feature_branch_name>
 
    # Delete feature branch locally forcefully regardless of whether it has been merged or not.
-   git branch -D <feature_branch_name>                   
+   git branch -D <feature_branch_name>
 
 # 11. Delete feature branch remotely
-git push origin --delete <feature_branch_name>      
+git push origin --delete <feature_branch_name>
 
+```
 
+## Working with multiple repos
 
-
-############################# Working with multiple repos
-
+```sh
 # Clone a repository
 git clone <repo_url>
 
@@ -198,11 +194,11 @@ git branch -a
 # Checkout a remote branch
 git checkout <branch_name>
 
+```
 
+## Differentuse cases of git add
 
-
-############################# Differentuse cases of git add
-
+```sh
 # Add all changes, including new and deleted files
 git add .
 
@@ -224,8 +220,8 @@ git add --patch or git add -p
 # Unstaged particular changes
 git reset -p
 
-# Unstage all changes 
-git reset 
+# Unstage all changes
+git reset
 
 # y - Yes, stage this hunk
 # n - No, don't stage this hunk
@@ -240,11 +236,11 @@ git reset
 # e - Manually edit the current hunk
 # p - Print the current hunk again
 # ? - Print help information about these commands
+```
 
+## Including file in gitignore that initially wasn't
 
-
-############################# Including file in gitignore that initially wasn't
-
+```sh
 # Clear cache incase changes don't reflect on GitHub, then:
 git rm -rf --cached .
 
@@ -252,41 +248,39 @@ git add .
 git commit -m "message"
 
 git push
+```
 
+## Starting a repo locally
 
-
-
-############################# Starting a repo locally
-
+```sh
 mkdir <new-repo> && cd <new-repo>
-git init		
+git init
 git add .
 git commit -m "Initial commit"
 git branch -M main
 git remote add origin <repo-url>
 git push -u origin main
+```
 
+## Undoing things with checkout, revert, reset
 
-
-
-############################# Undoing things with checkout, revert, reset
-
+```sh
 # 1. Switch to the specified commit
-git checkout <SHA code>		 
+git checkout <SHA code>
 
 # 2. Switch back to get to present
-git checkout main			      
+git checkout main
 
 # Creates a new commit that undoes the changes introduced by the specified commit.
 git revert <SHA code>
 
 # To undo a git revert
-git revert <SHA-of-the-revert-commit>     
+git revert <SHA-of-the-revert-commit>
 
 -----
 
 # Moves the HEAD pointer to a specific commit (<SHA>), altering your commit history.
-git reset <SHA code>                   
+git reset <SHA code>
 
 # To recover git reset
 git add .
@@ -295,11 +289,11 @@ git commit -m "undo reset"
 ----
 
 # Removes commits, can't be gotten back
-git reset --hard <SHA code>	            
-git push --force                
+git reset --hard <SHA code>
+git push --force
 
 # Safer, checks that no one else has pushed changes to the remote branch since your last pull
-git push --force-with-lease               
+git push --force-with-lease
 
 # Use git revert for shared branches (e.g., main) to avoid disrupting history.
 # Use git reset for local branches or when you’re sure no one else relies on the branch, as it rewrites history.
@@ -308,154 +302,148 @@ git push --force-with-lease
 -----------------------------------------------------
 
 # Undo last commit to github
-git reset --hard HEAD~1 or git reset --hard HEAD^                     
+git reset --hard HEAD~1 or git reset --hard HEAD^
 
-# Undo "git reset --hard HEAD~1echo "Cloning repository..." 
-git reset --hard ORIG_HEAD                      
+# Undo "git reset --hard HEAD~1echo "Cloning repository..."
+git reset --hard ORIG_HEAD
+```
 
+## Cloning more than one repo (main and feature branch)
 
-
-
-############################# Cloning more than one repo (main and feature branch)
-
+```sh
 git clone <URL-of-your-forked-repo>
 
 # Fetch all branches
-git fetch --all                           
+git fetch --all
 
 # List all local branches
-git branch                                
+git branch
 
 # List all remote branches
-git branch -a                             
+git branch -a
 
 # Switch to feature branch
-git checkout <feature_branch_name>        
+git checkout <feature_branch_name>
 
 git checkout main
 git pull origin main
 
 git checkout <feature_branch_name>
 git pull origin <feature_branch_name>
+```
 
+## Setting new remote urls
 
-
-
-############################# Setting new remote urls
-
+```sh
 # Change origin url
 git remote set-url origin <new-origin-url>
 
 # Chnage upstream url
 git remote set-url upstream <new-upstream-url>
+```
 
+## Pulling Changes from the Repository
 
+```sh
+# 1. Pull changes from the remote repository, rebasing any local commits on top of the updated code
+git pull --rebase
 
-
-############################# Pulling Changes from the Repository  
-
-# 1. Pull changes from the remote repository, rebasing any local commits on top of the updated code  
-git pull --rebase  
-
-# 2. If you encounter a merge conflict during the rebase process, abort the rebase.  
-# This will return your branch to the state before the rebase was initiated.  
-git rebase --abort  
+# 2. If you encounter a merge conflict during the rebase process, abort the rebase.
+# This will return your branch to the state before the rebase was initiated.
+git rebase --abort
 
 # 3. Alternatively, if rebasing is not your preferred method or you want to incorporate changes without rebasing.
 git pull
+```
 
+## git pull vs git pull --rebase
 
-
-############################# git pull vs git pull --rebase
-
-# If Your Local Branch is Up to Date or Has No Conflicts: 
+```sh
+# If Your Local Branch is Up to Date or Has No Conflicts:
 # If you haven't made any changes to your local branch since you last pulled
 git pull --rebase
 
 # If You Have Uncommitted Changes or Want Merge Context:
 # If your local branch has changes or you want to see a clear merge history
 git pull
+```
 
+## Creating, Rebasing, and Syncing a Feature Branch in Git
 
+```sh
+# 1. Create a new branch for your feature or changes
+git checkout -b my-feature-branch
 
+# 2. Staging and committing changes
+git add .
+git commit -m "Describe your changes here"
 
-############################# Creating, Rebasing, and Syncing a Feature Branch in Git
+# 3. Fetch the latest changes from the upstream repository
+git fetch upstream
 
-# 1. Create a new branch for your feature or changes  
-git checkout -b my-feature-branch  
+# 4. Rebase your current branch on top of the latest changes from upstream/main
+git rebase upstream/main
 
-# 2. Staging and committing changes 
-git add .  
-git commit -m "Describe your changes here"  
+# 5. If you encounter conflicts during the rebase process, stage the resolved files
+git add <file-with-conflicts>
 
-# 3. Fetch the latest changes from the upstream repository  
-git fetch upstream  
+# 6. Continue the rebase process after resolving conflicts
+git rebase --continue
 
-# 4. Rebase your current branch on top of the latest changes from upstream/main  
-git rebase upstream/main  
+# 7. Push the rebased changes to your forked repository, forcing the update
+git push origin my-feature-branch --force
 
-# 5. If you encounter conflicts during the rebase process, stage the resolved files  
-git add <file-with-conflicts>  
-
-# 6. Continue the rebase process after resolving conflicts  
-git rebase --continue  
-
-# 7. Push the rebased changes to your forked repository, forcing the update  
-git push origin my-feature-branch --force  
-
-# 8. Switch back to the main branch  
-git checkout main  
+# 8. Switch back to the main branch
+git checkout main
 
 # 9. Fetching and merging changes into your local main branch
-git fetch upstream  
-git merge upstream/main  
+git fetch upstream
+git merge upstream/main
 
-# 10. Push the updated main branch to your forked repository  
+# 10. Push the updated main branch to your forked repository
 git push origin main
+```
 
+## Git Stash Commands
 
+```sh
+# Stash your current changes (modified tracked files and the index)
+git stash
 
+# Stash changes with a message for later reference
+git stash push -m "Your message here"
 
-############################# Git Stash Commands  
+# List all stashed changes along with their identifiers
+git stash list
 
-# Stash your current changes (modified tracked files and the index)  
-git stash  
+# Apply the most recent stash to your working directory
+git stash apply
 
-# Stash changes with a message for later reference  
-git stash push -m "Your message here"  
+# Apply a specific stash by referencing its index (e.g., second stash)
+git stash apply stash@{1}
 
-# List all stashed changes along with their identifiers  
-git stash list  
+# Remove a specific stash from the list (e.g., remove the first stash)
+git stash drop stash@{0}
 
-# Apply the most recent stash to your working directory  
-git stash apply  
+# Clear all stashes from your stash list
+git stash clear
 
-# Apply a specific stash by referencing its index (e.g., second stash)  
-git stash apply stash@{1}  
+# Apply the most recent stash and remove it from the stash list
+git stash pop
 
-# Remove a specific stash from the list (e.g., remove the first stash)  
-git stash drop stash@{0}  
+# Stash untracked files in addition to tracked files
+git stash push -u
 
-# Clear all stashes from your stash list  
-git stash clear  
+# Stash all files, including ignored files
+git stash push -a
 
-# Apply the most recent stash and remove it from the stash list  
-git stash pop  
-
-# Stash untracked files in addition to tracked files  
-git stash push -u  
-
-# Stash all files, including ignored files  
-git stash push -a  
-
-# Create a new branch from the latest stash and apply it  
+# Create a new branch from the latest stash and apply it
 git stash branch new-branch-name
+```
 
+## Git Squash
 
-
-
-############################# Git Squash
-
+```sh
 # Replace n with the number of commits you want to squash.This command will open an interactive editor showing the last n commits.
 git rebase -i HEAD~n
 
@@ -463,11 +451,11 @@ git rebase -i HEAD~n
 # After saving and closing the editor, another editor will open, prompting you to edit the commit messages.
 
 # Rename commit mesage 2 commits back (using Nano)
-git rebase -i HEAD~2                            
-ESC > i > type `reword` > ESC > Ctrl + O > Enter > Ctrl + X   
+git rebase -i HEAD~2
+ESC > i > type `reword` > ESC > Ctrl + O > Enter > Ctrl + X
 Rewrite the commit message > ESC > Ctrl + O > Enter > Ctrl + X
 
-# ======================================= Squash during merge
+======================================= Squash during merge
 
 git merge --squash <branch_name>
 
@@ -475,18 +463,17 @@ git merge --squash <branch_name>
 git commit -m "Your squashed commit message"
 
 # If you're working with a publicly shared branch, like main or develop, be cautious about squashing, as it affects everyone’s history.
+```
 
+## Git worktree
 
-
-
-############################# Git worktree
-
+```sh
 # Creating a new worktree
 git worktree add <path> <branch>
 git worktree add ../new-feature feature/awesome-feature
 
 # The `feature/awesome-feature` branch must already exist in your repository
-# You can run this command while on any branch (including main), 
+# You can run this command while on any branch (including main),
 # as long as the `feature/awesome-feature` branch has already been created in your Git repository.
 
 #  Listing Worktrees
@@ -503,12 +490,11 @@ code ../feature-worktree
 git add .
 git commit -m "Adding new logic to feature"
 git push origin feature/new-feature
+```
 
+## Git diff
 
-
-
-############################# Git diff
-
+```sh
 # To see changes in your working directory that are not yet staged for commit
 git diff
 
@@ -538,12 +524,11 @@ git diff --word-diff
 
 # Show differences between the current branch and the previous commit
 git diff HEAD~1
+```
 
+## Git patch
 
-
-
-############################# Git patch
-
+```sh
 # To create a patch file
 git diff > my_changes.patch
 
@@ -558,12 +543,11 @@ git apply my_changes.patch
 
 # To apply a patch and also create a new commit
 git am my_changes.patch
+```
 
+## Git cherry-pick
 
-
-
-############################# Git cherry-pick
-
+```sh
 # To cherry-pick a commit
 git cherry-pick <commit_hash>
 
@@ -587,12 +571,11 @@ git cherry-pick --continue
 
 # To abort cherry-picking
 git cherry-pick --abort
+```
 
+## Git reflog
 
-
-
-############################# Git reflog
-
+```sh
 # To see a list of actions that have updated the HEAD reference
 git reflog
 
@@ -603,5 +586,5 @@ git checkout -b recovered-branch HEAD@{1}
 git reset --hard HEAD@{2}
 
 # Creates and switches to the feature branch at that commit, effectively branching off from that point in history
-git checkout -b feature-branch bfd054a 
+git checkout -b feature-branch bfd054a
 ```
