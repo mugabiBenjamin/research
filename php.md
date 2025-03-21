@@ -1,51 +1,50 @@
-```php
-####################################### Starting a local web server
+## Starting a local web server
 
+```php
 Type the following in cmd
    php -S localhost:4000
+   -
+   php -S localhost:8000 -t public
 
-Type the following in your browser   
+Type the following in your browser
    http://localhost:4000/www.site.php
 
    www is the folder located on :C drive, site.php is the file
+```
 
+## Writing php code
 
-
-
-####################################### Writing php code
-
+```php
    http://localhost:4000/www/site.php
 
-   echo  ("Hello World!");  
+   echo  ("Hello World!");
         // or
    echo "Hello World!";
 
 echo "<h1>Benjamin's site</h1>";\
 echo "<hr>";
-echo "<p>This is myparagraph</p>"; 
+echo "<p>This is myparagraph</p>";
+```
 
+## Variables
 
-
-
-####################################### Variables
-
+```php
 <?php
     $characterName = "Tom";
     $characterAge = 80;
-    
+
     echo "There once was a man named $characterName <br>";
     echo "He was $characterAge years old <br>";
-    
+
     $characterName = "Benja ";
         echo "He really liked the name $characterName <br>";
         echo "But didn't like being $characterAge <br>";
 ?>
+```
 
+## Data types
 
-
-
-####################################### Data types
-
+```php
     $phrase = "To be or not to be";   // string
     $age = 20; //integer
     $gpa = 4.95; //float
@@ -59,17 +58,16 @@ echo "<p>This is myparagraph</p>";
     echo "$isMale <br>";
     echo "$isFemale <br>";
     echo "<h1>" . $phrase . "</h1>";
+```
 
+## Working with strings
 
-
-
-####################################### Working with strings
-
+```php
     echo strtolower($phrase) . "<br>";
     echo strtoupper($phrase) . "<br>";
     echo strlen($phrase) . "<br>";
     echo $phrase[2] . "<br>";   // r
-    
+
     echo "Benjamin"[2] . "<br>";    // n
     $phrase[0] = "B";
     echo $phrase. "<hr> <br>";   // Biraffe Academy
@@ -81,14 +79,13 @@ echo "<p>This is myparagraph</p>";
     echo str_replace("Giraffe", "Panda", $phrase) . "<br>";  // Panda Academy
     echo str_replace("raff", "000", $phrase) . "<br>";  // Gi000e Academy
 
-    echo substr($phrase, 8);  // Academy 
+    echo substr($phrase, 8);  // Academy
     echo substr($phrase, 8, 3);  // Aca
+```
 
+## Working with numbers
 
-
-
-####################################### Working with numbers
-
+```php
     $num = 10;
     $num++;     // 11
     $num += 5;
@@ -104,12 +101,11 @@ echo "<p>This is myparagraph</p>";
     echo round(3.142) . "<br>"; // 3
     echo ceil(3.142) . "<br>"; // 4
     echo floor(3.142); // 3
+```
 
+## Getting user input
 
-
-
-####################################### Getting user input
-
+```php
     <form action="site.php" method="get">
         Name: <input type="text" name="name">
         <br>
@@ -119,20 +115,19 @@ echo "<p>This is myparagraph</p>";
     </form>
 
     <br>
-    
+
     <?php
     echo "Your name is " . $_GET["name"] . "<br>";
     echo "Your age is " . $_GET["age"];
     ?>
+```
 
+## Building a basic calculator
 
-
-
-####################################### Building a basic calculator
-
+```php
 http://localhost:3600/www/site.php?num1=10&num2=50
 
-    <form action="site.php" method="get">        
+    <form action="site.php" method="get">
         <input type="number" name="num1">
         <br>
         <input type="number" name="num2">
@@ -145,12 +140,11 @@ http://localhost:3600/www/site.php?num1=10&num2=50
     <?php
     echo "Answer: " . $_GET["num1"] + $_GET["num2"];
     ?>
+```
 
+## Building a mad libs game
 
-
-
-####################################### Building a mad libs game
-
+```php
 http://localhost:3600/www/site.php?color=Cyan&plural_noun=Elephants&celebrity=Tom+Cruise
 
     <form action="site.php" method="get">
@@ -174,13 +168,12 @@ http://localhost:3600/www/site.php?color=Cyan&plural_noun=Elephants&celebrity=To
     echo "$plural_noun are blue <br>";
     echo "I love $celebrity <br>";
     ?>
+```
 
+## URL parameters
 
-
-
-####################################### URL parameters
-
-http://localhost:3600/www/site.php?name=Joseph&age=70	
+```php
+http://localhost:3600/www/site.php?name=Joseph&age=70
 // added age through URL, no input for age in html code
 
 <form action="site.php" method="get">
@@ -195,12 +188,11 @@ http://localhost:3600/www/site.php?name=Joseph&age=70
     echo $_GET["name"] . "<br>";
     echo $_GET["age"];  // 70
     ?>
+```
 
+## POST Vs GET
 
-
-
-####################################### POST Vs GET
-
+```php
 get -> information shows up in the URL (not secure for password)
 post -> gets more information from the user than get
 
@@ -215,26 +207,24 @@ post -> gets more information from the user than get
     <?php
     echo $_POST["password"] . "<br>";
     ?>
+```
 
+## Arrays
 
-
-
-####################################### Arrays
-
+```php
 <?php
     $friends = array("Kevin", "Karren", "Oscar", "Jim");
-    
+
     echo $friends . "<br>"; // Array
     echo $friends[0] . "<br>";   // Kevin
     $friends[4] = "Angela";
     echo count($friends);   // 5
 ?>
+```
 
+## Using checkboxes
 
-
-
-####################################### Using checkboxes
-
+```php
     <form action="site.php" method="post">
 
         Apples: <input type="checkbox" name="fruits[]" value="apples">
@@ -250,12 +240,11 @@ post -> gets more information from the user than get
         $fruits = $_POST["fruits"];
         echo $fruits[0] . "<br>";
     ?>
+```
 
+## Associative arrays
 
-
-
-####################################### Associative arrays
-
+```php
     <?php
         $grades = array("Jim"=>"A+", "Pam"=>"B-", "Oscar"=>"C+");
         echo $grades["Jim"] . "<br>";    // A+
@@ -279,36 +268,34 @@ post -> gets more information from the user than get
 
     echo $grades[$student_grade];
     ?>
+```
 
+## Functions
 
-
-
-####################################### Functions
-
+```php
 <?php
     function sayHi(){
         echo "Hello User";
     }
-    
+
     sayHi();
 ?>
 
 -----
 
 <?php
-    function sayHi($name, $age){ 
+    function sayHi($name, $age){
         echo "Hello $name, you are $age <br>";
     }
-    
+
     sayHi("Benjamin", 40);
     sayHi("Benjn", 30);
 ?>
+```
 
+## Return statements
 
-
-
-####################################### Return  statements
-
+```php
 <?php
     function cube($number){
         return $number * $number * $number;
@@ -318,12 +305,11 @@ post -> gets more information from the user than get
     $cube_result = cube(4);
     echo $cube_result;
 ?>
+```
 
+## If statements
 
-
-
-####################################### If statements
-
+```php
     $isMale = false;
 
     if ($isMale){
@@ -368,12 +354,11 @@ post -> gets more information from the user than get
     } else {
         echo "You're not male and not tall";
     }
+```
 
+## If statements with comparisons
 
-
-
-####################################### If statements with comparisons
-
+```php
     function getMax($num1, $num2){
         if($num1 > $num2){
             return $num1;
@@ -400,12 +385,11 @@ post -> gets more information from the user than get
 
     $greater = getMax(3, 90, 99);   // 99
     echo $greater;
+```
 
+## Building a better calculator
 
-
-
-####################################### Building a better calculator
-
+```php
     <form action="site.php" method="post">
         First Number: <input type="number" step="0.1" name="num1">
         <br>
@@ -433,12 +417,11 @@ post -> gets more information from the user than get
         echo "Invalid operator";
     }
     ?>
+```
 
+## Switch statements
 
-
-
-####################################### Switch statements
-
+```php
     <form action="site.php" method="post">
 
         What was your grade?
@@ -449,7 +432,7 @@ post -> gets more information from the user than get
 
     <?php
     $grade = $_POST["grade"];
-    
+
     switch($grade) {
         case "A":
             echo "You did amazing!";
@@ -470,12 +453,11 @@ post -> gets more information from the user than get
             echo "Invalid Grade";
     }
     ?>
+```
 
+## While loops
 
-
-
-####################################### While loops
-
+```php
 <?php
     $index = 1;
 
@@ -495,20 +477,19 @@ post -> gets more information from the user than get
         $index++;
         // while loop checks the condition first then executes the  loop body
     }
-    
+
     $index = 6;
     do {
         echo "$index <br>";
         $index++;
     } while($index <= 5)
-    // do while loop executes the loop body first then checks the condition  
+    // do while loop executes the loop body first then checks the condition
     ?>
+```
 
+## For loops
 
-
-
-####################################### For loops
-
+```php
     for ($index = 1; $index <= 5; $index++) {
         echo "$index <br>";
     }
@@ -520,30 +501,28 @@ post -> gets more information from the user than get
     for ($i = 0; $i <= count($luckyNumbers); $i++) {
         echo "$luckyNumbers[$i] <br>";
     }
+```
 
+## Including HTML
 
-
-
-####################################### Including HTML
-
+```php
     <!--  include allows us to include inside of the php file -->
 
     <?php include "header.html" ?>
     <p>Hello World</p>
     <?php include "footer.html" ?>
+```
 
+## Include - PHP
 
-
-
-####################################### Include - PHP
-
+```php
 <!-- article-header.php file -->
 
 <h2><?php echo $title; ?></h2>
 <h4><?php echo $author; ?></h4>
 Word count: <?php echo $word_count; ?>
 
-<?php 
+<?php
     $title = "My first host";
     $author = "Benjamin";
     $word_count = 400;
@@ -561,18 +540,17 @@ function sayHi($name){
 }
 ?>
 
-<?php 
+<?php
     include "useful-tools.php";
     echo sayHi("Benny") . "<br>";
     echo $feetInMiles;
 ?>
+```
 
+## Classes and objects
 
-
-
-####################################### Classes and objects
-
-<?php 
+```php
+<?php
     class Book {
         var $title;
         var $author;
@@ -598,13 +576,12 @@ function sayHi($name){
     echo "$book2->author <br>";
     echo "$book2->pages <br>";
 ?>
+```
 
+## Constructors
 
-
-
-####################################### Constructors
-
-<?php 
+```php
+<?php
     class Book {
         var $title;
         var $author;
@@ -622,13 +599,12 @@ function sayHi($name){
     $book2 = new Book("Lord of the Rings", "Tolkien", 700);
     echo $book1->title; // Hunger Games
 ?>
+```
 
+## Object Functions
 
-
-
-####################################### Object Functions
-
-<?php 
+```php
+<?php
     class Student {
         var $name;
         var $major;
@@ -654,19 +630,18 @@ function sayHi($name){
 
     echo $student1->hasHonors();
 ?>
+```
 
+## Getters and setters \*\*\*didn't run
 
-
-
-####################################### Getters and setters	***didn't run
-
-<?php 
+```php
+<?php
     class Movie {
         public $title;
         private $rating;
 
         // visibility modifier is a key word thet tells php what code is able to access and use different attributes in the program
-        
+
         function __construct($title, $rating){
             $this->title = $title;
             // $this->rating = $rating;     // initially
@@ -683,7 +658,7 @@ function sayHi($name){
             if($rating == "G" || $rating == "PG" || $rating == "PG-13" || $rating == "R" || $rating == "NR"){
                 $this->rating = $rating;
             } esle {
-                $this->rating = "NR"; 
+                $this->rating = "NR";
             }
         }
     }
@@ -693,12 +668,11 @@ function sayHi($name){
         // $avengers->setRating("R");
     echo $avengers->getRating();
 ?>
+```
 
+## Inheritance
 
-
-
-####################################### Inheritance
-
+```php
 <?php
     class Chef {
         function makeChicken() {
@@ -729,14 +703,13 @@ function sayHi($name){
     $italianChef->makeSpecialDish();
     $italianChef->makePasta();
 ?>
+```
 
+## PHP OOP
 
+### Creating Classes
 
-
-####################################### PHP OOP
-#######################################
-####################################### Creating Classes
-
+```php
 // newclass.inc.php in the includes folder (served)
 <?php
     class NewClass {
@@ -748,12 +721,11 @@ function sayHi($name){
     // Instanciating the class
     $object = new NewClass();
     var_dump($object);      // object(NewClass)#1 (1) { ["info"]=> string(17) "This is some info" }
+```
 
+## Visibility and Inheritance
 
-
-
-####################################### Visibility and Inheritance
-
+```php
 // person.inc.php
 <?php
     class Person {
@@ -789,7 +761,7 @@ function sayHi($name){
             return $a;
         }
     }
-    
+
 -----
 
 // person.inc.php
@@ -813,19 +785,18 @@ function sayHi($name){
     $pet01 = new Pet();
     echo $pet01->owner();
 ?>
-    
+```
 
+## Properties and Methods
 
-
-####################################### Properties and Methods
-
+```php
 // person.inc.php
 <?php
     class Person {
         // Properties
-        public $name; 
-        public $eyeColor; 
-        public $age; 
+        public $name;
+        public $eyeColor;
+        public $age;
 
         // Method
         public function setName($aName) {
@@ -838,26 +809,26 @@ function sayHi($name){
     require 'includes/person.inc.php';
 
     $person1 = new Person();
-    $person1->setName("Daniel"); 
+    $person1->setName("Daniel");
     echo $person1->name . "<br>";
 
     $person2 = new Person();
-    $person2->setName("Timmy"); 
+    $person2->setName("Timmy");
     echo $person2->name;
 ?>
+```
 
+## Constructors and Destructors
 
+```php
+    // Destructors runs as soon as the class is done loading
 
-
-####################################### Constructors and Destructors
-
-        Destructors runs as soon as the class is done loading
 // person.inc.php
 <?php
     class Person {
-        public $name; 
-        public $eyeColor; 
-        public $age; 
+        public $name;
+        public $eyeColor;
+        public $age;
 
     public function __construct($aName, $aEyeColor, $aAge) {
         $this->name = $aName;
@@ -879,7 +850,7 @@ function sayHi($name){
     echo  $person1->eyeColor . "<br>";
     echo  $person1->age . "<br> <br>";
 
-    $person1->setName("John"); 
+    $person1->setName("John");
     echo $person1->name         // John
 ?>
 
@@ -890,17 +861,17 @@ class Person {
     private $name;
     private $eyeColor;
     private $age;
-    
+
     public function __construct($aName, $aEyeColor, $aAge) {
         $this->name = $aName;
         $this->eyeColor = $aEyeColor;
         $this->age = $aAge;
     }
-    
+
     public function setName($aName) {
         $this->name = $aName;
     }
-    
+
     public function getName() {
         return $this->name;
     }
@@ -912,12 +883,11 @@ class Person {
     $person1 = new Person("Daniel", "Blue", 28);
     echo $person1->getName();        // John
 ?>
+```
 
+## Deleting objects in PHP
 
-
-
-####################################### Deleting objects in PHP
-
+```php
 <?php
     require 'includes/newclass.inc.php';
 
@@ -925,12 +895,11 @@ class Person {
     unset($object);     // destroy an object after it is created
     echo $object->getProperty();
 ?>
+```
 
+## Static properties and Methods
 
-
-
-####################################### Static properties and Methods
-
+```php
 // person.inc.php
 <?php
 class Person {
@@ -939,17 +908,17 @@ class Person {
     private $age;
 
     public static $drinkingAge = 21;
-    
+
     public function __construct($aName, $aEyeColor, $aAge) {
         $this->name = $aName;
         $this->eyeColor = $aEyeColor;
         $this->age = $aAge;
     }
-    
+
     public function setName($aName) {
         $this->name = $aName;
     }
-    
+
     public function getDA() {
         return self::$drinkingAge;
     }
@@ -957,7 +926,7 @@ class Person {
     public static function setDrinkingAge($newDA) {
         self::$drinkingAge = $newDA;
     }
-} 
+}
 
 // index.php
 <?php
@@ -970,16 +939,15 @@ class Person {
     $person1 = new Person("Daniel", "Blue", 28);
     echo $person1->getDA();         // 21
 ?>
+```
 
+## Load classes automatically and namespace
 
-
-
-####################################### Load classes automatically and namespace
-
+```php
 // autoloader.inc.php in the includes folder
 <?php
-spl_autoload_register('myAutoLoader'); 
-    
+spl_autoload_register('myAutoLoader');
+
 function myAutoLoader($className) {
     $path = "classes/";
     $extension = ".class.php";
@@ -998,17 +966,17 @@ class Person {
     private $name;
     private $eyeColor;
     private $age;
-    
+
     public function __construct($aName, $aEyeColor, $aAge) {
         $this->name = $aName;
         $this->eyeColor = $aEyeColor;
         $this->age = $aAge;
     }
-    
+
     public function setName($aName) {
         $this->name = $aName;
     }
-    
+
     public function getName() {
         return $this->name;
     }
@@ -1017,27 +985,26 @@ class Person {
 // index.php
 <?php
     require 'includes/autoloader.inc.php';
-    
+
     $person1 = new Person("Daniel", "Blue", 28);
-    echo $person1->getName();        // Daniel      
+    echo $person1->getName();        // Daniel
 ?>
+```
 
+## Type declarations
 
-
-
-####################################### Type declarations
-
+```php
 // person.class.php
 <?php
 class Person {
     private $name;
     private $eyeColor;
     private $age;
-    
+
     public function setName(string $aName) {
         $this->name = $aName;
     }
-    
+
     public function getName() {
         return $this->name;
     }
@@ -1049,7 +1016,7 @@ class Person {
 ?>
 <?php
     require 'includes/autoloader.inc.php';
-    
+
     $person1 = new Person();
 
     try {
@@ -1059,18 +1026,17 @@ class Person {
             echo "Error!" . $e->getMessage();
     }
 ?>
+```
 
+## First exercise
 
-
-
-####################################### First exercise
-
+```php
 // class-autoload.inc.php
 <?php
-spl_autoload_register('myAutoLoader'); 
-    
+spl_autoload_register('myAutoLoader');
+
 function myAutoLoader($className) {
-    $url = $_SERVER['HTTP_HOST'].$_SERVER["REQUEST_URI"]; 
+    $url = $_SERVER['HTTP_HOST'].$_SERVER["REQUEST_URI"];
 
     if (strpos($url, 'includes') !== false) {
         $path = '../classes/';
@@ -1158,12 +1124,12 @@ class Calc {
         }
     }
 }
+?>
+```
 
+## Scope resolution operator (::)
 
-
-
-####################################### Scope resolution operator (::)
-
+```php
 // calc.inc.php
 <?php
 class FirstClass {
@@ -1191,12 +1157,11 @@ class SecondClass extends FirstClass {
 
 $b = SecondClass::anotherTest();    // You can't change this!       A static property!
 echo $b;
+```
 
+## Interfaces **\*\*** needs improving
 
-
-
-####################################### Interfaces      ****** needs improving
-
+```php
 <?php
 // Interfaces
 interface PaymentInterface {
@@ -1252,14 +1217,14 @@ class BuyProduct {
 $paymentType = new Cash();      // for instance, Cash
 $paymentType = new BuyProduct();
 $buyProduct->pay($paymentType);
+```
 
+## Abstract classes
 
-
-
-####################################### Abstract classes
+```php
         Can only be referenced from other classes
 
-// paymentTypes.abstract.php 
+// paymentTypes.abstract.php
 <?php
     abstract class Visa {
         public function visaPayment() {
@@ -1285,12 +1250,12 @@ $buyProduct->pay($paymentType);
 
     $buyProduct = new BuyProduct();
     echo $buyProduct->getPayment();
+```
 
+## Anonymous classes
 
-
-
-####################################### Anonymous classes
-        Less heavy to load, don't get stored in the memory of the website
+```php
+       // Less heavy to load, don't get stored in the memory of the website
 
 // SimpleClass.class.php
 <?php
@@ -1316,12 +1281,11 @@ $buyProduct->pay($paymentType);
     };
 
     $newObj->helloWorld();
-    
+```
 
+## OOP Traits
 
-
-####################################### OOP Traits
-
+```php
 <?php
     // Solution to multiple inheritance
 
