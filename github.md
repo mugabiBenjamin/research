@@ -588,3 +588,34 @@ git reset --hard HEAD@{2}
 # Creates and switches to the feature branch at that commit, effectively branching off from that point in history
 git checkout -b feature-branch bfd054a
 ```
+
+## Git blame
+
+```sh
+# To see who last modified a specific file
+git blame file.txt
+
+# To see who last modified a specific range of lines
+git blame -L 1,10 file.txt
+
+# Ignore whitespace changes
+git blame -w file.txt
+
+# To show line numbers
+git blame -n calculator.py
+
+# To ignore a specific commit
+git blame --ignore-rev <commit_hash> path/to/file.txt
+
+# Detect moved lines within the same file
+git blame -M calculator.py
+
+# Detect lines moved/copied from other files
+git blame -C calculator.py
+
+# Ignore whitespace, detects moved/copied lines, and focuses just on the function in question.
+git blame -w -C -M -L 100,150 complex_function.py
+
+# Detect lines moved within the same file (For deeper investigation)
+git log -L 42,42:file.py
+```
