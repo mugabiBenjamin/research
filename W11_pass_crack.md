@@ -1,5 +1,4 @@
-```bash
-# Switch cmd to ease of access 
+## Switch cmd to ease of access
 
 c:
 cd windows/system32
@@ -22,7 +21,9 @@ cd windows\system32
 del sethc.exe
 ren sethc.exe.bak sethc.exe
 
-__________________________ re-assigning pass to existing acc
+## Re-assigning pass to existing acc
+
+```bash
 net user
 -- net user <username> 
 -- net user <username> /active:yes
