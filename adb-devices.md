@@ -1,4 +1,4 @@
-> **ADB (Android Debug Bridge)**
+# ADB (Android Debug Bridge)
 
 ## Installation
 
