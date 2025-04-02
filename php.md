@@ -1,3 +1,5 @@
+# PHP
+
 ## Starting a local web server
 
 ```php
@@ -315,7 +317,7 @@ post -> gets more information from the user than get
     if ($isMale){
         echo "You're male";
     } else  {
-        echo "You're not male";	// <---
+        echo "You're not male";   // <---
     }
 
 -----
@@ -324,7 +326,7 @@ post -> gets more information from the user than get
     $isTall = true;
 
     if ($isMale && $isTall){
-        echo "You're a tall male";	// <---
+        echo "You're a tall male";    // <---
     } else  {
         echo "You're a short male";
     }
@@ -335,7 +337,7 @@ post -> gets more information from the user than get
     $isTall = false;
 
     if ($isMale || $isTall){
-        echo "You're a tall male";	// <---
+        echo "You're a tall male";    // <---
     } else  {
         echo "You're a short male";
     }
@@ -346,7 +348,7 @@ post -> gets more information from the user than get
     $isTall = true;
 
     if ($isMale && $isTall){
-        echo "You're a tall male";	// <---
+        echo "You're a tall male";    // <---
     } else if ($isMale && !$isTall) {
         echo "You're a short male";
     } else if (!$isMale && $isTall) {
