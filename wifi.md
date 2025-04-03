@@ -1,3 +1,5 @@
+# Wifi commands
+
 ## Show available networks
 
 ```bash
