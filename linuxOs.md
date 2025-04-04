@@ -1,6 +1,42 @@
 # Linux
 
+- [Working with Directories](#working-with-directories)
+  - [man command](#man-command)
+  - [pwd command](#pwd-command)
+  - [cd command](#cd-command)
+  - [ls command](#ls-command)
+  - [mkdir command](#mkdir-command)
+  - [rmdir command](#rmdir-command)
+  - [rm command with directories](#rm-command-with-directories)
+- [Working with Files](#working-with-files)
+  - [file command](#file-command)
+  - [touch command](#touch-command)
+  - [rm command with files](#rm-command-with-files)
+  - [cp command](#cp-command)
+  - [mv command](#mv-command)
+- [Viewing File Contents](#viewing-file-contents)
+  - [head command](#head-command)
+  - [tail command](#tail-command)
+  - [cat command](#cat-command)
+  - [echo command](#echo-command)
+  - [more command](#more-command)
+  - [less command](#less-command)
+- [Linux File System Structure](#linux-file-system-structure)
+- [System Information](#system-information)
+- [Miscelleneous commands](#miscelleneous-commands)
+  - [File Permissions and Ownership](#file-permissions-and-ownership)
+  - [Searching and Locating Files](#searching-and-locating-files)
+  - [Archiving and Downloading Files](#archiving-and-downloading-files)
+  - [Remote Access and Process Management](#remote-access-and-process-management)
+  - [Administrative Privileges and Disk Usage](#administrative-privileges-and-disk-usage)
+- [Formatting and disk partitioning](#formatting-and-disk-partitioning)
+  - [Formatting commands](#formatting-commands)
+  - [Unmounting a Partition in "Disks"](#unmounting-a-partition-in-disks)
+  - [Renaming a USB drive](#renaming-a-usb-drive)
+
 ## Working with Directories
+
+### man command
 
 ```bash
 # Shows help documentation for a specified command.
@@ -8,14 +44,18 @@ man – Displays the manual for a command.
 
 # Displays the manual for the 'ls' command.
 - Example: `man ls`
+```
 
+### pwd command
 
-
+```bash
 # Outputs the path of the current directory.
 pwd – Prints the current working directory.
+```
 
+### cd command
 
-
+```bash
 # Changes the current directory to a specified path.
 cd – Changes directory.
 
@@ -27,9 +67,11 @@ cd – Changes directory.
 
 # Can use full paths or paths relative to the current directory.
 - Supports absolute and relative paths.
+```
 
+### ls command
 
-
+```bash
 # Displays files and directories within the current directory.
 ls – Lists directory contents.
 
@@ -44,9 +86,11 @@ ls – Lists directory contents.
 
 # Shows all files with detailed information and readable sizes.
 - `ls -lah` – Combines all options above.
+```
 
+### mkdir command
 
-
+```bash
 # Creates a new directory or directories.
 mkdir – Creates directories.
 
@@ -55,18 +99,22 @@ mkdir – Creates directories.
 
 # Creates a nested directory structure.
 - `mkdir -p Linux/Ubuntu/Benjn` (creates nested directories).
+```
 
+### rmdir command
 
-
+```bash
 # Deletes empty directories.
 rmdir – Removes empty directories.
 
 # Removes directories and their parents if they are empty.
 - `rmdir -p linux/ubuntu/benjn` (removes multiple levels).
+```
 
+### rm command with directories
 
-
-For directories with content, use:
+```bash
+## For directories with content, use:
 
 # Deletes a directory and all its contents.
 - `rm -r directory_name` (recursively removes contents).
@@ -76,6 +124,8 @@ For directories with content, use:
 ```
 
 ## Working with Files
+
+### file command
 
 ```bash
 # File names must match exactly, including case.
@@ -92,9 +142,11 @@ file – Identifies file type.
 
 # Shows the file type of 'image.png'.
 Example: `file image.png`
+```
 
+### touch command
 
-
+```bash
 # Creates new empty files or updates timestamps of existing files.
 touch – Creates empty files.
 
@@ -103,9 +155,11 @@ touch – Creates empty files.
 
 # Creates multiple empty files.
 - `touch file1.txt file2.txt` (creates multiple files).
+```
 
+### rm command with files
 
-
+```bash
 # Deletes specified files or directories.
 rm – Removes files and directories.
 
@@ -117,9 +171,11 @@ rm – Removes files and directories.
 
 # Deletes a directory and its contents without confirmation.
 - `rm -rf directory_name` – Forcefully deletes directories and files.
+```
 
+### cp command
 
-
+```bash
 # Duplicates files or directories.
 cp – Copies files and directories.
 
@@ -128,9 +184,11 @@ cp – Copies files and directories.
 
 # Copies a directory and its contents.
 - `cp -r directory_name directory_copy` (copies a directory).
+```
 
+### mv command
 
-
+```bash
 # Moves files or directories to a new location or renames them.
 mv – Moves or renames files.
 
@@ -146,6 +204,8 @@ mv – Moves or renames files.
 
 ## Viewing File Contents
 
+### head command
+
 ```bash
 # Shows the beginning of a file.
 head – Displays the first lines of a file.
@@ -155,9 +215,11 @@ head – Displays the first lines of a file.
 
 # Displays the first 5 lines.
 - `head -5 filename.txt` (shows first 5 lines).
+```
 
+### tail command
 
-
+```bash
 # Shows the end of a file.
 tail – Displays the last lines of a file.
 
@@ -166,9 +228,11 @@ tail – Displays the last lines of a file.
 
 # Displays the last 5 lines.
 - `tail -5 filename.txt` (shows last 5 lines).
+```
 
+### cat command
 
-
+```bash
 # Outputs the contents of one or more files.
 cat – Concatenates and displays file contents.
 
@@ -180,9 +244,11 @@ cat – Concatenates and displays file contents.
 
 # Copies content from 'file1.txt' to 'file2.txt'.
 - `cat file1.txt > file2.txt` (copies content to another file).
+```
 
+### echo command
 
-
+```bash
 # Outputs text to the terminal or into a file.
 echo – Displays text and writes to a file.
 
@@ -191,16 +257,21 @@ echo – Displays text and writes to a file.
 
 # Appends "Text" to 'file.txt'.
 - `echo "Text" >> file.txt` (appends text).
+```
 
+### more command
 
+```bash
 # Allows viewing large files in segments.
 more / less – View file contents page by page.
 
 # Displays 'file.txt' one screen at a time.
 - `more file.txt`
+```
 
+### less command
 
-
+```bash
 # Displays 'file.txt' with backward scrolling capability.
 - `less file.txt` (allows scrolling back).
 ```
@@ -236,7 +307,9 @@ ls -l
 - `df` – Displays disk usage.
 ```
 
-##
+## Miscelleneous commands
+
+### File Permissions and Ownership
 
 ```bash
 # Modifies the access permissions of files or directories.
@@ -248,7 +321,11 @@ chmod – Changes file permissions.
 chown – Changes file owner and group.
 # Changes the owner of 'file.txt' to 'user' and the group to 'group'.
 - Example: `chown user:group file.txt`
+```
 
+### Searching and Locating Files
+
+```bash
 # Finds specific text in files or output.
 grep – Searches for a pattern in files.
 # Searches 'file.txt' for 'search_term'.
@@ -258,7 +335,11 @@ grep – Searches for a pattern in files.
 find – Searches for files in a directory hierarchy.
 # Finds all .txt files in the specified path.
 - Example: `find /path/to/search -name "*.txt"`
+```
 
+### Archiving and Downloading Files
+
+```bash
 # Combines multiple files or directories into a tarball for easier distribution.
 tar – Archives files into a single file.
 # Creates a tar file 'archive.tar' containing the specified directory.
@@ -268,7 +349,11 @@ tar – Archives files into a single file.
 wget – Downloads files from the web.
 # Downloads 'file.zip' from the specified URL.
 - Example: `wget http://example.com/file.zip`
+```
 
+### Remote Access and Process Management
+
+```bash
 # Allows secure remote access to another computer over a network.
 ssh – Secure shell for logging into a remote machine.
 # Connects to 'hostname' as 'user' via SSH.
@@ -283,7 +368,11 @@ ps – Displays currently running processes.
 kill – Sends a signal to a process.
 # Sends the default TERM signal to the process with the specified PID.
 - Example: `kill PID`
+```
 
+### Administrative Privileges and Disk Usage
+
+```bash
 # Allows users to run commands with elevated permissions.
 sudo – Executes a command with superuser privileges.
 # Runs the command to update package lists with administrative privileges.
