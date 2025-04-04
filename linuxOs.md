@@ -239,7 +239,6 @@ ls -l
 ##
 
 ```bash
-
 # Modifies the access permissions of files or directories.
 chmod – Changes file permissions.
 # Sets the permissions of 'script.sh' to read, write, and execute for the owner, and read and execute for others.
@@ -299,5 +298,93 @@ df – Displays disk space usage.
 du – Displays disk usage of files and directories.
 # Shows the total disk usage of the specified directory in a human-readable format.
 - Example: `du -sh /path/to/directory`
-
 ```
+
+## Formatting and disk partitioning
+
+1. **Identify the USB Drive:**
+
+   - Open the terminal (`Ctrl + Alt + T`).
+   - Run `lsblk` to list all block devices.
+   - Identify your USB drive (e.g., `/dev/sdb`).
+
+2. **Open `fdisk`:**
+
+   - Run `sudo fdisk /dev/sdX` (replace `/dev/sdX` with your USB drive's identifier).
+
+3. **Create a New Partition Table (if necessary):**
+
+   - Type `m` for help
+   - Type `g` for GPT partition table
+
+4. **Create a New Partition:**
+
+   - Type `n` to create a new partition.
+   - After the `g` command, you correctly typed `n` to create a new partition.
+   - Now, you need to follow the prompts to define the partition.
+   - `Partition number (1-128, default 1):` Press Enter to accept the default (1).
+   - `First sector (2048-..., default 2048):` Press Enter to accept the default.
+   - `Last sector, +sectors or +size{K,M,G,T,P} (2048-..., default ...):`
+     - To use the entire remaining space, press Enter.
+     - Do you want to remove the signature? `[Y]es/[N]o:` Type `y`
+     - ***To specify a size, you can use `+size` (e.g., `+2G` for a 2GB partition).***
+
+5. **Write the Changes:**
+
+   - After defining the partition, type `w` to write the changes to the disk.
+
+### Example
+
+```bash
+sudo fdisk /dev/sdb # replace sdb with your usb device.
+# inside fdisk:
+g # create GPT partition table
+n # create new partition
+# press enter (partition number 1)
+# press enter (first sector default)
+# press enter (last sector default, using all space)
+y # remove signature
+w # write changes and exit
+```
+
+### Formatting commands
+
+- **FAT32:** `sudo mkfs.vfat /dev/sdX1` (replace `/dev/sdX1` with your partition's identifier).
+
+- **NTFS:** `sudo mkfs.ntfs /dev/sdX1` (you might need to install the `ntfs-3g` package: `sudo apt install ntfs-3g`).
+
+```bash
+sudo mkfs.vfat /dev/sdb1
+```
+
+### Unmounting a Partition in "Disks"
+
+1. **Open the Disks Application:**
+
+   - Search for "Disks" in your applications menu and open it.
+
+2. **Select the USB Drive:**
+
+   - In the left-hand panel, click on the USB drive you want to work with.
+
+3. **Identify the Partition:**
+
+   - In the main panel, you'll see a visual representation of the drive and its partitions. Click on the specific partition you want to unmount.
+
+4. **Unmount the Partition:**
+
+   - Look for a `small square "stop" icon` (it might look like a stop button). This icon will only appear if the partition is currently mounted.
+   - Click the "stop" icon. This will unmount the partition.
+   - Alternatively, sometimes a menu will appear with a unmount option, depending on the version of ubuntu.
+
+- ***Always unmount the partition before changing its label or renaming it.***
+
+### Renaming a USB drive
+
+- Open the `"Disks" application`.
+- Select your USB drive from the list on the left.
+- If the partition is mounted, unmount it.
+- Click the `gear icon` (usually `"Additional partition options"`) and select `"Edit Filesystem."`
+- In the `"Label" field`, enter your desired name and click `Change`.
+
+[Back to top](#linux)
