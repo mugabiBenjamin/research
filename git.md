@@ -329,6 +329,9 @@ git reset --hard HEAD~1 or git reset --hard HEAD^
 
 # Undo "git reset --hard HEAD~1echo "Cloning repository..."
 git reset --hard ORIG_HEAD
+
+# Restores the file to the last committed state undoing uncommitted changes
+git restore file_name || git checkout -- file_name || git checkout HEAD file_name
 ```
 
 ## Cloning more than one repo (main and feature branch)
