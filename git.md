@@ -43,6 +43,9 @@ git fetch
 
 # Merge fetched updates into the working directory
 git merge
+
+# Search for a specific commit message
+git log -S <search_term> i.e. "Add"
 ```
 
 ## Stagging and commiting changes
