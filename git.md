@@ -172,35 +172,39 @@ git clone <repository_url>
 git remote add upstream <original_repository_url>
 git remote -v
 
-# 3. Create a new branch for the feature
-git checkout -b feature/<feature_branch_name>
-
-# 4. Stage and commit changes
-git add .
-git commit -m "Feature added"
-
-# 5. Push to the feature branch
-git push origin feature/<feature_branch_name>
-
-# 6. Create pull request from original repo
-
-# 7. Switch to the main branch
-git checkout main
-
-# 8. Fetch changes from the original repository
+# 3. Fetch changes from the original repository
 git fetch upstream
 git merge upstream/main
 
-# 9. Push changes to the main branch of the fork
+# 4. Create a new branch for the feature
+git checkout -b feature/<feature_branch_name>
+
+# 5. Stage and commit changes
+git add .
+git commit -m "Feature added"
+
+# 6. Push to the feature branch
+git push origin feature/<feature_branch_name>
+
+# 7. Create pull request from original repo
+
+# 8. Switch to the main branch
+git checkout main
+
+# 9. Fetch changes from the original repository
+git fetch upstream
+git merge upstream/main
+
+# 10. Push changes to the main branch of the fork
 git push origin main
 
-# 10. Delete feature branch locally
+# 11. Delete feature branch locally
    git branch -d <feature_branch_name>
 
    # Delete feature branch locally forcefully regardless of whether it has been merged or not.
    git branch -D <feature_branch_name>
 
-# 11. Delete feature branch remotely
+# 12. Delete feature branch remotely
 git push origin --delete <feature_branch_name>
 ```
 
