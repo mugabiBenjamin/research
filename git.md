@@ -12,7 +12,7 @@
 - [Including file in gitignore that initially wasn't](#including-file-in-gitignore-that-initially-wasnt)
 - [Starting a repo locally](#starting-a-repo-locally)
 - [Undoing things with checkout, revert, reset](#undoing-things-with-checkout-revert-reset)
-- [Cloning more than one repo (main and feature branch)](#cloning-more-than-one-repo-main-and-feature-branch)
+- [Cloning more than one branch (main and feature branch)](#cloning-more-than-one-branch-main-and-feature-branch)
 - [Setting new remote urls](#setting-new-remote-urls)
 - [Pulling Changes from the Repository](#pulling-changes-from-the-repository)
 - [git pull vs git pull --rebase](#git-pull-vs-git-pull---rebase)
@@ -341,7 +341,7 @@ git reset --hard ORIG_HEAD
 git restore file_name || git checkout -- file_name || git checkout HEAD file_name
 ```
 
-## Cloning more than one repo (main and feature branch)
+## Cloning more than one branch (main and feature branch)
 
 ```sh
 git clone <URL-of-your-forked-repo>
