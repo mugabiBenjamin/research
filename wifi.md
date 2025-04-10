@@ -1,5 +1,9 @@
 # Wifi commands
 
+- [Show available networks](#show-available-networks)
+- [Display QR code for active network](#display-qr-code-for-active-network)
+- [Low-level WiFi tools](#low-level-wifi-tools)
+
 ## Show available networks
 
 ```bash
@@ -41,3 +45,5 @@ sudo airmon-ng start wlan0
 sudo airodump-ng wlan0mon
 sudo airmon-ng stop wlan0mon
 ```
+
+[Back to top](#wifi-commands)
