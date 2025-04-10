@@ -1,5 +1,16 @@
 # ADB (Android Debug Bridge)
 
+- [Installation](#installation)
+- [Verifcation](#verifcation)
+- [Device navigation & File transfer](#device-navigation--file-transfer)
+- [Reboot commands](#reboot-commands)
+- [App management](#app-management)
+- [Debugging & Screen capture](#debugging--screen-capture)
+- [Port forwarding](#port-forwarding)
+- [Backup & Restore](#backup--restore)
+- [Wireless ADB (Without USB)](#wireless-adb-without-usb)
+- [Pairing Without USB (QR Code / Pairing Code)](#pairing-without-usb-qr-code--pairing-code)
+
 ## Installation
 
 ```bash
@@ -152,3 +163,5 @@ adb pair <IP_ADDRESS>:<PORT>
 # Disconnect from device
 adb disconnect <IP_ADDRESS>:5555
 ```
+
+[Back to top](#adb-android-debug-bridge)
