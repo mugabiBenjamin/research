@@ -40,7 +40,7 @@ List of devices attached
 - `offline` → Device not properly connected.
 ```
 
-## Device Navigation & File Transfer
+## Device navigation & File transfer
 
 ```bash
 # Open terminal on the device
@@ -79,7 +79,7 @@ adb install /path/to/app.apk
 adb uninstall com.example.app
 ```
 
-## Debugging & screen capture
+## Debugging & Screen capture
 
 ```bash
 # Capture a bug report
@@ -108,7 +108,7 @@ adb forward tcp:8080 tcp:8080
 adb reverse tcp:3000 tcp:3000
 ```
 
-## Backup & restore
+## Backup & Restore
 
 ```bash
 # Backup device data
