@@ -1,5 +1,23 @@
 # Markdown Syntax
 
+- [Headings](#headings)
+- [Heading Alternate Syntax](#heading-alternate-syntax)
+- [Text formattings](#text-formattings)
+- [Unordered lists](#unordered-lists)
+- [Ordered lists](#ordered-lists)
+- [Links](#links)
+- [Image](#image)
+- [Image with link](#image-with-link)
+- [Inline code](#inline-code)
+- [Code blocks](#code-blocks)
+- [Syntax highlighting](#syntax-highlighting)
+- [Tables](#tables)
+- [Task List](#task-list)
+- [Footnotes](#footnotes)
+- [Collapsible section](#collapsible-section)
+- [Escaping characters](#escaping-characters)
+- [Horizontal rules](#horizontal-rules)
+
 ## Headings
 
 ```markdown
@@ -160,3 +178,5 @@ Javascript Mastery
 
 ---
 ```
+
+[Back to top](#markdown-syntax)
