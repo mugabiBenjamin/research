@@ -92,11 +92,15 @@ _Italic text_ or _Italic text_
 ![GitHub Logo](https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png?raw=true)
 ```
 
+![GitHub Logo](https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png?raw=true)
+
 ## Image with link
 
 ```markdown
 [![Landscape Image](landscape.jpg)](https://images.pexels.com/photos/17863401/pexels-photo-17863401/free-photo-of-a-road-is-in-the-middle-of-a-snowy-mountain-range.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1)
 ```
+
+[![Landscape Image](landscape.jpg)](https://images.pexels.com/photos/17863401/pexels-photo-17863401/free-photo-of-a-road-is-in-the-middle-of-a-snowy-mountain-range.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1)
 
 ## Inline code
 
