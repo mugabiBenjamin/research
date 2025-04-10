@@ -14,11 +14,11 @@
 - [Undoing things with checkout, revert, reset](#undoing-things-with-checkout-revert-reset)
 - [Cloning more than one branch (main and feature branch)](#cloning-more-than-one-branch-main-and-feature-branch)
 - [Setting new remote urls](#setting-new-remote-urls)
-- [Pulling Changes from the Repository](#pulling-changes-from-the-repository)
+- [Pulling changes from the repository](#pulling-changes-from-the-repository)
 - [git pull vs git pull --rebase](#git-pull-vs-git-pull---rebase)
-- [Creating, Rebasing, and Syncing a Feature Branch in git](#creating-rebasing-and-syncing-a-feature-branch-in-git)
-- [Git Stash Commands](#git-stash-commands)
-- [Git Squash](#git-squash)
+- [Creating, Rebasing, and Syncing a feature branch in git](#creating-rebasing-and-syncing-a-feature-branch-in-git)
+- [Git stash commands](#git-stash-commands)
+- [Git squash](#git-squash)
 - [Git worktree](#git-worktree)
 - [Git diff](#git-diff)
 - [Git patch](#git-patch)
@@ -375,7 +375,7 @@ git remote set-url origin <new-origin-url>
 git remote set-url upstream <new-upstream-url>
 ```
 
-## Pulling Changes from the Repository
+## Pulling changes from the repository
 
 ```sh
 # 1. Pull changes from the remote repository, rebasing any local commits on top of the updated code
@@ -401,7 +401,7 @@ git pull --rebase
 git pull
 ```
 
-## Creating, Rebasing, and Syncing a Feature Branch in git
+## Creating, Rebasing, and Syncing a feature branch in git
 
 ```sh
 # 1. Create a new branch for your feature or changes
@@ -437,7 +437,7 @@ git merge upstream/main
 git push origin main
 ```
 
-## Git Stash Commands
+## Git stash commands
 
 ```sh
 # Stash your current changes (modified tracked files and the index)
@@ -474,7 +474,7 @@ git stash push -a
 git stash branch new-branch-name
 ```
 
-## Git Squash
+## Git squash
 
 ```sh
 # Replace n with the number of commits you want to squash.This command will open an interactive editor showing the last n commits.
