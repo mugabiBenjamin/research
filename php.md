@@ -725,7 +725,7 @@ function sayHi($name){
     var_dump($object);      // object(NewClass)#1 (1) { ["info"]=> string(17) "This is some info" }
 ```
 
-## Visibility and Inheritance
+### Visibility and Inheritance
 
 ```php
 // person.inc.php
@@ -789,7 +789,7 @@ function sayHi($name){
 ?>
 ```
 
-## Properties and Methods
+### Properties and Methods
 
 ```php
 // person.inc.php
@@ -820,7 +820,7 @@ function sayHi($name){
 ?>
 ```
 
-## Constructors and Destructors
+### Constructors and Destructors
 
 ```php
     // Destructors runs as soon as the class is done loading
@@ -887,7 +887,7 @@ class Person {
 ?>
 ```
 
-## Deleting objects in PHP
+### Deleting objects in PHP
 
 ```php
 <?php
@@ -899,7 +899,7 @@ class Person {
 ?>
 ```
 
-## Static properties and Methods
+### Static properties and Methods
 
 ```php
 // person.inc.php
