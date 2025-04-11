@@ -638,38 +638,41 @@ function sayHi($name){
 
 ```php
 <?php
-    class Movie {
-        public $title;
-        private $rating;
+class Movie
+{
+    public $title;
+    private $rating;
 
-        // visibility modifier is a key word thet tells php what code is able to access and use different attributes in the program
+    // visibility modifier is a key word thet tells php what code is able to access and use different attributes in the program
 
-        function __construct($title, $rating){
-            $this->title = $title;
-            // $this->rating = $rating;     // initially
-            $this->setRating($rating);
-        }
-
-        function getRating(){
-            return $this->rating;
-        }
-
-        function setRating($rating){
-            // $this->rating = $rating; // initially
-
-            if($rating == "G" || $rating == "PG" || $rating == "PG-13" || $rating == "R" || $rating == "NR"){
-                $this->rating = $rating;
-            } esle {
-                $this->rating = "NR";
-            }
-        }
+    function __construct($title, $rating)
+    {
+        $this->title = $title;
+        // $this->rating = $rating;     // initially
+        $this->setRating($rating);
     }
 
-    // G, PG, PG-13, R, NR
-    $avengers = new Movie("Avengers", "PG-13");
-        // $avengers->setRating("R");
-    echo $avengers->getRating();
-?>
+    function getRating()
+    {
+        return $this->rating;
+    }
+
+    function setRating($rating)
+    {
+        // $this->rating = $rating; // initially
+
+        if ($rating == "G" || $rating == "PG" || $rating == "PG-13" || $rating == "R" || $rating == "NR") {
+            $this->rating = $rating;
+        } else {
+            $this->rating = "NR";
+        }
+    }
+}
+
+// G, PG, PG-13, R, NR
+$avengers = new Movie("Avengers", "PG-13");
+// $avengers->setRating("R");
+echo $avengers->getRating();
 ```
 
 ## Inheritance
