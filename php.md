@@ -1166,59 +1166,80 @@ echo $b;
 ```php
 <?php
 // Interfaces
-interface PaymentInterface {
+interface PaymentInterface
+{
     public function payNow();
 }
 
-interface LoginInterface {
+interface OnlinePaymentInterface extends PaymentInterface
+{
     public function loginFirst();
 }
 
-// Classses
-class Paypal implements PaymentInterface, LoginInterface {
-    public function loginFirst() {}
-    public function payNow() {}
-    public function paymentProcess() {
-        $this->loginFirst();
-        $this->payNow();
+// Classes
+class Paypal implements OnlinePaymentInterface
+{
+    public function loginFirst()
+    {
+        echo "Logging in to Paypal...\n";
+    }
+    public function payNow()
+    {
+        echo "Paying with Paypal...\n";
     }
 }
 
-class BankTransfer implements PaymentInterface, LoginInterface {
-    public function loginFirst() {}
-    public function payNow() {}
-    public function paymentProcess() {
-        $this->loginFirst();
-        $this->payNow();
+class BankTransfer implements OnlinePaymentInterface
+{
+    public function loginFirst()
+    {
+        echo "Logging in to Bank Transfer...\n";
+    }
+    public function payNow()
+    {
+        echo "Paying with Bank Transfer...\n";
     }
 }
 
-class Visa implements PaymentInterface {
-    public function payNow() {}
-    public function paymentProcess() {
-        $this->payNow();
+class Visa implements PaymentInterface
+{
+    public function payNow()
+    {
+        echo "Paying with Visa...\n";
     }
 }
 
-class Cash implements PaymentInterface {
-    public function payNow() {}
-    public function paymentProcess() {
-        $this->payNow();
+class Cash implements PaymentInterface
+{
+    public function payNow()
+    {
+        echo "Paying with Cash...\n";
     }
 }
 
-class BuyProduct {
-    public function pay(PaymentInterface $paymentType) {
-        $paymentType->paymentProcess();
-    }
-    public function onlinePay(LoginInterface $paymentType) {
-        $paymentType->paymentProcess();
+// BuyProduct Class
+class BuyProduct
+{
+    public function pay(PaymentInterface $paymentType)
+    {
+        if ($paymentType instanceof OnlinePaymentInterface) {
+            $paymentType->loginFirst();
+        }
+        $paymentType->payNow();
     }
 }
 
-$paymentType = new Cash();      // for instance, Cash
-$paymentType = new BuyProduct();
-$buyProduct->pay($paymentType);
+// Example Usage
+$buyProduct = new BuyProduct();
+
+// Paying with Cash
+$cashPayment = new Cash();
+$buyProduct->pay($cashPayment);
+
+// Paying with Paypal
+$paypalPayment = new Paypal();
+$buyProduct->pay($paypalPayment);
+
 ```
 
 ## Abstract classes
