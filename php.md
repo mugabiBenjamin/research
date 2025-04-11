@@ -634,7 +634,7 @@ function sayHi($name){
 ?>
 ```
 
-## Getters and setters \*\*\*didn't run
+## Getters and setters
 
 ```php
 <?php
@@ -1164,7 +1164,7 @@ $b = SecondClass::anotherTest();    // You can't change this!       A static pro
 echo $b;
 ```
 
-## Interfaces **\*\*** needs improving
+## Interfaces
 
 ```php
 <?php
