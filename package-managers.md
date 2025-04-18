@@ -25,16 +25,16 @@
 
 ## pip Command Cheat Sheet  
 
-| Command                               | Description                              |  
-|---------------------------------------|------------------------------------------|  
-| `pip install <package>`               | Install a package                        |  
-| `pip uninstall <package>`             | Remove a package                         |  
-| `pip list`                            | List installed packages                  |  
-| `pip show <package>`                  | Show package details                     |  
+| Command                               | Description                                      |  
+|---------------------------------------|--------------------------------------------------|  
+| `pip install <package>`               | Install a package                                |  
+| `pip uninstall <package>`             | Remove a package                                 |  
+| `pip list`                            | List installed packages                          |  
+| `pip show <package>`                  | Show package details                             |  
 | `pip freeze`                          | List installed packages (for `requirements.txt`) |  
-| `pip search <package>`                | Search PyPI for packages                 |  
-| `pip install --upgrade <package>`     | Upgrade a package                        |  
-| `pip install -r requirements.txt`     | Install from a requirements file        |  
+| `pip search <package>`                | Search PyPI for packages                         |  
+| `pip install --upgrade <package>`     | Upgrade a package                                |  
+| `pip install -r requirements.txt`     | Install from a requirements file                 |  
 
 ### Usage Notes
 
