@@ -2,6 +2,7 @@
 
 - [npm vs Yarn Command Comparison](#npm-vs-yarn-command-comparison)
 - [pip Command Cheat Sheet](#pip-command-cheat-sheet)
+- [composer Command Cheat Sheet](#composer-command-cheat-sheet)
 
 ## npm vs Yarn Command Comparison
 
@@ -61,3 +62,25 @@
 ```bash
 curl -sSL https://install.python-poetry.org | python3 -
 ```
+
+## composer Command Cheat Sheet
+
+| Command                             | Description                                                                                                                                       |  
+|-------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------|  
+| `composer init`                     | Creates a new `composer.json` file in the current directory, prompting the user for details.                                                      |  
+| `composer install`                  | Installs the dependencies listed in `composer.json`, creating a `vendor` directory.                                                               |  
+| `composer update`                   | Updates all dependencies to the latest versions allowed by the version constraints in `composer.json`, and updates the `composer.lock` file.      |  
+| `composer require [package]`        | Adds a new package to the project, updates `composer.json`, and installs the package.                                                             |  
+| `composer remove [package]`         | Removes a package from the project, updates `composer.json`, and deletes the package files.                                                       |  
+| `composer show`                     | Lists all installed packages along with their versions and descriptions.                                                                          |  
+| `composer show [package]`           | Provides detailed information about a specific package, including its dependencies.                                                               |  
+| `composer dump-autoload`            | Regenerates the list of all classes that need to be included using autoloading.                                                                   |  
+| `composer validate`                 | Checks the `composer.json` file for syntax errors and other warnings to ensure it’s valid.                                                        |  
+| `composer create-project [package]` | Creates a new project based on an existing package, copying its files and structure.                                                              |  
+| `composer global require [package]` | Installs a package globally, making it available for all projects on the system.                                                                  |  
+| `composer.lock`                     | This is not a command but refers to the file that locks the project dependencies at specific versions. It should be committed to version control. |  
+| `composer status`                   | Shows which installed packages are out of date compared to `composer.lock`.                                                                       |  
+| `composer config`                   | Sets configuration values for Composer, such as repositories or authentication.                                                                   |  
+| `composer self-update`              | Updates Composer itself to the latest version.                                                                                                    |  
+| `composer run-script [script]`      | Executes a defined script in the `scripts` section of `composer.json`.                                                                            |  
+| `composer remove [package]`         | Removes a package and updates `composer.json` accordingly.                                                                                        |
