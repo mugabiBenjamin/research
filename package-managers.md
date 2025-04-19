@@ -1,4 +1,4 @@
-# yarn vs npm
+# Package Managers
 
 - [npm vs Yarn Command Comparison](#npm-vs-yarn-command-comparison)
 - [pip Command Cheat Sheet](#pip-command-cheat-sheet)
