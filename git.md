@@ -9,6 +9,7 @@
 - [Forking and pull requests](#forking-and-pull-requests)
 - [Working with multiple repos](#working-with-multiple-repos)
 - [Different use cases of git add](#different-use-cases-of-git-add)
+- [Cloning and merging repos from a template repo](#cloning-and-merging-repos-from-a-template-repo)
 - [Including file in gitignore that initially wasn't](#including-file-in-gitignore-that-initially-wasnt)
 - [Starting a repo locally](#starting-a-repo-locally)
 - [Undoing things with checkout, revert, reset](#undoing-things-with-checkout-revert-reset)
@@ -267,6 +268,22 @@ git reset
 # e - Manually edit the current hunk
 # p - Print the current hunk again
 # ? - Print help information about these commands
+```
+
+## Cloning and merging repos from a template repo
+
+```sh
+git checkout feature-branch
+git rebase main
+
+# If you encounter conflicts, resolve them
+git add files-with-conflicts
+git rebase --continue
+
+git rebase --abort         # Discard changes
+
+git checkout main
+git merge feature-branch
 ```
 
 ## Including file in gitignore that initially wasn't
