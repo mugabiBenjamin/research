@@ -17,17 +17,21 @@ my_project/
 
 ### Example Workflow in Ubuntu
 
-```python
+```bash
+# Install Python and pip (if not already installed)
+sudo apt update
+sudo apt install python3 python3-pip python3-venv
+
 # Create project directory
 mkdir my_project && cd my_project
 
 # Create and activate venv
-python3 -m venv venv        
+python3 -m venv venv
 # The second `venv` is the name of the directory where the virtual environment files will be stored. This can be renamed (e.g., .venv, env, myenv).
 source venv/bin/activate
 
-# Install packages
-pip install requests flask
+# Install dependencies
+pip install -r requirements.txt
 
 # Generate requirements.txt
 pip freeze > requirements.txt
