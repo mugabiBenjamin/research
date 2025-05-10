@@ -3,6 +3,7 @@
 - [npm vs Yarn Command Comparison](#npm-vs-yarn-command-comparison)
 - [pip Command Cheat Sheet](#pip-command-cheat-sheet)
 - [composer Command Cheat Sheet](#composer-command-cheat-sheet)
+- [uv Command Cheat Sheet](#uv-command-cheat-sheet)
 
 ## npm vs Yarn Command Comparison
 
@@ -90,3 +91,13 @@ curl -sSL https://install.python-poetry.org | python3 -
 | `composer self-update`              | Updates Composer itself to the latest version.                                                                                                    |
 | `composer run-script [script]`      | Executes a defined script in the `scripts` section of `composer.json`.                                                                            |
 | `composer remove [package]`         | Removes a package and updates `composer.json` accordingly.                                                                                        |
+
+## uv Command Cheat Sheet
+
+```bash
+# Install uv globally using curl
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Install uv globally using wget
+wget -qO- https://astral.sh/uv/install.sh | shx
+```
