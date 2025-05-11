@@ -100,4 +100,25 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 
 # Install uv globally using wget
 wget -qO- https://astral.sh/uv/install.sh | shx
+
+# Install uv using uv
+pip install uv
 ```
+
+| Command                      | Description                                             |
+| ---------------------------- | ------------------------------------------------------- |
+| `uv init <project-name>`     | Creates a new directory with a basic project structure. |
+| `uv init`                    | Initializes a new uv project in the current directory.  |
+| `uv add <package>`           | Adds a new package as a dependency to the project.      |
+| `uv remove <package>`        | Removes a package dependency from the project.          |
+| `uv tree`                    | Lists all dependencies in the project.                  |
+| `uv run main.py`             | Runs the main script in the project.                    |
+| `uv sync`                    | Updates all dependencies to their latest versions.      |
+| `uv add -r requirements.txt` | Adds packages from a requirements.txt file.             |
+| `uv tool list`               | Lists all installed tools.                              |
+| `uv tool upgrade`            | Updates all installed tools to their latest versions.   |
+| `uv build`                   | Builds the project for deployment.                      |
+| `uv publish`                 | Publishes the project to PyPI.                          |
+| `uv self update`             | Updates uv to the latest version.                       |
+| `uv cache prune`             | Clears the uv cache.                                    |
+| `uv cache clean`             | Clears the uv cache.                                    |
