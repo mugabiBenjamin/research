@@ -529,6 +529,12 @@ git worktree add ../new-feature feature/awesome-feature
 #  Listing Worktrees
 git worktree list
 
+# Provides detailed info, including worktree states
+git worktree list --verbose
+
+# Cleans up worktrees that no longer exist or are unreachable
+git worktree prune
+
 # Removing a Worktree
 git worktree remove <path>
 git worktree remove ~/Desktop/Projects/new-feature
