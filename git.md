@@ -289,12 +289,18 @@ git merge feature-branch
 ## Including file in gitignore that initially wasn't
 
 ```sh
-# Clear cache incase changes don't reflect on GitHub, then:
-git rm -rf --cached .
+# Add file to .gitignore then run this
+git rm --cached src/data/data.json
+
+# Add folder to .gitignore
+src/data/
+!src/data/.gitkeep  # Optional: to keep the folder itself in Git
+
+# Then run this to remove folder
+git rm  -r --cached src/data
 
 git add .
 git commit -m "message"
-
 git push
 ```
 
