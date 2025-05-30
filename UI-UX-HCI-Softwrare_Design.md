@@ -1,5 +1,9 @@
 # Comprehensive Principles of UI/UX, HCI, and Software Design
 
+- [User-Centered Qualities](#user-centered-qualities)
+- [System & Design Qualities](#system--design-qualities)
+- [Development & Testing Qualities](#development--testing-qualities)
+
 ## User-Centered Qualities
 
 - Usability
@@ -49,3 +53,5 @@
 - Task Efficiency
 - Satisfaction Over Time
 - User Diversity & Personas
+
+[Back to top](#comprehensive-principles-of-uiux-hci-and-software-design)
