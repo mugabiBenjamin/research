@@ -297,7 +297,7 @@ src/data/
 !src/data/.gitkeep  # Optional: to keep the folder itself in Git
 
 # Then run this to remove folder
-git rm  -r --cached src/data
+git rm -r --cached src/data
 
 git add .
 git commit -m "message"
