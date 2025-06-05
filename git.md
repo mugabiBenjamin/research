@@ -302,6 +302,17 @@ git rm -r --cached src/data
 git add .
 git commit -m "message"
 git push
+
+# ===================== The "Clean Slate" Workflow =====================
+
+# 1. Before you start, your .gitignore file should list everything you don't want to be tracked.
+# 2. Remove all tracked files from the Git index
+git rm -r --cached .
+
+# 3. Add all untracked files to the Git index
+git add .
+git commit -m "Cleaned up repository, only tracking necessary files"
+git push
 ```
 
 ## Starting a repo locally
