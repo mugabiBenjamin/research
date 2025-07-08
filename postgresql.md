@@ -41,6 +41,15 @@ _Important Security Note: For production systems, avoid using the postgres super
 2. Use `psql -U youruser -d yourdb` for daily work
 3. Only use postgres access for admin/maintenance tasks
 
+```sql
+-- If you need a new user/database (replace youruser and yourdb):
+sudo -u postgres createuser --interactive  # Follow prompts
+sudo -u postgres createdb yourdb
+
+-- Connect to Your Database
+psql -U youruser -d yourdb
+```
+
 ## creating DBs
 
 ```sql
