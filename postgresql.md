@@ -10,6 +10,13 @@
     -w, --no-password        never prompt for password
     -W, --password           force password prompt (should happen automatically)
 
+    \l  -- list databases
+    \c -- connect to a database
+    \d -- list tables in a database
+    \dt -- list tables in a database
+    \d table_name -- list table detailed info
+    \dt table_name -- list just that table if it exists
+
         psql -h localhost -p 5432 -U <username> <dbname>;
 
     -- alternatively
