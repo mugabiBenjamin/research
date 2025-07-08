@@ -20,6 +20,34 @@
         \c <dbname> -> to connect to a database
 ```
 
+### Use `sudo -i -u postgres` when you need to
+
+- Perform multiple PostgreSQL admin tasks
+- Access files owned by the postgres user
+
+### Use `sudo -u postgres psql` when you need to
+
+- Quickly get a PostgreSQL superuser prompt
+- Run a single admin command
+
+### Use `psql -U user -d db-name` when you
+
+- Want to connect as a regular database user
+- Are working with application databases (not admin tasks)
+
+_Important Security Note: For production systems, avoid using the postgres superuser for routine operations. Instead:_
+
+1. Create dedicated database users with limited privileges
+2. Use `psql -U youruser -d yourdb` for daily work
+3. Only use postgres access for admin/maintenance tasks
+
+## creating DBs
+
+```sql
+    CREATE DATABASE <dbname>;
+    \l
+```
+
 ## deleteing DBs
 
 ```sql
