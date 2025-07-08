@@ -48,6 +48,37 @@ sudo -u postgres createdb yourdb
 
 -- Connect to Your Database
 psql -U youruser -d yourdb
+
+-- Example workflow
+
+sudo -u postgres psql -c "CREATE USER devuser WITH PASSWORD 'mypass123';"
+sudo -u postgres psql -c "CREATE DATABASE devdb;"
+sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE devdb TO devuser;"
+
+psql -U devuser -d devdb
+-- Will prompt for password (enter 'mypass123')
+```
+
+## How to Check/Create Them
+
+### 1. Check if User & DB Exist (as admin)
+
+```sql
+sudo -u postgres psql -c "\du"         # List all users/roles
+sudo -u postgres psql -c "\l"          # List all databases
+```
+
+### 2. Create Missing User & Database
+
+If either doesn't exist, create them first (as postgres admin):
+
+```sql
+# Create a new user (role) with password
+sudo -u postgres psql -c "CREATE USER youruser WITH PASSWORD 'yourpassword';"
+
+# Create a database and grant privileges
+sudo -u postgres psql -c "CREATE DATABASE yourdb;"
+sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE yourdb TO youruser;"
 ```
 
 ## creating DBs
