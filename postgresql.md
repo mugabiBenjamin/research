@@ -1,5 +1,43 @@
 # PostgreSQL
 
+- [connecting to DB](#connecting-to-db)
+- [How to Check/Create Them](#how-to-checkcreate-them)
+- [creating DBs](#creating-dbs)
+- [deleteing DBs](#deleteing-dbs)
+- [creating tables without constraints](#creating-tables-without-constraints)
+- [creating tables with constraints](#creating-tables-with-constraints)
+- [INSERT INTO tables](#insert-into-tables)
+- [generating 1000 rows with Mockaroo](#generating-1000-rows-with-mockaroo)
+- [ORDER BY](#order-by)
+- [DISTINCT](#distinct)
+- [comparison operators](#comparison-operators)
+- [LIMIT OFFSET & FETCH](#limit-offset--fetch)
+- [IN](#in)
+- [BETWEEN](#between)
+- [LIKE & ILIKE](#like--ilike)
+- [GROUP BY](#group-by)
+- [GROUP BY HAVING](#group-by-having)
+- [MIN, MAX, SUM, AVG](#min-max-sum-avg)
+- [Coalasce](#coalasce)
+- [NULLIF](#nullif)
+- [DATE & TIMESTAMPS](#date--timestamps)
+- [Adding & Subtracting with databases](#adding--subtracting-with-databases)
+- [Extracting Fields](#extracting-fields)
+- [Age Function](#age-function)
+- [PRIMARY KEYS](#primary-keys)
+- [Adding PRIMARY KEYS](#adding-primary-keys)
+- [UNIQUE constraints](#unique-constraints)
+- [UPDATE records](#update-records)
+- [On conflict do nothing](#on-conflict-do-nothing)
+- [Forign key, Joins & Relationships](#forign-key-joins--relationships)
+- [Deleting records with foreign KEYS](#deleting-records-with-foreign-keys)
+- [Exporting Query Results to CSV](#exporting-query-results-to-csv)
+- [Serial & Sequences](#serial--sequences)
+- [Extensions](#extensions)
+- [Understanding UUID data type](#understanding-uuid-data-type)
+- [UUID as Primary Key](#uuid-as-primary-key)
+- []
+
 ## connecting to DB
 
 ```sql
@@ -75,7 +113,7 @@ sudo -u postgres psql -c "\du"
 
 sudo -u postgres psql -c "DROP OWNED BY benjamin CASCADE; DROP ROLE IF EXISTS benjamin;"
 
-sudo -u postgres psql -c "\du"  
+sudo -u postgres psql -c "\du"
 ```
 
 - `DROP OWNED BY` removes all objects (tables, etc.) owned by benjamin.
