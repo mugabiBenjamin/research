@@ -546,7 +546,35 @@ sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE yourdb TO youruser;"
 ## Deleting records with foreign KEYS
 
 ```sql
-    -- Delete record that has no foreign key first or updating the column with foreign key to null
+    -- Delete child records first
+
+    -- Delete child records referencing the parent record
+    DELETE FROM child_table WHERE foreign_key_column = parent_id;
+    -- Then delete the parent record
+    DELETE FROM parent_table WHERE id = parent_id;
+```
+
+```sql
+    -- Update foreign key columns to NULL (if allowed)
+
+    -- Set foreign key column to NULL before deleting parent record
+    UPDATE child_table SET foreign_key_column = NULL WHERE foreign_key_column = parent_id;
+    -- Then delete the parent record
+    DELETE FROM parent_table WHERE id = parent_id;
+```
+
+```sql
+    -- Using ON DELETE CASCADE or SET NULL
+
+    ALTER TABLE child_table
+    ADD CONSTRAINT fk_name
+    FOREIGN KEY (foreign_key_column)
+    REFERENCES parent_table(id)
+    ON DELETE CASCADE;  -- Automatically deletes child records when parent is deleted
+
+    -- OR
+
+    ON DELETE SET NULL; -- Sets foreign key to NULL on parent deletion
 ```
 
 ## Exporting Query Results to CSV
