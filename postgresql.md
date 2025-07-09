@@ -27,6 +27,7 @@
 - [PRIMARY KEYS](#primary-keys)
 - [Adding PRIMARY KEYS](#adding-primary-keys)
 - [UNIQUE constraints](#unique-constraints)
+- [Check constraints](#check-constraints)
 - [UPDATE records](#update-records)
 - [On conflict do nothing](#on-conflict-do-nothing)
 - [Forign key, Joins & Relationships](#forign-key-joins--relationships)
@@ -36,7 +37,6 @@
 - [Extensions](#extensions)
 - [Understanding UUID data type](#understanding-uuid-data-type)
 - [UUID as Primary Key](#uuid-as-primary-key)
-- []
 
 ## connecting to DB
 
@@ -467,16 +467,16 @@ sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE yourdb TO youruser;"
     ADD UNIQUE(email);          -- postgres defines the constraint name
 ```
 
-## Check constraints -- none worked
+## Check constraints
 
 ```sql
     ALTER TABLE person
     ADD CONSTRAINT chk_gender
-    CHECK (gender IN ('Female', 'Male));
+    CHECK (gender IN ('Female', 'Male'));
 
     ALTER TABLE person
     ADD CONSTRAINT chk_gender
-    CHECK (gender = 'Female' OR gender = 'Male);
+    CHECK (gender = 'Female' OR gender = 'Male');
 ```
 
 ## UPDATE records
