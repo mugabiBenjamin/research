@@ -37,6 +37,9 @@
 - [Extensions](#extensions)
 - [Understanding UUID data type](#understanding-uuid-data-type)
 - [UUID as Primary Key](#uuid-as-primary-key)
+- [Resetting Auto-Increment IDs](#resetting-auto-increment-ids)
+  - [Complete Reset Solution (For Development/Testing)](#complete-reset-solution-for-developmenttesting)
+  - [Partial Reset (Keep Data, Just Fix IDs)](#partial-reset-keep-data-just-fix-ids)
 
 ## connecting to DB
 
@@ -685,6 +688,75 @@ sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE yourdb TO youruser;"
     LEFT JOIN car
         USING (car_uid)
     WHERE car.* IS NULL;
+```
+
+## Resetting Auto-Increment IDs
+
+### Complete Reset Solution (For Development/Testing)
+
+```sql
+    -- 1. First truncate choices (child table) to avoid foreign key errors
+    TRUNCATE TABLE choices RESTART IDENTITY;
+
+    -- 2. Then truncate questions (parent table)
+    TRUNCATE TABLE questions RESTART IDENTITY;
+
+    -- 3. Verify reset worked
+    INSERT INTO questions (question_text) VALUES ('Test question');
+    INSERT INTO choices (question_id, choice_text, is_correct)
+    VALUES (1, 'Test choice', true);
+
+    -- Check results
+    SELECT * FROM questions;  -- Should show ID 1
+    SELECT * FROM choices;    -- Should show ID 1 with question_id 1
+```
+
+### Partial Reset (Keep Data, Just Fix IDs)
+
+```sql
+    -- 1. Reset questions sequence
+    ALTER SEQUENCE questions_id_seq RESTART WITH 1;
+
+    -- 2. Reset choices sequence
+    ALTER SEQUENCE choices_id_seq RESTART WITH 1;
+
+    -- 3. Reassign question IDs sequentially
+    WITH new_questions AS (
+    SELECT id, ROW_NUMBER() OVER (ORDER BY id) as new_id
+    FROM questions
+    )
+    UPDATE questions q
+    SET id = n.new_id
+    FROM new_questions n
+    WHERE q.id = n.id;
+
+    -- 4. Update choice question_ids to match
+    UPDATE choices c
+    SET question_id = q.new_id
+    FROM (
+    SELECT id, ROW_NUMBER() OVER (ORDER BY id) as new_id
+    FROM questions
+    ) q
+    WHERE c.question_id = q.id;
+
+    -- 5. Reassign choice IDs sequentially
+    WITH new_choices AS (
+    SELECT id, ROW_NUMBER() OVER (ORDER BY id) as new_id
+    FROM choices
+    )
+    UPDATE choices c
+    SET id = n.new_id
+    FROM new_choices n
+    WHERE c.id = n.id;
+```
+
+### For SQLAlchemy
+
+```sql
+    # Execute raw SQL through your session
+    db.execute(text("TRUNCATE TABLE choices RESTART IDENTITY"))
+    db.execute(text("TRUNCATE TABLE questions RESTART IDENTITY"))
+    db.commit()
 ```
 
 [Back to top](#postgresql)
