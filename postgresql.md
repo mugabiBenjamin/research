@@ -70,6 +70,17 @@ psql -U benjamin -d Quiz
 -- 3. Once connected, you can run \l to list databases
 ```
 
+```sql
+sudo -u postgres psql -c "\du"
+
+sudo -u postgres psql -c "DROP OWNED BY benjamin CASCADE; DROP ROLE IF EXISTS benjamin;"
+
+sudo -u postgres psql -c "\du"  
+```
+
+- `DROP OWNED BY` removes all objects (tables, etc.) owned by benjamin.
+- `DROP ROLE` deletes the user.
+
 ## How to Check/Create Them
 
 ### 1. Check if User & DB Exist (as admin)
