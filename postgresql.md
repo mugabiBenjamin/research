@@ -58,12 +58,16 @@ psql -U youruser -d yourdb
 
 -- Example workflow
 
-sudo -u postgres psql -c "CREATE USER devuser WITH PASSWORD 'mypass123';"
-sudo -u postgres psql -c "CREATE DATABASE devdb;"
-sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE devdb TO devuser;"
+-- 1. Create role and database (as postgres admin)
+sudo -u postgres psql -c "CREATE USER benjamin WITH PASSWORD '12345678';"
+sudo -u postgres psql -c "CREATE DATABASE Quiz;"
+sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE Quiz TO benjamin;"
 
-psql -U devuser -d devdb
--- Will prompt for password (enter 'mypass123')
+-- 2. Connect as benjamin (PostgreSQL role)
+psql -U benjamin -d Quiz
+-- Enter password when prompted: 12345678
+
+-- 3. Once connected, you can run \l to list databases
 ```
 
 ## How to Check/Create Them
