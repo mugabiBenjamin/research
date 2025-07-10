@@ -4,6 +4,8 @@
 - [pip Command Cheat Sheet](#pip-command-cheat-sheet)
 - [composer Command Cheat Sheet](#composer-command-cheat-sheet)
 - [uv Command Cheat Sheet](#uv-command-cheat-sheet)
+  - [Cloning a repo that uses uv](#cloning-a-repo-that-uses-uv)
+  - [Migrating from `requirements.txt` to `uv`](#migrating-from-requirementstxt-to-uv)
 
 ## npm vs Yarn Command Comparison
 
@@ -105,20 +107,120 @@ wget -qO- https://astral.sh/uv/install.sh | shx
 pip install uv
 ```
 
-| Command                      | Description                                             |
-| ---------------------------- | ------------------------------------------------------- |
-| `uv init <project-name>`     | Creates a new directory with a basic project structure. |
-| `uv init`                    | Initializes a new uv project in the current directory.  |
-| `uv add <package>`           | Adds a new package as a dependency to the project.      |
-| `uv remove <package>`        | Removes a package dependency from the project.          |
-| `uv tree`                    | Lists all dependencies in the project.                  |
-| `uv run main.py`             | Runs the main script in the project.                    |
-| `uv sync`                    | Updates all dependencies to their latest versions.      |
-| `uv add -r requirements.txt` | Adds packages from a requirements.txt file.             |
-| `uv tool list`               | Lists all installed tools.                              |
-| `uv tool upgrade`            | Updates all installed tools to their latest versions.   |
-| `uv build`                   | Builds the project for deployment.                      |
-| `uv publish`                 | Publishes the project to PyPI.                          |
-| `uv self update`             | Updates uv to the latest version.                       |
-| `uv cache prune`             | Clears the uv cache.                                    |
-| `uv cache clean`             | Clears the uv cache.                                    |
+| Command                        | Description                                             |
+| ------------------------------ | ------------------------------------------------------- |
+| `uv init <project-name>`       | Creates a new directory with a basic project structure  |
+| `uv init --lib <project-name>` | Initializes a new directory with a `src` folder         |
+| `uv init`                      | Initializes a new uv project in the current directory   |
+| `uv venv`                      | Creates a virtual environment                           |
+| `uv add <package>`             | Adds a new package as a dependency to the project       |
+| `uv remove <package>`          | Removes a package dependency from the project           |
+| `uv sync`                      | Installs dependencies from pyproject.toml/uv.lock       |
+| `uv lock`                      | Generate/update the lock file                           |
+| `uv lock --upgrade`            | Update dependencies to their latest versions            |
+| `uv add --editable .`          | Install current project in editable mode                |
+| `uv sync --extra dev`          | Install project in editable mode with dev dependencies  |
+| `uv tree`                      | Lists all dependencies in the project                   |
+| `uv run <command>`             | Runs a command in the project environment               |
+| `uv run main.py`               | Runs the main script in the project                     |
+| `uv add -r requirements.txt`   | Adds packages from a requirements.txt file              |
+| `uv python install <version>`  | Install a specific Python version                       |
+| `uv python list`               | List installed Python versions                          |
+| `uv tool install <package>`    | Install a tool globally                                 |
+| `uv tool list`                 | Lists all installed tools                               |
+| `uv tool upgrade`              | Updates all installed tools to their latest versions    |
+| `uv build`                     | Builds the project for deployment                       |
+| `uv publish`                   | Publishes the project to PyPI                           |
+| `uv self update`               | Updates uv to the latest version                        |
+| `uv cache clean`               | Clears the uv cache                                     |
+
+### Cloning a repo that uses uv
+
+- **Step 1: Clone the repository**
+
+```bash
+git clone <repository-url>
+cd <repository-name>
+```
+
+- **Step 2: Install dependencies from pyproject.toml**
+
+```bash
+# Install uv if not already installed
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Create virtual environment and install dependencies
+uv sync
+
+# Or if you want to specify Python version
+uv sync --python 3.11
+```
+
+- **Step 3: Activate virtual environment (optional)**
+
+```bash
+# Activate virtual environment
+source .venv/bin/activate
+
+# Or use uv run for commands (no activation needed)
+uv run python main.py
+```
+
+- **Step 4: Run the FastAPI application**
+
+```bash
+# Using uv run (recommended - no venv activation needed)
+uv run uvicorn main:app --reload
+
+# Or if venv is activated
+uvicorn main:app --reload
+```
+
+### Migrating from `requirements.txt` to `uv`
+
+- **Step 1: Initialize uv project**
+
+```bash
+# Navigate to your project directory
+cd your-project
+
+# Initialize uv project (creates pyproject.toml)
+uv init
+
+# Or if you want to specify Python version
+uv init --python 3.11
+```
+
+- **Step 2: Convert requirements.txt to pyproject.toml**
+
+```bash
+# Add dependencies from requirements.txt
+uv add fastapi uvicorn
+
+# Or add all at once if you have a requirements.txt
+uv add -r requirements.txt
+```
+
+- **Step 3: Create virtual environment and install dependencies**
+
+```bash
+# Create and activate virtual environment
+uv venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+
+# Install dependencies
+uv sync
+```
+
+- **Step 4: Run your FastAPI application**
+
+```bash
+
+# Using uv run (recommended)
+uv run uvicorn main:app --reload
+
+# Or traditional way after activating venv
+uvicorn main:app --reload
+```
+
+[Back to Top](#package-managers)
