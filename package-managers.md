@@ -6,6 +6,7 @@
 - [uv Command Cheat Sheet](#uv-command-cheat-sheet)
   - [Cloning a repo that uses uv](#cloning-a-repo-that-uses-uv)
   - [Migrating from `requirements.txt` to `uv`](#migrating-from-requirementstxt-to-uv)
+  - [When to use each `sync`](#when-to-use-each-sync)
 
 ## npm vs Yarn Command Comparison
 
@@ -134,7 +135,7 @@ pip install uv
 | `uv self update`               | Updates uv to the latest version                        |
 | `uv cache clean`               | Clears the uv cache                                     |
 
-### Cloning a repo that uses uv
+## Cloning a repo that uses uv
 
 - **Step 1: Clone the repository**
 
@@ -176,7 +177,7 @@ uv run uvicorn main:app --reload
 uvicorn main:app --reload
 ```
 
-### Migrating from `requirements.txt` to `uv`
+## Migrating from `requirements.txt` to `uv`
 
 - **Step 1: Initialize uv project**
 
@@ -222,5 +223,25 @@ uv run uvicorn main:app --reload
 # Or traditional way after activating venv
 uvicorn main:app --reload
 ```
+
+## When to use each `sync`
+
+### `uv sync`
+
+- Fresh project setup from existing pyproject.toml
+- Installing only production dependencies
+- CI/CD pipelines, Docker builds
+
+### `uv sync --extra dev`
+
+- Development environment setup
+- Installs main + dev dependencies (testing, linting tools)
+- When pyproject.toml has [project.optional-dependencies] sections
+
+### `uv add --editable .`
+
+- Making your project code importable during development
+- Want changes to reflect immediately without reinstalling
+- Building a package/library you're actively developing
 
 [Back to Top](#package-managers)
