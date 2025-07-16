@@ -7,7 +7,7 @@
 - [creating tables without constraints](#creating-tables-without-constraints)
 - [creating tables with constraints](#creating-tables-with-constraints)
 - [INSERT INTO tables](#insert-into-tables)
-- [generating 1000 rows with Mockaroo](#generating-1000-rows-with-mockaroo)
+- [Importing data from a file](#importing-data-from-a-file)
 - [ORDER BY](#order-by)
 - [DISTINCT](#distinct)
 - [comparison operators](#comparison-operators)
@@ -212,12 +212,18 @@ sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE yourdb TO youruser;"
         ('Jake', 'Jones', 'MALE', DATE '1990-01-10', 'jake@gmail.com');
 ```
 
-## generating 1000 rows with Mockaroo
+## Importing data from a file
 
 ```sql
-<!-- Mockaroo.com -->
+    -- Mockaroo.com
 
+    -- sql
     \i /home/benjn/Desktop/postrgreSQL/persona.sql -> to import file
+
+    -- csv
+    COPY table_name FROM /home/benjn/Desktop/file.csv
+    DELIMITER ','
+    CSV HEADER;
 ```
 
 ## ORDER BY
