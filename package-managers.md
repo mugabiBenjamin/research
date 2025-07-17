@@ -17,7 +17,9 @@
 | `npm install`             | `yarn install` (or just `yarn`) |
 | `npm update`              | `yarn upgrade`                  |
 | `npm list`                | `yarn list`                     |
-| `npm run <script-name>`   | `yarn <script-name>`            |
+| **`npm run dev`**             | **`yarn dev`**                      |
+| `npm start`               | `yarn start`                    |
+| `npm run build`           | `yarn build`                    |
 | `npm init`                | `yarn init`                     |
 | `npm update <package>`    | `yarn upgrade <package>`        |
 | `package-lock.json`       | `yarn.lock`                     |
