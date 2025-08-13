@@ -40,6 +40,7 @@
 - [Resetting Auto-Increment IDs](#resetting-auto-increment-ids)
   - [Complete Reset Solution (For Development/Testing)](#complete-reset-solution-for-developmenttesting)
   - [Partial Reset (Keep Data, Just Fix IDs)](#partial-reset-keep-data-just-fix-ids)
+- [Backing up a table](#backing-up-a-table)
 
 ## connecting to DB
 
@@ -756,13 +757,11 @@ sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE yourdb TO youruser;"
     WHERE c.id = n.id;
 ```
 
-### For SQLAlchemy
+## Backing up a table
 
 ```sql
-    # Execute raw SQL through your session
-    db.execute(text("TRUNCATE TABLE choices RESTART IDENTITY"))
-    db.execute(text("TRUNCATE TABLE questions RESTART IDENTITY"))
-    db.commit()
+CREATE TABLE roles_backup AS SELECT \* FROM roles;
+-- Foreign key constraints and indexes are not preserved
 ```
 
 [Back to top](#postgresql)
