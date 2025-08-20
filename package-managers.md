@@ -17,7 +17,7 @@
 | `npm install`             | `yarn install` (or just `yarn`) |
 | `npm update`              | `yarn upgrade`                  |
 | `npm list`                | `yarn list`                     |
-| **`npm run dev`**             | **`yarn dev`**                      |
+| **`npm run dev`**         | **`yarn dev`**                  |
 | `npm start`               | `yarn start`                    |
 | `npm run build`           | `yarn build`                    |
 | `npm init`                | `yarn init`                     |
@@ -110,32 +110,34 @@ wget -qO- https://astral.sh/uv/install.sh | shx
 pip install uv
 ```
 
-| Command                        | Description                                             |
-| ------------------------------ | ------------------------------------------------------- |
-| `uv init <project-name>`       | Creates a new directory with a basic project structure  |
-| `uv init --lib <project-name>` | Initializes a new directory with a `src` folder         |
-| `uv init`                      | Initializes a new uv project in the current directory   |
-| `uv venv`                      | Creates a virtual environment                           |
-| `uv add <package>`             | Adds a new package as a dependency to the project       |
-| `uv remove <package>`          | Removes a package dependency from the project           |
-| `uv sync`                      | Installs dependencies from pyproject.toml/uv.lock       |
-| `uv lock`                      | Generate/update the lock file                           |
-| `uv lock --upgrade`            | Update dependencies to their latest versions            |
-| `uv add --editable .`          | Install current project in editable mode                |
-| `uv sync --extra dev`          | Install project in editable mode with dev dependencies  |
-| `uv tree`                      | Lists all dependencies in the project                   |
-| `uv run <command>`             | Runs a command in the project environment               |
-| `uv run main.py`               | Runs the main script in the project                     |
-| `uv add -r requirements.txt`   | Adds packages from a requirements.txt file              |
-| `uv python install <version>`  | Install a specific Python version                       |
-| `uv python list`               | List installed Python versions                          |
-| `uv tool install <package>`    | Install a tool globally                                 |
-| `uv tool list`                 | Lists all installed tools                               |
-| `uv tool upgrade`              | Updates all installed tools to their latest versions    |
-| `uv build`                     | Builds the project for deployment                       |
-| `uv publish`                   | Publishes the project to PyPI                           |
-| `uv self update`               | Updates uv to the latest version                        |
-| `uv cache clean`               | Clears the uv cache                                     |
+| Command                               | Description                                            |
+| ------------------------------------- | ------------------------------------------------------ |
+| `uv init <project-name>`              | Creates a new directory with a basic project structure |
+| `uv init --lib <project-name>`        | Initializes a new directory with a `src` folder        |
+| `uv init`                             | Initializes a new uv project in the current directory  |
+| `uv venv`                             | Creates a virtual environment                          |
+| `uv add <package>`                    | Adds a new package as a dependency to the project      |
+| `uv remove <package>`                 | Removes a package dependency from the project          |
+| `uv sync`                             | Installs dependencies from pyproject.toml/uv.lock      |
+| `uv sync --upgrade`                   | Update all dependencies to their latest versions       |
+| `uv sync --upgrade-package <package>` | Update a specific package to its latest version        |
+| `uv lock`                             | Generate/update the lock file                          |
+| `uv run <command>`                    | Runs a command in the project environment              |
+| `uv run main.py`                      | Runs the main script in the project                    |
+| `uv add -r requirements.txt`          | Adds packages from a requirements.txt file             |
+| `uv python install <version>`         | Install a specific Python version                      |
+| `uv lock --upgrade`                   | Update dependencies to their latest versions           |
+| `uv add --editable .`                 | Install current project in editable mode               |
+| `uv sync --extra dev`                 | Install project in editable mode with dev dependencies |
+| `uv python list`                      | List installed Python versions                         |
+| `uv tree`                             | Lists all dependencies in the project                  |
+| `uv tool install <package>`           | Install a tool globally                                |
+| `uv tool list`                        | Lists all installed tools                              |
+| `uv tool upgrade`                     | Updates all installed tools to their latest versions   |
+| `uv build`                            | Builds the project for deployment                      |
+| `uv publish`                          | Publishes the project to PyPI                          |
+| `uv self update`                      | Updates uv to the latest version                       |
+| `uv cache clean`                      | Clears the uv cache                                    |
 
 ## Cloning a repo that uses uv
 
