@@ -760,7 +760,7 @@ sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE yourdb TO youruser;"
 ## Backing up a table
 
 ```sql
-CREATE TABLE roles_backup AS SELECT \* FROM roles;
+CREATE TABLE roles_backup AS SELECT * FROM roles;
 -- Foreign key constraints and indexes are not preserved
 ```
 
