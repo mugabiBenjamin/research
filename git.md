@@ -440,6 +440,8 @@ git pull
 ```sh
 # 1. Create a new branch for your feature or changes
 git checkout -b my-feature-branch
+# or
+git switch -c my-feature-branch
 
 # 2. Staging and committing changes
 git add .
