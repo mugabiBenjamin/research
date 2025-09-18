@@ -1,7 +1,7 @@
 #!/bin/bash  
-# create file and name it "update.old.sh"  
-# run "chmod +x update.old.sh" to make file executable  
-# run "sudo ./update.old.sh"  
+# create file and name it "update"  
+# run "chmod +x update" to make file executable  
+# run "sudo ./update"  
 
 # Update and upgrade the package lists and installed packages  
 apt update -y          # Update the list of available packages  
