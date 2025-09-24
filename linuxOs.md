@@ -466,7 +466,7 @@ grep – Searches for a pattern in files.
 # Searches 'file.txt' for 'search_term'.
 - Example: `grep "search_term" file.txt`
 
-# Recursively searches for 'pico' in all files in the current directory.  
+# Recursively searches for 'pico' in all files in the current directory.
 grep -r "pico" .
 # Recursively searches for 'pico' in all files in the specified directory.
 grep -r "pico" /path/to/folder/with/nested/files
