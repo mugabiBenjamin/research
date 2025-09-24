@@ -67,6 +67,46 @@
 - **Shell:** is the CLI interpreter that interpretes the CLI input and instructions the OS to perform actions e.g `Bash`, `tcsh`, `zsh`, etc
 - **Partition** is a container in which a file system resides
 
+## The Command Line
+
+Most input commands entered in the command line are separated by spaces. They have 3 basic elements
+
+`<command>` `<-options>` `<arguements>` </br>
+E.g. `ls` `-a` `/home/user`
+
+## Rebooting and shutting down a Linux system
+
+```bash
+# Shut down the system
+shutdown -h now
+
+# Reboot the system
+shutdown -r now
+
+# Reboot the system at a specific time
+sudo shutdown -r 10:00 "Shutting down for scheduled maintenance"
+
+# Reboot the system at a specific date
+shutdown -r "2023-06-01"
+
+# Reboot the system at a specific date and time
+shutdown -r "2023-06-01 10:00"
+
+# Cancel a scheduled reboot
+shutdown -c
+```
+
+## Locating applications
+
+Executable programs and scripts live in the:
+
+```bash
+`/bin` || `/usr/bin` || `/sbin` || `/usr/sbin` || `/opt` || `/usr/local/bin` || `/usr/local/sbin` || `/home/user/bin`
+# directories
+```
+
+To locate programs, use the `which` command. If `which` fails, use the `whereis` command
+
 ## Working with Directories
 
 ### man command
