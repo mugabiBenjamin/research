@@ -1,5 +1,35 @@
 # Complete Cybersecurity Learning Roadmap
 
+- [Phase 1: Foundation (3-4 months)](#phase-1-foundation-3-4-months)
+  -[Linux Fundamentals (4-6 weeks)](#linux-fundamentals-4-6-weeks)
+  - [Networking Basics (3-4 weeks)](#networking-basics-3-4-weeks)
+  - [Programming Fundamentals (4-5 weeks)](#programming-fundamentals-4-5-weeks)
+- [Phase 2: Security Fundamentals (2-3 months)](#phase-2-security-fundamentals-2-3-months)
+  - [Core Security Concepts (3-4 weeks)](#core-security-concepts-3-4-weeks)
+  - [System Security (3-4 weeks)](#system-security-3-4-weeks)
+  - [Network Security (2-3 weeks)](#network-security-2-3-weeks)
+- [Phase 3: Hands-On Security Skills (3-4 months)](#phase-3-hands-on-security-skills-3-4-months)
+  - [Vulnerability Assessment (4-5 weeks)](#vulnerability-assessment-4-5-weeks)
+  - [Basic Penetration Testing (4-6 weeks)](#basic-penetration-testing-4-6-weeks)
+  - [Incident Response Basics (2-3 weeks)](#incident-response-basics-2-3-weeks)
+- [Phase 4: Specialization Choice (4-6 months)](#phase-4-specialization-choice-4-6-months)
+  - [Option A: Penetration Testing](#option-a-penetration-testing)
+  - [Option B: SOC Analyst/Blue Team](#option-b-soc-analystblue-team)
+  - [Option C: GRC (Governance, Risk, Compliance)](#option-c-grc-governance-risk-compliance)
+  - [Option D: Cloud Security](#option-d-cloud-security)
+- [Phase 5: Advanced Skills & Career Prep (3-6 months)](#phase-5-advanced-skills--career-prep-3-6-months)
+  - [Professional Development](#professional-development)
+  - [Advanced Certifications](#advanced-certifications)
+  - [Real-World Experience](#real-world-experience)
+- [Ubuntu Setup for Cybersecurity](#ubuntu-setup-for-cybersecurity)
+  - [Essential Tools Available on Ubuntu](#essential-tools-available-on-ubuntu)
+  - [Ubuntu Advantages](#ubuntu-advantages)
+  - [Making Ubuntu Security-Focused](#making-ubuntu-security-focused)
+- [Total Timeline: 15-20 months to job-ready](#total-timeline-15-20-months-to-job-ready)
+  - [Realistic Expectations](#realistic-expectations)
+  - [Budget-Friendly Resources](#budget-friendly-resources)
+  - [Success Metrics by Phase](#success-metrics-by-phase)
+
 ## Phase 1: Foundation (3-4 months)
 
 ### Prerequisites & Core Knowledge
@@ -205,3 +235,5 @@ echo "deb http://http.kali.org/kali kali-rolling main non-free contrib" | sudo t
 5. **Phase 5:** Portfolio ready, applying for jobs
 
 **Key Success Factor:** Consistency over intensity. 1-2 hours daily beats weekend marathons.
+
+[Back to Top](#complete-cybersecurity-learning-roadmap)
