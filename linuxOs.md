@@ -238,6 +238,15 @@ touch – Creates empty files.
 
 # Creates multiple empty files.
 - `touch file1.txt file2.txt` (creates multiple files).
+
+# Creates 10 empty files named 'benjn1.txt' to 'benjn10.txt'.
+touch benjn{1..10}.txt
+
+# Creates 5 empty files named 'thank' 'you' 'so' 'much' 'benjamin'
+touch thank you so much benjamin
+
+# Creates a file named 'future.md' and sets its creation date to tomorrow.
+touch -d tomorrow future.md
 ```
 
 ### rm command with files
