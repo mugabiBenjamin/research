@@ -109,6 +109,16 @@ To locate programs, use the `which` command. If `which` fails, use the `whereis`
 
 ## Working with Directories
 
+## whatis
+
+```bash
+# Displays brief information about a specified command unlike 'man'
+whatis – Displays information about a command.
+
+# Displays information about the 'ls' command.
+- Example: whatis ls
+```
+
 ### man command
 
 ```bash
