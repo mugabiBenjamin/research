@@ -34,6 +34,39 @@
   - [Unmounting a Partition in "Disks"](#unmounting-a-partition-in-disks)
   - [Renaming a USB drive](#renaming-a-usb-drive)
 
+## Introduction to Linux Families
+
+### The Red Hat Family (RHEL -> Red Hat Enterprise Linux)
+
+- CentOs, centOs stream
+- Fedora, contains more softare
+- oracle linux
+- uses `yum` package manger
+
+### The SUSE Family
+
+- openSUSE
+- SLES
+- uses `RPM-based zypper` package manager
+
+### The Debian Family
+
+- Ubuntu
+- Debian family is upstream for Ubuntu
+- uses `dpkg-based apt` package manager
+
+- **Kernel:** is the brain of the linux OS. It controls the hardware e.g `Linux kernel`
+- **Distro:** is a collection of software combined with the linus kernel
+- **Bootloader:** is a program that boots the OS e.g `GRUB` ans `ISOLINUX`
+- **Serice:** is a program that runs background process e.g `httpd`, `nfsd`, `ntpd`, `ftpd`, etc
+- **File System:** is a method for storing and organising files in linux e.g `ext3`, `ext4`, `FAT`, `XFS`, `NFTS`, `Btrfs`, etc
+- **X Window System:** provides the standard tool kit and protocol to build GUIs on nearly all linux systems
+- **Desktop Environment (DE):** is a GUI on top of the OS
+  e.g `GNOME`, `KDE`, `Xfce`, `LXDE`, `Fluxbox`, etc
+- **Command Line:** is an interface for typing commands on top of the OS
+- **Shell:** is the CLI interpreter that interpretes the CLI input and instructions the OS to perform actions e.g `Bash`, `tcsh`, `zsh`, etc
+- **Partition** is a container in which a file system resides
+
 ## Working with Directories
 
 ### man command
@@ -416,7 +449,7 @@ du – Displays disk usage of files and directories.
    - `Last sector, +sectors or +size{K,M,G,T,P} (2048-..., default ...):`
      - To use the entire remaining space, press Enter.
      - Do you want to remove the signature? `[Y]es/[N]o:` Type `y`
-     - ***To specify a size, you can use `+size` (e.g., `+2G` for a 2GB partition).***
+     - **_To specify a size, you can use `+size` (e.g., `+2G` for a 2GB partition)._**
 
 5. **Write the Changes:**
 
@@ -466,7 +499,7 @@ sudo mkfs.vfat /dev/sdb1
    - Click the "stop" icon. This will unmount the partition.
    - Alternatively, sometimes a menu will appear with a unmount option, depending on the version of ubuntu.
 
-- ***Always unmount the partition before changing its label or renaming it.***
+- **_Always unmount the partition before changing its label or renaming it._**
 
 ### Renaming a USB drive
 
