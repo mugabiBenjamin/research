@@ -1,15 +1,22 @@
 # Wifi commands
 
-- [Show available networks](#show-available-networks)
+- [Show all available networks in range](#show-all-available-networks-in-range)
+- [Show active wifi](#show-active-wifi)
 - [Display QR code for active network](#display-qr-code-for-active-network)
+- [Show all coonections whether currently active or not](#show-all-coonections-whether-currently-active-or-not)
 - [Low-level WiFi tools](#low-level-wifi-tools)
 
-## Show available networks
+## Show all available networks in range
 
 ```bash
 # show only WiFi networks that are currently broadcasting in range
 nmcli dev wifi list
+
+# show wifi password of wifi
+sudo nmcli -s -g 802-11-WIRELESS-SECURITY.PSK connection show "SSID"
 ```
+
+## Show active wifi
 
 ```bash
 # show active wifi
@@ -19,11 +26,6 @@ nmcli connection show --active
 nmcli c show --active
 ```
 
-```bash
-# show wifi password of wifi
-sudo nmcli -s -g 802-11-WIRELESS-SECURITY.PSK connection show "SSID"
-```
-
 ## Display QR code for active network
 
 ```bash
@@ -31,12 +33,14 @@ sudo nmcli -s -g 802-11-WIRELESS-SECURITY.PSK connection show "SSID"
 nmcli dev wifi show-password
 ```
 
-## Low-level WiFi tools
+## Show all coonections whether currently active or not
 
 ```bash
-# display connections that have been configured previously, whethher currently active or not, both wired and wireless
+# display connections that have been configured previously, whether currently active or not, both wired and wireless
 nmcli c
 ```
+
+## Low-level WiFi tools
 
 ```bash
 # Monitor WiFi packets (requires aircrack-ng)
