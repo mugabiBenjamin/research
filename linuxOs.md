@@ -294,6 +294,49 @@ mv – Moves or renames files.
 - `mv directory_old directory_new` (renames a directory).
 ```
 
+### shred command (irreversible)
+
+```bash
+# Erases data from a file.
+shred – Erases data from a file.
+
+# Erases data from 'file.txt'.
+- `shred file.txt`
+
+# Erases data from multiple files.
+- `shred file1.txt file2.txt`
+
+# Erases data from a directory and its contents.
+- `shred -r directory_name`
+
+# Erases data and remove file after overwriting
+- shred -u file.txt (unreversible)
+```
+
+## ln command
+
+```bash
+# Creates hard links to existing files.
+ln – Creates hard links.
+ln -s target link_name
+ln -s path/to/file_or_folder path/to/symlink
+
+# Overwriting an existing link
+ln -sf path/to/new_file_or_folder path/to/symlink
+
+# Creates a hard link from 'file1.txt' to 'file2.txt'.
+- ln todo.txt stuff.txt
+
+# Creates multiple hard links.
+- ln file1.txt file2.txt file3.txt
+
+# Creates a symbolic link from 'file1.txt' to 'file2.txt'.
+- ln -s file1.txt file2.txt
+
+# Creates multiple symbolic links.
+- ln -s file1.txt file2.txt file3.txt
+```
+
 ## Viewing File Contents
 
 ### head command
