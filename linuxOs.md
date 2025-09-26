@@ -1,39 +1,5 @@
 # Linux
 
-- [Working with Directories](#working-with-directories)
-  - [man command](#man-command)
-  - [pwd command](#pwd-command)
-  - [cd command](#cd-command)
-  - [ls command](#ls-command)
-  - [mkdir command](#mkdir-command)
-  - [rmdir command](#rmdir-command)
-  - [rm command with directories](#rm-command-with-directories)
-- [Working with Files](#working-with-files)
-  - [file command](#file-command)
-  - [touch command](#touch-command)
-  - [rm command with files](#rm-command-with-files)
-  - [cp command](#cp-command)
-  - [mv command](#mv-command)
-- [Viewing File Contents](#viewing-file-contents)
-  - [head command](#head-command)
-  - [tail command](#tail-command)
-  - [cat command](#cat-command)
-  - [echo command](#echo-command)
-  - [more command](#more-command)
-  - [less command](#less-command)
-- [Linux File System Structure](#linux-file-system-structure)
-- [System Information](#system-information)
-- [Miscelleneous commands](#miscelleneous-commands)
-  - [File Permissions and Ownership](#file-permissions-and-ownership)
-  - [Searching and Locating Files](#searching-and-locating-files)
-  - [Archiving and Downloading Files](#archiving-and-downloading-files)
-  - [Remote Access and Process Management](#remote-access-and-process-management)
-  - [Administrative Privileges and Disk Usage](#administrative-privileges-and-disk-usage)
-- [Formatting and disk partitioning](#formatting-and-disk-partitioning)
-  - [Formatting commands](#formatting-commands)
-  - [Unmounting a Partition in "Disks"](#unmounting-a-partition-in-disks)
-  - [Renaming a USB drive](#renaming-a-usb-drive)
-
 ## Introduction to Linux Families
 
 ### The Red Hat Family (RHEL -> Red Hat Enterprise Linux)
@@ -107,555 +73,1180 @@ Executable programs and scripts live in the:
 
 To locate programs, use the `which` command. If `which` fails, use the `whereis` command
 
-## Chaning the password
+## Getting Help
+
+### man - Manual Pages
 
 ```bash
-# Change the password for the current user.
-sudo passwd
+# Display manual for a command
+man ls
+man grep
 
-# Change the password for a specific user.
-sudo passwd username
+# Search manual pages by keyword
+man -k network
+apropos network
 ```
 
-## Downloading files
+### whatis - Brief Command Description
 
 ```bash
-# Download a file from a URL.
-wget – Downloads a file from a URL.
-
-# Download a file from a URL and save it to a specific location.
-- Example: `wget https://example.com/file.txt -O /path/to/save/file.txt`
-
-# Download a file from a URL and save it to the current directory.
-- Example: `wget https://example.com/file.txt`
-
-# Download a file from a URL and save it to a specific directory.
-- Example: `wget https://example.com/file.txt -P /path/to/directory/`
-
-# Download a file from a URL using
+# Display brief information about a command
+whatis ls
+whatis grep
+whatis chmod
 ```
 
-## curl comand
+### help - Built-in Help
 
 ```bash
-# Download a file from a URL.
-curl – Downloads a file from a URL.
+# Get help for built-in commands
+help cd
+help echo
 
-# Download a file from a URL and save it to a specific location.
-- Example: `curl https://example.com/file.txt -o /path/to/save/file.txt`
-
-# Download a file from a URL and save it to the current directory.
-- Example: `curl https://example.com/file.txt`
-
-# Download a file from a URL and save it to a specific directory.
-- Example: `curl https://example.com/file.txt -o /path/to/directory/file.txt`
+# Command help options
+ls --help
+grep --help
 ```
 
-## zip command
+## Directory Operations
+
+### pwd - Print Working Directory
 
 ```bash
-# Create a zip archive from a list of files.
-zip – Creates a zip archive from a list of files.
-
-# Create a zip archive from a list of files and save it to the current directory.
-- Example: `zip archive_name.zip file1.txt file2.txt`
-
-# Create a zip archive from a list of files and save it to a specific directory.
-- Example: `zip archive_name.zip file1.txt file2.txt -d /path/to/directory/`
-```
-
-## cmp command
-
-```bash
-# Compares the contents of two files byte by byte.
-cmp – Compares the contents of two files.
-
-# Compares the contents of two files and displays the differences.
-- Example: `cmp file1.txt file2.txt`
-```
-
-## diff command
-
-```bash
-# Compares the contents of two files line by line.
-diff – Compares the contents of two files.
-
-# Compares the contents of two files and displays the differences.
-- Example: `diff file1.txt file2.txt`
-```
-
-## sort command
-
-```bash
-# Sorts the contents of a file.
-sort – Sorts the contents of a file.
-
-# Sorts the contents of a file and saves it to the current directory.
-- Example: `sort file.txt`
-
-# Sorts the contents of a file and saves it to a specific directory.
-- Example: `sort file.txt -o /path/to/directory/sorted_file.txt`
-
-# Sorts the contents of a file and saves it to the current directory in reverse order.
-- Example: `sort -r file.txt`
-
-# Sorts the contents of a file and saves it to a specific directory in reverse order.
-- Example: `sort -r file.txt -o /path/to/directory/reversed_sorted_file.txt`
-
-cat test.txt | sort
-```
-
-## find command
-
-```bash
-# Locates files and directories based on specified criteria.
-find – Searches for files in a directory hierarchy.
-
-# Locates files and directories based on specified criteria and saves the results to the current directory.
-- Example: `find . -name "*.txt"`
-
-# Locates files and directories based on specified criteria and saves the results to a specific directory.
-- Example: `find . -name "*.txt" -exec cp {} /path/to/directory/ \;`
-```
-
-## Making file executable
-
-```bash
-# Sets the executable permission for a file.
-chmod +x filename.txt
-./filename.txt
-```
-
-## Change ownership of a file
-
-```bash
-# Changes the owner and group of a file.
-chown – Changes the owner and group of a file.
-
-# Changes the owner and group of a file.
-- Example: `chown username:groupname filename.txt`
-```
-
-## Working with Directories
-
-## whatis
-
-```bash
-# Displays brief information about a specified command unlike 'man'
-whatis – Displays information about a command.
-
-# Displays information about the 'ls' command.
-- Example: whatis ls
-```
-
-### man command
-
-```bash
-# Shows help documentation for a specified command.
-man – Displays the manual for a command.
-
-# Displays the manual for the 'ls' command.
-- Example: `man ls`
-```
-
-### pwd command
-
-```bash
-# Outputs the path of the current directory.
-pwd – Prints the current working directory.
-```
-
-### cd command
-
-```bash
-# Changes the current directory to a specified path.
-cd – Changes directory.
-
-# Navigates to the user's home directory.
-- `cd` (without arguments) returns to the home directory.
-
-# Switches back to the previous directory.
-- `cd -` toggles between the last two directories.
-
-# Can use full paths or paths relative to the current directory.
-- Supports absolute and relative paths.
-```
-
-### ls command
-
-```bash
-# Displays files and directories within the current directory.
-ls – Lists directory contents.
-
-# Lists all files, including those starting with a dot.
-- `ls -a` – Show all files, including hidden ones.
-
-# Provides detailed information about each file.
-- `ls -l` – Long listing format.
-
-# Displays file sizes in a human-readable format.
-- `ls -h` – Human-readable sizes.
-
-# Shows all files with detailed information and readable sizes.
-- `ls -lah` – Combines all options above.
-```
-
-### mkdir command
-
-```bash
-# Creates a new directory or directories.
-mkdir – Creates directories.
-
-# Creates a directory named 'Test'.
-- `mkdir Test`
-
-# Creates a nested directory structure.
-- `mkdir -p Linux/Ubuntu/Benjn` (creates nested directories).
-```
-
-### rmdir command
-
-```bash
-# Deletes empty directories.
-rmdir – Removes empty directories.
-
-# Removes directories and their parents if they are empty.
-- `rmdir -p linux/ubuntu/benjn` (removes multiple levels).
-```
-
-### rm command with directories
-
-```bash
-## For directories with content, use:
-
-# Deletes a directory and all its contents.
-- `rm -r directory_name` (recursively removes contents).
-
-# Forcefully deletes a directory and its contents without confirmation.
-- `rm -rf directory_name` (forces deletion without prompts).
-```
-
-## Working with Files
-
-### file command
-
-```bash
-# File names must match exactly, including case.
-- Files are case-sensitive (unlike Windows).
-
-# Directories are a type of file in Linux.
-- Directories are treated as files.
-
-# File types are identified by their content, not their names.
-- Linux does not determine file type based on extensions.
-
-# Displays the type of a specified file.
-file – Identifies file type.
-
-# Shows the file type of 'image.png'.
-Example: `file image.png`
-```
-
-### touch command
-
-```bash
-# Creates new empty files or updates timestamps of existing files.
-touch – Creates empty files.
-
-# Creates an empty file named 'file.txt'.
-- `touch file.txt`
-
-# Creates multiple empty files.
-- `touch file1.txt file2.txt` (creates multiple files).
-
-# Creates 10 empty files named 'benjn1.txt' to 'benjn10.txt'.
-touch benjn{1..10}.txt
-
-# Creates 5 empty files named 'thank' 'you' 'so' 'much' 'benjamin'
-touch thank you so much benjamin
-
-# Creates a file named 'future.md' and sets its creation date to tomorrow.
-touch -d tomorrow future.md
-```
-
-### rm command with files
-
-```bash
-# Deletes specified files or directories.
-rm – Removes files and directories.
-
-# Removes 'file.txt'.
-- `rm file.txt` – Deletes a file.
-
-# Prompts for confirmation before deleting.
-- `rm -i file.txt` – Interactive mode (asks for confirmation).
-
-# Deletes a directory and its contents without confirmation.
-- `rm -rf directory_name` – Forcefully deletes directories and files.
-```
-
-### cp command
-
-```bash
-# Duplicates files or directories.
-cp – Copies files and directories.
-
-# Copies 'file1.txt' to 'file2.txt'.
-- `cp file1.txt file2.txt` (copies a file).
-
-# Copies a directory and its contents.
-- `cp -r directory_name directory_copy` (copies a directory).
-```
-
-### mv command
-
-```bash
-# Moves files or directories to a new location or renames them.
-mv – Moves or renames files.
-
-# Renames 'file1.txt' to 'file2.txt'.
-- `mv file1.txt file2.txt` (renames a file).
-
-# Moves 'file.txt' to the specified destination.
-- `mv file.txt /destination/` (moves a file).
-
-# Renames a directory.
-- `mv directory_old directory_new` (renames a directory).
-```
-
-### shred command (irreversible)
-
-```bash
-# Erases data from a file.
-shred – Erases data from a file.
-
-# Erases data from 'file.txt'.
-- `shred file.txt`
-
-# Erases data from multiple files.
-- `shred file1.txt file2.txt`
-
-# Erases data from a directory and its contents.
-- `shred -r directory_name`
-
-# Erases data and remove file after overwriting
-- shred -u file.txt (unreversible)
-```
-
-## ln command
-
-```bash
-# Creates hard links to existing files.
-ln – Creates hard links.
-ln -s target link_name
-ln -s path/to/file_or_folder path/to/symlink
-
-# Overwriting an existing link
-ln -sf path/to/new_file_or_folder path/to/symlink
-
-# Creates a hard link from 'file1.txt' to 'file2.txt'.
-- ln todo.txt stuff.txt
-
-# Creates multiple hard links.
-- ln file1.txt file2.txt file3.txt
-
-# Creates a symbolic link from 'file1.txt' to 'file2.txt'.
-- ln -s file1.txt file2.txt
-
-# Creates multiple symbolic links.
-- ln -s file1.txt file2.txt file3.txt
-```
-
-## Viewing File Contents
-
-### head command
-
-```bash
-# Shows the beginning of a file.
-head – Displays the first lines of a file.
-
-# Displays the first 10 lines of 'filename.txt'.
-- `head filename.txt` (shows first 10 lines by default).
-
-# Displays the first 5 lines.
-- `head -5 filename.txt` (shows first 5 lines).
-```
-
-### tail command
-
-```bash
-# Shows the end of a file.
-tail – Displays the last lines of a file.
-
-# Displays the last 10 lines of 'filename.txt'.
-- `tail filename.txt` (shows last 10 lines by default).
-
-# Displays the last 5 lines.
-- `tail -5 filename.txt` (shows last 5 lines).
-```
-
-### cat command
-
-```bash
-# Outputs the contents of one or more files.
-cat – Concatenates and displays file contents.
-
-# Displays the entire content of 'file.txt'.
-- `cat file.txt` (prints the whole file).
-
-# Displays contents of both files sequentially.
-- `cat file1.txt file2.txt` (prints multiple files).
-
-# Copies content from 'file1.txt' to 'file2.txt'.
-- `cat file1.txt > file2.txt` (copies content to another file).
-```
-
-### echo command
-
-```bash
-# Outputs text to the terminal or into a file.
-echo – Displays text and writes to a file.
-
-# Writes "Hello World" into 'file.txt'.
-- `echo "Hello World" > file.txt` (creates and writes text).
-
-# Appends "Text" to 'file.txt'.
-- `echo "Text" >> file.txt` (appends text).
-```
-
-### more command
-
-```bash
-# Allows viewing large files in segments.
-more / less – View file contents page by page.
-
-# Displays 'file.txt' one screen at a time.
-- `more file.txt`
-```
-
-### less command
-
-```bash
-# Displays 'file.txt' with backward scrolling capability.
-- `less file.txt` (allows scrolling back).
-```
-
-## Linux File System Structure
-
-```bash
-Navigate the root directory:
-
-# Changes to the root directory.
-cd /
-
-# Displays '/' (the root directory).
+# Show current directory path
 pwd
+```
 
-# Lists files and directories in the root.
+### cd - Change Directory
+
+```bash
+# Go to home directory
+cd
+cd ~
+
+# Go to specific directory
+cd /path/to/directory
+
+# Go to parent directory
+cd ..
+
+# Go back to previous directory
+cd -
+
+# Go to root directory
+cd /
+```
+
+### ls - List Directory Contents
+
+```bash
+# Basic listing
+ls
+
+# List all files (including hidden)
+ls -a
+
+# Long format with details
 ls -l
+
+# Human-readable file sizes
+ls -lh
+
+# Combine options
+ls -lah
+
+# List specific directory
+ls /path/to/directory
+
+# Sort by modification time
+ls -lt
+
+# Reverse sort order
+ls -lr
+```
+
+### mkdir - Create Directories
+
+```bash
+# Create single directory
+mkdir directory_name
+
+# Create multiple directories
+mkdir dir1 dir2 dir3
+
+# Create nested directories
+mkdir -p path/to/nested/directory
+
+# Create with specific permissions
+mkdir -m 755 directory_name
+```
+
+### rmdir - Remove Empty Directories
+
+```bash
+# Remove empty directory
+rmdir directory_name
+
+# Remove nested empty directories
+rmdir -p path/to/nested/directory
+```
+
+### rm - Remove Files and Directories
+
+```bash
+# Remove file
+rm filename
+
+# Remove multiple files
+rm file1 file2 file3
+
+# Remove with confirmation
+rm -i filename
+
+# Remove directory and contents (recursive)
+rm -r directory_name
+
+# Force remove without confirmation
+rm -rf directory_name
+
+# Remove files matching pattern
+rm *.txt
+```
+
+## File Operations
+
+### file - Identify File Type
+
+```bash
+# Check file type
+file filename
+file image.png
+file /bin/ls
+
+# Check multiple files
+file *
+```
+
+### touch - Create Files and Update Timestamps
+
+```bash
+# Create empty file
+touch filename
+
+# Create multiple files
+touch file1.txt file2.txt file3.txt
+
+# Create numbered files
+touch file{1..10}.txt
+
+# Update file timestamp
+touch existing_file
+
+# Set specific timestamp
+touch -d "2024-01-01" filename
+touch -d tomorrow filename
+```
+
+### cp - Copy Files and Directories
+
+```bash
+# Copy file
+cp source destination
+
+# Copy file to directory
+cp file.txt /path/to/directory/
+
+# Copy multiple files to directory
+cp file1.txt file2.txt /destination/
+
+# Copy directory recursively
+cp -r source_directory destination_directory
+
+# Copy with confirmation
+cp -i source destination
+
+# Preserve file attributes
+cp -p source destination
+
+# Copy and create backup
+cp --backup source destination
+```
+
+### mv - Move/Rename Files and Directories
+
+```bash
+# Rename file
+mv old_name new_name
+
+# Move file to directory
+mv file.txt /path/to/directory/
+
+# Move multiple files
+mv file1.txt file2.txt /destination/
+
+# Rename directory
+mv old_directory new_directory
+
+# Move with confirmation
+mv -i source destination
+```
+
+### ln - Create Links
+
+```bash
+# Create hard link
+ln target_file link_name
+
+# Create symbolic link
+ln -s target_file symlink_name
+ln -s /path/to/target /path/to/symlink
+
+# Create symbolic link to directory
+ln -s /path/to/directory /path/to/symlink
+
+# Overwrite existing symlink
+ln -sf new_target existing_symlink
+
+# Create multiple hard links
+ln target_file link1 link2 link3
+```
+
+### shred - Securely Delete Files
+
+```bash
+# Overwrite file data
+shred filename
+
+# Overwrite and remove file
+shred -u filename
+
+# Multiple overwrite passes
+shred -n 3 filename
+
+# Overwrite multiple files
+shred file1.txt file2.txt
+
+# Verbose output
+shred -v filename
+```
+
+## File Content Viewing
+
+### cat - Display File Contents
+
+```bash
+# Display file content
+cat filename
+
+# Display multiple files
+cat file1.txt file2.txt
+
+# Number lines
+cat -n filename
+
+# Show non-printing characters
+cat -v filename
+
+# Concatenate files and redirect
+cat file1.txt file2.txt > combined.txt
+```
+
+### head - Display Beginning of Files
+
+```bash
+# Show first 10 lines (default)
+head filename
+
+# Show first N lines
+head -n 5 filename
+head -5 filename
+
+# Show multiple files
+head file1.txt file2.txt
+
+# Show first N bytes
+head -c 100 filename
+```
+
+### tail - Display End of Files
+
+```bash
+# Show last 10 lines (default)
+tail filename
+
+# Show last N lines
+tail -n 5 filename
+tail -5 filename
+
+# Follow file changes (useful for logs)
+tail -f logfile
+
+# Show multiple files
+tail file1.txt file2.txt
+
+# Show last N bytes
+tail -c 100 filename
+```
+
+### more - Page Through Files
+
+```bash
+# View file page by page
+more filename
+
+# Navigate: Space (next page), q (quit), h (help)
+```
+
+### less - Advanced File Pager
+
+```bash
+# View file with navigation
+less filename
+
+# Navigate: Space (next page), b (previous page), q (quit)
+# Search: /pattern (forward), ?pattern (backward)
+# Go to line: :n (line number n)
+```
+
+### echo - Display Text
+
+```bash
+# Display text
+echo "Hello World"
+
+# Write to file (overwrite)
+echo "Hello World" > filename
+
+# Append to file
+echo "Hello World" >> filename
+
+# Display variables
+echo $HOME
+echo $PATH
+
+# Disable newline
+echo -n "No newline"
+```
+
+## File Permissions and Ownership
+
+### chmod - Change File Permissions
+
+```bash
+# Using octal notation
+chmod 755 filename      # rwxr-xr-x
+chmod 644 filename      # rw-r--r--
+chmod 600 filename      # rw-------
+
+# Using symbolic notation
+chmod +x filename       # Add execute permission
+chmod -x filename       # Remove execute permission
+chmod u+x filename      # Add execute for user
+chmod g+r filename      # Add read for group
+chmod o-w filename      # Remove write for others
+
+# Recursive permission change
+chmod -R 755 directory/
+
+# Make script executable
+chmod +x script.sh
+./script.sh
+```
+
+### chown - Change File Ownership
+
+```bash
+# Change owner
+chown username filename
+
+# Change owner and group
+chown username:groupname filename
+
+# Change group only
+chown :groupname filename
+
+# Recursive ownership change
+chown -R username:groupname directory/
+
+# Using numeric IDs
+chown 1000:1000 filename
+```
+
+### chgrp - Change Group Ownership
+
+```bash
+# Change group
+chgrp groupname filename
+
+# Recursive group change
+chgrp -R groupname directory/
+```
+
+### umask - Set Default Permissions
+
+```bash
+# Display current umask
+umask
+
+# Set umask (permissions to subtract)
+umask 022
+
+# Set umask symbolically
+umask u=rwx,g=rx,o=rx
+```
+
+## Searching and Text Processing
+
+### grep - Search Text Patterns
+
+```bash
+# Basic search
+grep "pattern" filename
+
+# Case-insensitive search
+grep -i "pattern" filename
+
+# Recursive search in directories
+grep -r "pattern" directory/
+
+# Search with line numbers
+grep -n "pattern" filename
+
+# Search for whole words only
+grep -w "word" filename
+
+# Invert match (lines not containing pattern)
+grep -v "pattern" filename
+
+# Count matches
+grep -c "pattern" filename
+
+# Search multiple files
+grep "pattern" file1.txt file2.txt
+
+# Search using regular expressions
+grep -E "pattern1|pattern2" filename
+```
+
+### find - Search Files and Directories
+
+```bash
+# Find by name
+find /path -name "filename"
+find . -name "*.txt"
+
+# Case-insensitive name search
+find . -iname "*.TXT"
+
+# Find by type
+find . -type f        # Files only
+find . -type d        # Directories only
+
+# Find by size
+find . -size +100M    # Larger than 100MB
+find . -size -1k      # Smaller than 1KB
+
+# Find by modification time
+find . -mtime -7      # Modified in last 7 days
+find . -mtime +30     # Modified more than 30 days ago
+
+# Find and execute command
+find . -name "*.tmp" -delete
+find . -name "*.txt" -exec cp {} /backup/ \;
+
+# Find by permissions
+find . -perm 644
+```
+
+### which - Locate Command
+
+```bash
+# Find command location
+which ls
+which python
+which gcc
+```
+
+### locate - Find Files by Name
+
+```bash
+# Find files (requires updatedb)
+locate filename
+locate "*.conf"
+
+# Update locate database
+sudo updatedb
+```
+
+### awk - Text Processing
+
+```bash
+# Print specific columns
+awk '{print $1}' filename
+awk '{print $1, $3}' filename
+
+# Print lines matching pattern
+awk '/pattern/ {print}' filename
+
+# Print with conditions
+awk '$3 > 100 {print}' filename
+
+# Field separator
+awk -F: '{print $1}' /etc/passwd
+```
+
+### sed - Stream Editor
+
+```bash
+# Substitute text
+sed 's/old/new/' filename
+sed 's/old/new/g' filename    # Global replacement
+
+# Delete lines
+sed '2d' filename             # Delete line 2
+sed '/pattern/d' filename     # Delete lines matching pattern
+
+# Print specific lines
+sed -n '1,5p' filename        # Print lines 1-5
+```
+
+### sort - Sort File Contents
+
+```bash
+# Sort alphabetically
+sort filename
+
+# Sort numerically
+sort -n filename
+
+# Reverse sort
+sort -r filename
+
+# Sort by specific column
+sort -k2 filename
+
+# Remove duplicates while sorting
+sort -u filename
+
+# Sort and save to file
+sort filename -o sorted_file.txt
+
+# Sort from pipe
+cat filename | sort
+```
+
+### uniq - Report or Filter Unique Lines
+
+```bash
+# Remove duplicate lines (requires sorted input)
+uniq filename
+
+# Count occurrences
+uniq -c filename
+
+# Show only duplicates
+uniq -d filename
+
+# Show only unique lines
+uniq -u filename
+```
+
+### wc - Word, Line, Character Count
+
+```bash
+# Count lines, words, characters
+wc filename
+
+# Count lines only
+wc -l filename
+
+# Count words only
+wc -w filename
+
+# Count characters only
+wc -c filename
+```
+
+## Archiving and Compression
+
+### tar - Archive Files
+
+```bash
+# Create archive
+tar -cvf archive.tar directory/
+tar -cvf archive.tar file1 file2 file3
+
+# Create compressed archive
+tar -czvf archive.tar.gz directory/     # gzip
+tar -cjvf archive.tar.bz2 directory/    # bzip2
+
+# Extract archive
+tar -xvf archive.tar
+tar -xzvf archive.tar.gz
+
+# List archive contents
+tar -tvf archive.tar
+
+# Extract specific files
+tar -xvf archive.tar filename
+
+# Extract to specific directory
+tar -xvf archive.tar -C /destination/
+```
+
+### zip - Create ZIP Archives
+
+```bash
+# Create zip archive
+zip archive.zip file1.txt file2.txt
+
+# Create zip from directory
+zip -r archive.zip directory/
+
+# Create zip with compression level
+zip -9 archive.zip file.txt    # Maximum compression
+
+# Add to existing archive
+zip archive.zip newfile.txt
+```
+
+### unzip - Extract ZIP Archives
+
+```bash
+# Extract zip archive
+unzip archive.zip
+
+# Extract to specific directory
+unzip archive.zip -d /destination/
+
+# List archive contents
+unzip -l archive.zip
+
+# Extract specific files
+unzip archive.zip filename
+```
+
+### gzip/gunzip - Compress/Decompress Files
+
+```bash
+# Compress file
+gzip filename          # Creates filename.gz
+
+# Decompress file
+gunzip filename.gz
+
+# Keep original file
+gzip -k filename
+
+# Compress with maximum compression
+gzip -9 filename
+```
+
+## Network and Downloads
+
+### wget - Download Files
+
+```bash
+# Download file
+wget https://example.com/file.txt
+
+# Download and save with specific name
+wget https://example.com/file.txt -O newname.txt
+
+# Download to specific directory
+wget https://example.com/file.txt -P /path/to/directory/
+
+# Continue partial download
+wget -c https://example.com/largefile.zip
+
+# Download recursively
+wget -r https://example.com/directory/
+
+# Limit download speed
+wget --limit-rate=200k https://example.com/file.txt
+```
+
+### curl - Transfer Data
+
+```bash
+# Download file
+curl https://example.com/file.txt
+
+# Save to file
+curl https://example.com/file.txt -o filename.txt
+
+# Follow redirects
+curl -L https://example.com/redirect
+
+# Send POST request
+curl -X POST -d "data=value" https://example.com/api
+
+# Include headers
+curl -H "Content-Type: application/json" https://example.com/api
+
+# Download with progress bar
+curl -# https://example.com/file.txt -o file.txt
+```
+
+### ping - Test Network Connectivity
+
+```bash
+# Ping host
+ping google.com
+
+# Ping with count
+ping -c 4 google.com
+
+# Ping with interval
+ping -i 2 google.com
+```
+
+### ssh - Secure Shell
+
+```bash
+# Connect to remote host
+ssh user@hostname
+
+# Connect with specific port
+ssh -p 2222 user@hostname
+
+# Execute command remotely
+ssh user@hostname 'ls -la'
+
+# Copy SSH key
+ssh-copy-id user@hostname
+```
+
+### scp - Secure Copy
+
+```bash
+# Copy file to remote host
+scp file.txt user@hostname:/remote/path/
+
+# Copy file from remote host
+scp user@hostname:/remote/file.txt ./
+
+# Copy directory recursively
+scp -r directory/ user@hostname:/remote/path/
+
+# Copy with specific port
+scp -P 2222 file.txt user@hostname:/remote/path/
+```
+
+### rsync - Synchronize Files
+
+```bash
+# Basic sync
+rsync -av source/ destination/
+
+# Sync to remote host
+rsync -av directory/ user@hostname:/remote/path/
+
+# Sync with progress
+rsync -av --progress source/ destination/
+
+# Exclude files
+rsync -av --exclude='*.tmp' source/ destination/
+
+# Delete files not in source
+rsync -av --delete source/ destination/
+```
+
+## Process Management
+
+### ps - Display Processes
+
+```bash
+# Show processes for current user
+ps
+
+# Show all processes
+ps aux
+
+# Show process tree
+ps auxf
+
+# Show processes for specific user
+ps -u username
+
+# Show specific process
+ps -p PID
+```
+
+### top - Display Running Processes
+
+```bash
+# Show top processes (interactive)
+top
+
+# Sort by CPU usage: P
+# Sort by memory usage: M
+# Kill process: k
+# Quit: q
+```
+
+### htop - Enhanced Process Viewer
+
+```bash
+# Interactive process viewer (if installed)
+htop
+
+# More user-friendly than top
+# F9: Kill process, F6: Sort options
+```
+
+### kill - Terminate Processes
+
+```bash
+# Kill process by PID
+kill PID
+
+# Force kill process
+kill -9 PID
+
+# Kill by process name
+killall process_name
+
+# Kill all processes of a user
+killall -u username
+
+# List available signals
+kill -l
+```
+
+### jobs - Display Active Jobs
+
+```bash
+# Show current jobs
+jobs
+
+# Show job PIDs
+jobs -l
+
+# Bring job to foreground
+fg %1
+
+# Send job to background
+bg %1
+```
+
+### nohup - Run Commands Immune to Hangups
+
+```bash
+# Run command in background
+nohup command &
+
+# Run with output redirection
+nohup command > output.log 2>&1 &
 ```
 
 ## System Information
 
+### uname - System Information
+
 ```bash
-# Displays how long the system has been running.
-- `uptime` – Shows system runtime.
+# Show system information
+uname -a
 
-# Shows current memory usage statistics.
-- `free` – Displays memory usage.
+# Show kernel name
+uname -s
 
-# Lists currently running processes.
-- `ps` – Shows running processes.
+# Show kernel version
+uname -r
 
-# Shows disk space usage for file systems.
-- `df` – Displays disk usage.
+# Show machine architecture
+uname -m
 ```
 
-## Miscelleneous commands
-
-### File Permissions and Ownership
+### uptime - System Uptime
 
 ```bash
-# Modifies the access permissions of files or directories.
-chmod – Changes file permissions.
-# Sets the permissions of 'script.sh' to read, write, and execute for the owner, and read and execute for others.
-- Example: `chmod 755 script.sh`
+# Show system uptime and load
+uptime
 
-# Changes the owner and/or group of a file or directory.
-chown – Changes file owner and group.
-# Changes the owner of 'file.txt' to 'user' and the group to 'group'.
-- Example: `chown user:group file.txt`
+# Show uptime in pretty format
+uptime -p
 ```
 
-### Searching and Locating Files
+### whoami - Current User
 
 ```bash
-# Finds specific text in files or output.
-grep – Searches for a pattern in files.
-# Searches 'file.txt' for 'search_term'.
-- Example: `grep "search_term" file.txt`
+# Show current username
+whoami
 
-# Recursively searches for 'pico' in all files in the current directory.
-grep -r "pico" .
-# Recursively searches for 'pico' in all files in the specified directory.
-grep -r "pico" /path/to/folder/with/nested/files
+# Show current user ID
+id
 
-# Locates files and directories based on specified criteria.
-find – Searches for files in a directory hierarchy.
-# Finds all .txt files in the specified path.
-- Example: `find /path/to/search -name "*.txt"`
+# Show all user information
+id -a
 ```
 
-### Archiving and Downloading Files
+### who - Logged in Users
 
 ```bash
-# Combines multiple files or directories into a tarball for easier distribution.
-tar – Archives files into a single file.
-# Creates a tar file 'archive.tar' containing the specified directory.
-- Example: `tar -cvf archive.tar /path/to/directory`
+# Show logged in users
+who
 
-# Retrieves files from the internet via the command line.
-wget – Downloads files from the web.
-# Downloads 'file.zip' from the specified URL.
-- Example: `wget http://example.com/file.zip`
+# Show detailed information
+who -a
+
+# Show current terminal
+tty
 ```
 
-### Remote Access and Process Management
+### df - Disk Space Usage
 
 ```bash
-# Allows secure remote access to another computer over a network.
-ssh – Secure shell for logging into a remote machine.
-# Connects to 'hostname' as 'user' via SSH.
-- Example: `ssh user@hostname`
+# Show disk usage
+df
 
-# Lists active processes in the system.
-ps – Displays currently running processes.
-# Shows detailed information about all running processes.
-- Example: `ps aux`
+# Human-readable format
+df -h
 
-# Terminates or sends signals to processes based on their PID.
-kill – Sends a signal to a process.
-# Sends the default TERM signal to the process with the specified PID.
-- Example: `kill PID`
+# Show filesystem types
+df -T
+
+# Show specific filesystem
+df /home
 ```
 
-### Administrative Privileges and Disk Usage
+### du - Directory Size
 
 ```bash
-# Allows users to run commands with elevated permissions.
-sudo – Executes a command with superuser privileges.
-# Runs the command to update package lists with administrative privileges.
-- Example: `sudo apt-get update`
+# Show directory size
+du directory/
 
-# Shows how much disk space is used and available on the mounted file systems.
-df – Displays disk space usage.
-# Shows disk usage in a human-readable format.
-- Example: `df -h`
+# Human-readable format
+du -h directory/
 
-# Reports the amount of disk space used by files or directories.
-du – Displays disk usage of files and directories.
-# Shows the total disk usage of the specified directory in a human-readable format.
-- Example: `du -sh /path/to/directory`
+# Summary only
+du -s directory/
+
+# Show all subdirectories
+du -a directory/
+
+# Sort by size
+du -h directory/ | sort -h
+```
+
+### free - Memory Usage
+
+```bash
+# Show memory usage
+free
+
+# Human-readable format
+free -h
+
+# Show in MB
+free -m
+
+# Show continuously
+free -h -s 2
+```
+
+### lscpu - CPU Information
+
+```bash
+# Show CPU information
+lscpu
+
+# Show CPU architecture
+arch
+```
+
+### lsblk - Block Devices
+
+```bash
+# List block devices
+lsblk
+
+# Show filesystem information
+lsblk -f
+```
+
+### mount - Mount Filesystems
+
+```bash
+# Show mounted filesystems
+mount
+
+# Mount filesystem
+mount /dev/sdb1 /mnt/usb
+
+# Unmount filesystem
+umount /mnt/usb
+```
+
+## Text Editors
+
+### nano - Simple Text Editor
+
+```bash
+# Edit file
+nano filename
+
+# Key commands:
+# Ctrl+O: Save
+# Ctrl+X: Exit
+# Ctrl+W: Search
+# Ctrl+G: Help
+```
+
+### vim - Advanced Text Editor
+
+```bash
+# Edit file
+vim filename
+
+# Basic vim commands:
+# i: Insert mode
+# Esc: Command mode
+# :w: Save
+# :q: Quit
+# :wq: Save and quit
+# :q!: Quit without saving
+```
+
+### emacs - Another Advanced Editor
+
+```bash
+# Edit file
+emacs filename
+
+# Basic emacs commands:
+# Ctrl+X Ctrl+S: Save
+# Ctrl+X Ctrl+C: Exit
+# Ctrl+X Ctrl+F: Open file
+```
+
+## Environment Variables
+
+### env - Environment Variables
+
+```bash
+# Show all environment variables
+env
+
+# Show specific variable
+echo $HOME
+echo $PATH
+echo $USER
+
+# Set temporary variable
+export VAR_NAME="value"
+
+# Add to PATH
+export PATH=$PATH:/new/path
+```
+
+### history - Command History
+
+```bash
+# Show command history
+history
+
+# Execute previous command
+!!
+
+# Execute command by number
+!123
+
+# Search history
+Ctrl+R
+
+# Clear history
+history -c
+```
+
+### alias - Command Aliases
+
+```bash
+# Show current aliases
+alias
+
+# Create alias
+alias ll='ls -la'
+alias grep='grep --color=auto'
+
+# Remove alias
+unalias ll
+```
+
+## File Comparison
+
+### cmp - Compare Files Byte by Byte
+
+```bash
+# Compare two files
+cmp file1.txt file2.txt
+
+# Verbose output
+cmp -v file1.txt file2.txt
+
+# Silent mode (exit code only)
+cmp -s file1.txt file2.txt
+```
+
+### diff - Compare Files Line by Line
+
+```bash
+# Compare two files
+diff file1.txt file2.txt
+
+# Unified format
+diff -u file1.txt file2.txt
+
+# Context format
+diff -c file1.txt file2.txt
+
+# Compare directories
+diff -r dir1/ dir2/
+
+# Ignore case differences
+diff -i file1.txt file2.txt
+```
+
+## Administrative Commands
+
+### sudo - Execute as Another User
+
+```bash
+# Run command as root
+sudo command
+
+# Switch to root shell
+sudo -i
+sudo su -
+
+# Run command as specific user
+sudo -u username command
+
+# Edit sudoers file
+sudo visudo
+```
+
+### su - Switch User
+
+```bash
+# Switch to root
+su -
+
+# Switch to specific user
+su username
+
+# Execute single command
+su -c "command"
+```
+
+### passwd - Change Password
+
+```bash
+# Change own password
+passwd
+
+# Change another user's password (as root)
+passwd username
 ```
 
 ## Formatting and disk partitioning
