@@ -107,6 +107,135 @@ Executable programs and scripts live in the:
 
 To locate programs, use the `which` command. If `which` fails, use the `whereis` command
 
+## Chaning the password
+
+```bash
+# Change the password for the current user.
+sudo passwd
+
+# Change the password for a specific user.
+sudo passwd username
+```
+
+## Downloading files
+
+```bash
+# Download a file from a URL.
+wget – Downloads a file from a URL.
+
+# Download a file from a URL and save it to a specific location.
+- Example: `wget https://example.com/file.txt -O /path/to/save/file.txt`
+
+# Download a file from a URL and save it to the current directory.
+- Example: `wget https://example.com/file.txt`
+
+# Download a file from a URL and save it to a specific directory.
+- Example: `wget https://example.com/file.txt -P /path/to/directory/`
+
+# Download a file from a URL using
+```
+
+## curl comand
+
+```bash
+# Download a file from a URL.
+curl – Downloads a file from a URL.
+
+# Download a file from a URL and save it to a specific location.
+- Example: `curl https://example.com/file.txt -o /path/to/save/file.txt`
+
+# Download a file from a URL and save it to the current directory.
+- Example: `curl https://example.com/file.txt`
+
+# Download a file from a URL and save it to a specific directory.
+- Example: `curl https://example.com/file.txt -o /path/to/directory/file.txt`
+```
+
+## zip command
+
+```bash
+# Create a zip archive from a list of files.
+zip – Creates a zip archive from a list of files.
+
+# Create a zip archive from a list of files and save it to the current directory.
+- Example: `zip archive_name.zip file1.txt file2.txt`
+
+# Create a zip archive from a list of files and save it to a specific directory.
+- Example: `zip archive_name.zip file1.txt file2.txt -d /path/to/directory/`
+```
+
+## cmp command
+
+```bash
+# Compares the contents of two files byte by byte.
+cmp – Compares the contents of two files.
+
+# Compares the contents of two files and displays the differences.
+- Example: `cmp file1.txt file2.txt`
+```
+
+## diff command
+
+```bash
+# Compares the contents of two files line by line.
+diff – Compares the contents of two files.
+
+# Compares the contents of two files and displays the differences.
+- Example: `diff file1.txt file2.txt`
+```
+
+## sort command
+
+```bash
+# Sorts the contents of a file.
+sort – Sorts the contents of a file.
+
+# Sorts the contents of a file and saves it to the current directory.
+- Example: `sort file.txt`
+
+# Sorts the contents of a file and saves it to a specific directory.
+- Example: `sort file.txt -o /path/to/directory/sorted_file.txt`
+
+# Sorts the contents of a file and saves it to the current directory in reverse order.
+- Example: `sort -r file.txt`
+
+# Sorts the contents of a file and saves it to a specific directory in reverse order.
+- Example: `sort -r file.txt -o /path/to/directory/reversed_sorted_file.txt`
+
+cat test.txt | sort
+```
+
+## find command
+
+```bash
+# Locates files and directories based on specified criteria.
+find – Searches for files in a directory hierarchy.
+
+# Locates files and directories based on specified criteria and saves the results to the current directory.
+- Example: `find . -name "*.txt"`
+
+# Locates files and directories based on specified criteria and saves the results to a specific directory.
+- Example: `find . -name "*.txt" -exec cp {} /path/to/directory/ \;`
+```
+
+## Making file executable
+
+```bash
+# Sets the executable permission for a file.
+chmod +x filename.txt
+./filename.txt
+```
+
+## Change ownership of a file
+
+```bash
+# Changes the owner and group of a file.
+chown – Changes the owner and group of a file.
+
+# Changes the owner and group of a file.
+- Example: `chown username:groupname filename.txt`
+```
+
 ## Working with Directories
 
 ## whatis
