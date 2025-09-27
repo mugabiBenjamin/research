@@ -117,7 +117,7 @@ exiftool image.jpg
 exiftool -DateTimeOriginal -GPS* photo.jpg
 
 # Remove all metadata
-exiftool -all= image.jpg
+exiftool -all image.jpg
 
 # Copy metadata between files
 exiftool -TagsFromFile source.jpg target.jpg
@@ -291,6 +291,10 @@ tshark -i eth0 -f "port 80"
 
 # Display filter
 tshark -r capture.pcap -Y "http"
+
+# Convert to XML
+tshark -r capture.pcap -Y "http" -T dpml > http_pdml.xml
+cat http_pdml.xml | grep pass:
 
 # Extract specific fields
 tshark -r capture.pcap -T fields -e ip.src -e ip.dst
