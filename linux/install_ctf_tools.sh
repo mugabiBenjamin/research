@@ -34,6 +34,16 @@ log()  { printf '\e[1;32m[+] %s\e[0m\n' "$*"; }
 warn() { printf '\e[1;33m[!] %s\e[0m\n' "$*"; }
 err()  { printf '\e[1;31m[-] %s\e[0m\n' "$*"; exit 1; }
 
+# Helper to install packages with error handling
+install_package() {
+  local pkg="$1"
+  if sudo apt install -y "$pkg" 2>/dev/null; then
+    log "Installed $pkg"
+  else
+    warn "Failed to install $pkg - package may not be available"
+  fi
+}
+
 command -v sudo >/dev/null 2>&1 || err "sudo is required."
 
 export DEBIAN_FRONTEND=noninteractive
@@ -61,39 +71,61 @@ if [ "${MINIMAL}" = true ]; then
 else
   log "Installing FULL package set (may take a while)..."
 
-  # Web / enumeration / scanners
-  sudo apt install -y burpsuite dirb gobuster wfuzz sqlmap nikto
+  # Web / enumeration / scanners (install individually due to availability issues)
+  log "Installing web/enumeration tools..."
+  install_package dirb
+  install_package gobuster
+  install_package wfuzz
+  install_package sqlmap
+  install_package nikto
+  warn "burpsuite not available in apt - install manually from https://portswigger.net/burp/communitydownload"
 
   # Networking / captures / utils
-  sudo apt install -y curl wget nmap netcat-openbsd nmap-ncat tcpdump wireshark tshark net-tools iproute2
+  log "Installing networking tools..."
+  sudo apt install -y curl wget nmap netcat-openbsd tcpdump wireshark tshark net-tools iproute2
 
   # Binary / RE / build tools (xxd/hexdump/binutils included)
+  log "Installing binary analysis tools..."
   sudo apt install -y gdb radare2 binwalk file strace ltrace xxd hexdump binutils
   sudo apt install -y gcc g++ make cmake git vim vim-common
 
   # Forensics / recovery
+  log "Installing forensics tools..."
   sudo apt install -y foremost scalpel libimage-exiftool-perl steghide outguess gddrescue
-  sudo apt install -y testdisk photorec sleuthkit autopsy || warn "autopsy may require additional setup or a GUI session."
+  install_package testdisk
+  install_package photorec
+  install_package sleuthkit
+  install_package autopsy
 
   # Media / analysis
+  log "Installing media analysis tools..."
   sudo apt install -y ffmpeg mediainfo sox imagemagick
 
   # Monitoring / sysadmin
+  log "Installing system monitoring tools..."
   sudo apt install -y tree htop tmux unzip p7zip-full iotop sysstat lsof perf valgrind
 
   # Security / password / cracking / brute
+  log "Installing password cracking tools..."
   sudo apt install -y hashcat john hydra
 
   # Crypto / GPG / SSL
+  log "Installing crypto tools..."
   sudo apt install -y openssl gnupg
 
   # Text / data processors
+  log "Installing text processing tools..."
   sudo apt install -y jq xmlstarlet pandoc
 
   # Rootkit / auditing / integrity
-  sudo apt install -y chkrootkit rkhunter lynis aide
+  log "Installing security auditing tools..."
+  install_package chkrootkit
+  install_package rkhunter
+  install_package lynis
+  install_package aide
 
   # Python & runtime
+  log "Installing Python runtime..."
   sudo apt install -y python3 python3-pip python3-dev python3-venv default-jre
 fi
 
@@ -177,6 +209,7 @@ Quick reminders:
  - 'strings' is provided by binutils; there is no separate 'strings' apt package.
  - 'volatility-tools' is often not available in apt. We installed volatility3 via pip (python3 -m pip install --user volatility3).
  - GHIDRA download uses GHIDRA_URL at top; change GHIDRA_VERSION/GHIDRA_URL to update the version. For the absolute latest GHIDRA automatically you'd need to query GitHub (not implemented here).
+ - burpsuite must be installed manually from https://portswigger.net/burp/communitydownload
  - Add ~/.local/bin to PATH if missing:
      echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.profile
  - If a specific tool failed to install, run the corresponding apt or pip command shown above manually or check the warnings printed.
