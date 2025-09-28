@@ -1,17 +1,14 @@
 #!/usr/bin/env bash
 # install_ctf_tools.sh
-# Install a wide set of CTF / forensics / RE / pentest tools on Debian/Ubuntu systems.
+# Install CTF / forensics / RE / pentest tools (excluding Python/pip tools and Ubuntu defaults)
 # Usage:
 #   chmod +x install_ctf_tools.sh
 #   ./install_ctf_tools.sh [--no-ghidra] [--no-pwndbg] [--minimal]
-# Notes:
-#  - 'strings' comes from binutils.
-#  - Volatility (volatility3) is installed via pip (not reliably in apt).
-#  - GHIDRA install is optional. Change GHIDRA_VERSION to update.
+
 set -euo pipefail
 
 # --- Configuration ---
-GHIDRA_VERSION="10.4_PUBLIC_20230928"   # change if you want another version
+GHIDRA_VERSION="10.4_PUBLIC_20230928"
 GHIDRA_ZIP="ghidra_${GHIDRA_VERSION}.zip"
 GHIDRA_URL="https://github.com/NationalSecurityAgency/ghidra/releases/download/Ghidra_10.4_build/${GHIDRA_ZIP}"
 TOOLS_DIR="${HOME}/tools"
@@ -34,7 +31,6 @@ log()  { printf '\e[1;32m[+] %s\e[0m\n' "$*"; }
 warn() { printf '\e[1;33m[!] %s\e[0m\n' "$*"; }
 err()  { printf '\e[1;31m[-] %s\e[0m\n' "$*"; exit 1; }
 
-# Helper to install packages with error handling
 install_package() {
   local pkg="$1"
   if sudo apt install -y "$pkg" 2>/dev/null; then
@@ -45,7 +41,6 @@ install_package() {
 }
 
 command -v sudo >/dev/null 2>&1 || err "sudo is required."
-
 export DEBIAN_FRONTEND=noninteractive
 
 # Basic checks
@@ -58,38 +53,40 @@ sudo apt update -y
 log "Upgrading packages..."
 sudo apt upgrade -y
 
-# --- Package lists ---
+# --- Package Installation ---
 if [ "${MINIMAL}" = true ]; then
   log "Installing MINIMAL package set..."
+  # Core tools not in default Ubuntu
   sudo apt install -y \
-    curl wget nmap netcat-openbsd tcpdump \
-    gdb binwalk file strace ltrace xxd hexdump binutils \
-    gcc g++ make cmake git vim \
-    python3 python3-pip python3-venv \
+    nmap tcpdump \
+    binwalk strace ltrace radare2 \
     hashcat john \
-    tree htop tmux unzip p7zip-full default-jre
+    tmux p7zip-full
 else
-  log "Installing FULL package set (may take a while)..."
+  log "Installing FULL package set..."
 
-  # Web / enumeration / scanners (install individually due to availability issues)
+  # Web / enumeration tools
   log "Installing web/enumeration tools..."
   install_package dirb
   install_package gobuster
   install_package wfuzz
   install_package sqlmap
   install_package nikto
+  # burpsuite - manual install required
   warn "burpsuite not available in apt - install manually from https://portswigger.net/burp/communitydownload"
 
-  # Networking / captures / utils
+  # Networking tools
   log "Installing networking tools..."
-  sudo apt install -y curl wget nmap netcat-openbsd tcpdump wireshark tshark net-tools iproute2
+  sudo apt install -y nmap tcpdump wireshark tshark
+  # curl, wget, netcat-openbsd, net-tools, iproute2 - already in Ubuntu
 
-  # Binary / RE / build tools (xxd/hexdump/binutils included)
+  # Binary analysis tools
   log "Installing binary analysis tools..."
-  sudo apt install -y gdb radare2 binwalk file strace ltrace xxd hexdump binutils
-  sudo apt install -y gcc g++ make cmake git vim vim-common
+  sudo apt install -y radare2 binwalk strace ltrace
+  # gdb, file, xxd, binutils - already in Ubuntu
+  # gcc, g++, make, cmake, git, vim - already in Ubuntu
 
-  # Forensics / recovery
+  # Forensics tools
   log "Installing forensics tools..."
   sudo apt install -y foremost scalpel libimage-exiftool-perl steghide outguess gddrescue
   install_package testdisk
@@ -97,129 +94,110 @@ else
   install_package sleuthkit
   install_package autopsy
 
-  # Media / analysis
+  # Media analysis
   log "Installing media analysis tools..."
   sudo apt install -y ffmpeg mediainfo sox imagemagick
 
-  # Monitoring / sysadmin
+  # System monitoring
   log "Installing system monitoring tools..."
-  sudo apt install -y tree htop tmux unzip p7zip-full iotop sysstat lsof perf valgrind
+  sudo apt install -y tmux p7zip-full iotop sysstat lsof perf valgrind
+  # tree, htop, unzip - already in Ubuntu
 
-  # Security / password / cracking / brute
+  # Password cracking
   log "Installing password cracking tools..."
   sudo apt install -y hashcat john hydra
 
-  # Crypto / GPG / SSL
+  # Crypto tools
   log "Installing crypto tools..."
-  sudo apt install -y openssl gnupg
+  # openssl, gnupg - already in Ubuntu
 
-  # Text / data processors
+  # Text processors
   log "Installing text processing tools..."
   sudo apt install -y jq xmlstarlet pandoc
 
-  # Rootkit / auditing / integrity
+  # Security auditing
   log "Installing security auditing tools..."
   install_package chkrootkit
   install_package rkhunter
   install_package lynis
   install_package aide
 
-  # Python & runtime
-  log "Installing Python runtime..."
-  sudo apt install -y python3 python3-pip python3-dev python3-venv default-jre
+  # Runtime
+  # python3, python3-pip, python3-dev, python3-venv, default-jre - already in Ubuntu or manual install
 fi
 
 log "APT install finished."
 
-# Ensure ~/.local/bin exists and warn if not in PATH
-mkdir -p "${HOME}/.local/bin"
-if ! echo "${PATH}" | tr ':' '\n' | grep -qx "${HOME}/.local/bin"; then
-  warn "Add '${HOME}/.local/bin' to your PATH (e.g. add to ~/.profile or ~/.bashrc)."
-fi
-
-# --- Python tools (user) ---
-log "Upgrading pip and installing Python tools (user)..."
-python3 -m pip install --user --upgrade pip setuptools wheel
-
-# Core python packages useful for CTF / forensics / RE
-PY_PKGS=(pwntools requests beautifulsoup4 scapy cryptography volatility3)
-for pkg in "${PY_PKGS[@]}"; do
-  log "Installing ${pkg}..."
-  python3 -m pip install --user "${pkg}" || warn "pip install ${pkg} failed (you may need to run it manually)."
-done
-
-log "Installed volatility3 via pip (if available)."
+# Python tools - COMMENTED OUT (install manually in venv)
+# log "Python tools to install manually in virtual environment:"
+# warn "pip install pwntools requests beautifulsoup4 scapy cryptography volatility3"
 
 # --- Tools directory ---
 mkdir -p "${TOOLS_DIR}"
 log "Tools directory: ${TOOLS_DIR}"
 
-# --- GHIDRA (optional) ---
+# --- GHIDRA (optional download) ---
 if [ "${INSTALL_GHIDRA}" = true ] && [ "${MINIMAL}" = false ]; then
-  log "Attempting to download and install GHIDRA (${GHIDRA_VERSION})..."
+  log "Attempting to download GHIDRA (${GHIDRA_VERSION})..."
   if command -v wget >/dev/null 2>&1; then
     tmp_zip="$(mktemp --suffix=.zip)"
     if wget -q -O "${tmp_zip}" "${GHIDRA_URL}"; then
-      unzip -q "${tmp_zip}" -d "${TOOLS_DIR}" || warn "Unzip failed; you may need to unzip manually."
+      unzip -q "${tmp_zip}" -d "${TOOLS_DIR}" || warn "Unzip failed"
       rm -f "${tmp_zip}"
       log "Ghidra downloaded and extracted to ${TOOLS_DIR}."
     else
-      warn "Failed to download GHIDRA from ${GHIDRA_URL}. Check network or update GHIDRA_URL."
+      warn "Failed to download GHIDRA from ${GHIDRA_URL}"
       rm -f "${tmp_zip}"
     fi
   else
-    warn "wget not installed; cannot download GHIDRA automatically."
+    warn "wget not available for GHIDRA download"
   fi
 else
-  log "Skipping GHIDRA (either --no-ghidra passed, or running MINIMAL install)."
+  log "Skipping GHIDRA download"
 fi
 
-# --- pwndbg (optional) ---
+# --- pwndbg (optional git clone) ---
 if [ "${INSTALL_PWNDDBG}" = true ]; then
-  log "Installing or updating pwndbg..."
+  log "Installing pwndbg..."
   PWNDDBG_DIR="${TOOLS_DIR}/pwndbg"
   if [ -d "${PWNDDBG_DIR}" ]; then
-    git -C "${PWNDDBG_DIR}" pull --ff-only || warn "Failed to update pwndbg; please update manually."
+    git -C "${PWNDDBG_DIR}" pull --ff-only || warn "Failed to update pwndbg"
   else
-    git clone --depth 1 https://github.com/pwndbg/pwndbg "${PWNDDBG_DIR}" || warn "Failed to clone pwndbg."
+    git clone --depth 1 https://github.com/pwndbg/pwndbg "${PWNDDBG_DIR}" || warn "Failed to clone pwndbg"
   fi
   if [ -f "${PWNDDBG_DIR}/setup.sh" ]; then
-    (cd "${PWNDDBG_DIR}" && ./setup.sh) || warn "pwndbg setup script failed; run manually if needed."
+    (cd "${PWNDDBG_DIR}" && ./setup.sh) || warn "pwndbg setup failed"
   fi
 else
-  log "Skipping pwndbg as requested."
+  log "Skipping pwndbg"
 fi
 
-# --- Post-install notes & small sanity checks ---
-log "Verifying a few installed commands..."
-for cmd in strings binwalk gdb nmap python3 pip3 jq; do
+# --- Verification ---
+log "Verifying installed commands..."
+for cmd in nmap binwalk radare2 hashcat john jq; do
   if command -v "${cmd}" >/dev/null 2>&1; then
-    printf '  %-12s: %s\n' "${cmd}" "$(command -v ${cmd})"
+    printf '  %-12s: installed\n' "${cmd}"
   else
-    warn "Command '${cmd}' not found in PATH (install may have failed or PATH needs update)."
+    warn "Command '${cmd}' not found"
   fi
 done
 
 cat <<'EOF'
 
 =====================================================================
-Installation steps finished.
+Installation complete.
 
-Quick reminders:
- - 'strings' is provided by binutils; there is no separate 'strings' apt package.
- - 'volatility-tools' is often not available in apt. We installed volatility3 via pip (python3 -m pip install --user volatility3).
- - GHIDRA download uses GHIDRA_URL at top; change GHIDRA_VERSION/GHIDRA_URL to update the version. For the absolute latest GHIDRA automatically you'd need to query GitHub (not implemented here).
- - burpsuite must be installed manually from https://portswigger.net/burp/communitydownload
- - Add ~/.local/bin to PATH if missing:
-     echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.profile
- - If a specific tool failed to install, run the corresponding apt or pip command shown above manually or check the warnings printed.
+Manual steps required:
+ - Install burpsuite from: https://portswigger.net/burp/communitydownload
+ - Install Python tools in virtual environment:
+   python3 -m venv ctf_env
+   source ctf_env/bin/activate
+   pip install pwntools requests beautifulsoup4 scapy cryptography volatility3
 
-To run script again with minimal set:
-  ./install_ctf_tools.sh --minimal
-
-To skip GHIDRA or pwndbg:
-  ./install_ctf_tools.sh --no-ghidra --no-pwndbg
+Excluded (already in Ubuntu):
+ - curl, wget, netcat, git, vim, gcc, gdb, file, xxd, binutils
+ - tree, htop, unzip, openssl, gnupg, python3
 
 EOF
 
-log "Done — tools installed (or attempted). Good luck with your CTFs!"
+log "Done — CTF tools installed!"
