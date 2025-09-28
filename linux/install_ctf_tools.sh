@@ -100,7 +100,7 @@ else
 
   # System monitoring
   log "Installing system monitoring tools..."
-  sudo apt install -y tmux p7zip-full iotop sysstat lsof perf valgrind
+  sudo apt install -y tmux p7zip-full iotop sysstat lsof linux-tools-generic valgrind
   # tree, htop, unzip - already in Ubuntu
 
   # Password cracking
@@ -137,40 +137,40 @@ mkdir -p "${TOOLS_DIR}"
 log "Tools directory: ${TOOLS_DIR}"
 
 # --- GHIDRA (optional download) ---
-if [ "${INSTALL_GHIDRA}" = true ] && [ "${MINIMAL}" = false ]; then
-  log "Attempting to download GHIDRA (${GHIDRA_VERSION})..."
-  if command -v wget >/dev/null 2>&1; then
-    tmp_zip="$(mktemp --suffix=.zip)"
-    if wget -q -O "${tmp_zip}" "${GHIDRA_URL}"; then
-      unzip -q "${tmp_zip}" -d "${TOOLS_DIR}" || warn "Unzip failed"
-      rm -f "${tmp_zip}"
-      log "Ghidra downloaded and extracted to ${TOOLS_DIR}."
-    else
-      warn "Failed to download GHIDRA from ${GHIDRA_URL}"
-      rm -f "${tmp_zip}"
-    fi
-  else
-    warn "wget not available for GHIDRA download"
-  fi
-else
-  log "Skipping GHIDRA download"
-fi
+# if [ "${INSTALL_GHIDRA}" = true ] && [ "${MINIMAL}" = false ]; then
+#   log "Attempting to download GHIDRA (${GHIDRA_VERSION})..."
+#   if command -v wget >/dev/null 2>&1; then
+#     tmp_zip="$(mktemp --suffix=.zip)"
+#     if wget -q -O "${tmp_zip}" "${GHIDRA_URL}"; then
+#       unzip -q "${tmp_zip}" -d "${TOOLS_DIR}" || warn "Unzip failed"
+#       rm -f "${tmp_zip}"
+#       log "Ghidra downloaded and extracted to ${TOOLS_DIR}."
+#     else
+#       warn "Failed to download GHIDRA from ${GHIDRA_URL}"
+#       rm -f "${tmp_zip}"
+#     fi
+#   else
+#     warn "wget not available for GHIDRA download"
+#   fi
+# else
+#   log "Skipping GHIDRA download"
+# fi
 
 # --- pwndbg (optional git clone) ---
-if [ "${INSTALL_PWNDDBG}" = true ]; then
-  log "Installing pwndbg..."
-  PWNDDBG_DIR="${TOOLS_DIR}/pwndbg"
-  if [ -d "${PWNDDBG_DIR}" ]; then
-    git -C "${PWNDDBG_DIR}" pull --ff-only || warn "Failed to update pwndbg"
-  else
-    git clone --depth 1 https://github.com/pwndbg/pwndbg "${PWNDDBG_DIR}" || warn "Failed to clone pwndbg"
-  fi
-  if [ -f "${PWNDDBG_DIR}/setup.sh" ]; then
-    (cd "${PWNDDBG_DIR}" && ./setup.sh) || warn "pwndbg setup failed"
-  fi
-else
-  log "Skipping pwndbg"
-fi
+# if [ "${INSTALL_PWNDDBG}" = true ]; then
+#   log "Installing pwndbg..."
+#   PWNDDBG_DIR="${TOOLS_DIR}/pwndbg"
+#   if [ -d "${PWNDDBG_DIR}" ]; then
+#     git -C "${PWNDDBG_DIR}" pull --ff-only || warn "Failed to update pwndbg"
+#   else
+#     git clone --depth 1 https://github.com/pwndbg/pwndbg "${PWNDDBG_DIR}" || warn "Failed to clone pwndbg"
+#   fi
+#   if [ -f "${PWNDDBG_DIR}/setup.sh" ]; then
+#     (cd "${PWNDDBG_DIR}" && ./setup.sh) || warn "pwndbg setup failed"
+#   fi
+# else
+#   log "Skipping pwndbg"
+# fi
 
 # --- Verification ---
 log "Verifying installed commands..."
