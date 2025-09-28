@@ -1,5 +1,13 @@
 # CTF Tools Examples & Use Cases
 
+- [Web Exploitation](#web-exploitation)
+- [Binary Exploitation & Reverse Engineering](#binary-exploitation--reverse-engineering)
+- [Digital Forensics](#digital-forensics)
+- [Cryptography](#cryptography)
+- [Network Security](#network-security)
+- [Python Tools](#python-tools)
+- [Analysis Utilities](#analysis-utilities)
+
 ## Web Exploitation
 
 ### burpsuite
@@ -287,3 +295,5 @@ echo "48656c6c6f" | xxd -r -p
 7z x -p"password" encrypted.zip
 7z l archive.zip  # List contents
 ```
+
+[Back to Top](#ctf-tools-examples--use-cases)
