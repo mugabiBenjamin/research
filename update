@@ -3,6 +3,11 @@
 # run "chmod +x update" to make file executable  
 # run "sudo ./update"  
 
+# --- Helpers ---
+log()  { printf '\e[1;32m[+] %s\e[0m\n' "$*"; }
+warn() { printf '\e[1;33m[!] %s\e[0m\n' "$*"; }
+err()  { printf '\e[1;31m[-] %s\e[0m\n' "$*"; exit 1; }
+
 log "Update and upgrade the package lists and installed packages  "
 apt update -y          # Update the list of available packages  
 apt upgrade -y         # Upgrade all installed packages to their latest versions  
@@ -21,5 +26,5 @@ flatpak update -y         # Update all installed Flatpak packages (if Flatpak is
 
 # Finished  
 echo "-------------------------------------------"  
-log " System update and maintenance completed!"  
+log "> System update and maintenance completed!"  
 echo "-------------------------------------------"  
