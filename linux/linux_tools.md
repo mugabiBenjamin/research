@@ -152,6 +152,22 @@ strings -e l binary_file  # 16-bit little endian
 strings -e b binary_file  # 16-bit big endian
 ```
 
+## upx - Executable Compressor
+
+```bash
+# Compress executable
+upx program 
+
+# Decompress executable
+upx -d program
+
+# Check compression status
+upx -t program
+
+# Set compression level (0-9)
+upx -9 program
+```
+
 ## Network Analysis
 
 ### tcpdump - Network Packet Capture
