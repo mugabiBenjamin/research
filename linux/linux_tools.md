@@ -72,10 +72,10 @@ binwalk -E firmware.bin
 binwalk -B firmware.bin
 ```
 
-### foremost - File Recovery Tool
+### foremost - File Recovery Tool (Extract embedded files)
 
 ```bash
-# Recover files from disk image
+# Recover files from disk image (Default)
 foremost -i disk.img -o output/
 
 # Specify file types
