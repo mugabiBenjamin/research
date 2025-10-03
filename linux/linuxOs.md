@@ -759,11 +759,58 @@ wget https://example.com/file.txt -P /path/to/directory/
 # Continue partial download
 wget -c https://example.com/largefile.zip
 
+# Download multiple files from a list
+wget -i list.txt
+# first_url
+# second_url
+
+# Mirrors a website, recursively downloading all pages, images, and files
+wget -m https://example.com/
+
+# Creates a complete, offline-browsable copy of the website
+wget --mirror --page-requisites --convert-link --no-clobber --no-parent --domains example.com https://example.com/
+
+# short hand version:
+wget -mpkNnp -D example.com --no-clobber https://example.com/
+# -m = --mirror
+# -p = --page-requisites
+# -E = --adjust-extension (not --convert-links, but related)
+# -k = --convert-links
+# -N = --timestamping (already in -m)
+# -np = --no-parent
+# -D = --domains
+# There's no short flag for --no-clobber
+
+# ==========================================
+
+# -r (recursive) downloads pages and follows links indefinitely.
+# -m (mirror) is -r plus:
+   # -N (timestamping - only downloads newer files)
+   # -l inf (infinite depth)
+   # --no-remove-listing (keeps FTP listings)
+# So -m is designed for creating/updating website mirrors, while -r is just basic recursion.
+
+wget -r -p -c -k -K -e robots=off https://example.com
+# -r = recursive download
+# -p = page requisites (CSS, images, JS)
+# -c = continue partially downloaded files
+# -k = convert links for offline browsing
+# -K = backup original files before conversion
+# -e robots=off = ignore robots.txt (aggresive scrapping, downloads restricted areas, Violate site's terms of service, Could get your IP blocked)
+
 # Download recursively
 wget -r https://example.com/directory/
 
 # Limit download speed
 wget --limit-rate=200k https://example.com/file.txt
+wget --limit-rate=2M https://example.com/file.txt
+
+# Download large file in background even terminal is closed
+nohup wget https://example.com/file.zip &
+# or
+nohup wget -b https://example.com/file.zip
+
+wget -r ftp://test.rebex.net --user=demo --password=password
 ```
 
 ### curl - Transfer Data
