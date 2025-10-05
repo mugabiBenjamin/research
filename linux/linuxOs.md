@@ -513,7 +513,7 @@ grep -r "pattern" directory/
 grep -n "pattern" filename
 
 # Search for whole words only
-grep -w "word" filename
+grep -w "div" *.html
 
 # Invert match (lines not containing pattern)
 grep -v "pattern" filename
@@ -526,6 +526,8 @@ grep "pattern" file1.txt file2.txt
 
 # Search using regular expressions
 grep -E "pattern1|pattern2" filename
+
+man lsof | grep -e "-a"
 ```
 
 ### find - Search Files and Directories
