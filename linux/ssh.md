@@ -232,4 +232,11 @@ ssh username@ip_address -p PORT_NUMBER
 - Mount your drive and edit `/etc/ssh/sshd_config`
 - Change `PasswordAuthentication` back to `yes`
 
+## Alternatively, use a different method to transfer:
+
+- USB drive
+- Shared folder
+- Upload to cloud storage and download
+- Use `nc` (netcat) for direct transfer
+
 [Back to Top](#ssh)
