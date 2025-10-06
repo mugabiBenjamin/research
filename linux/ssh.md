@@ -9,6 +9,8 @@
 - [SSH Keys (passwordless login)](#ssh-keys-passwordless-login)
 - [Basic sshd_config hardening](#basic-sshd_config-hardening)
 - [If you lock yourself out](#if-you-lock-yourself-out)
+- [Alternatively, use a different method to transfer](#alternatively-use-a-different-method-to-transfer)
+- [Using VS Code Remote-SSH from Windows](#using-vs-code-remote-ssh-from-windows)
 
 ## To install the SSH server
 
@@ -91,9 +93,9 @@ scp -r C:\local\folder username@ip_address:/remote/path
 # When using custom port
 scp -P PORT_NUMBER username@ip_address:/path/to/file C:\destination\path
 
-C:\Users\Admin> scp -P PORT_NUMBER C:/Users/Admin/Downloads/wordlist_candidates.txt username@ip_address:/home/username/Desktop/UCC/double_trouble/fifth
+C:\Users\Admin> scp -P PORT_NUMBER C:/Users/Admin/Downloads/wordlist_candidates.txt username@ip_address:/home/username/Desktop
 # -
-C:\Users\Admin>scp -P PORT_NUMBER C:\Users\Admin\Downloads\wordlist_candidates.txt username@ip_address:/home/username/Desktop/UCC/double_trouble/sixth
+C:\Users\Admin>scp -P PORT_NUMBER C:\Users\Admin\Downloads\wordlist_candidates.txt username@ip_address:/home/username/Desktop
 ```
 
 ## Find your IP address
@@ -232,11 +234,48 @@ ssh username@ip_address -p PORT_NUMBER
 - Mount your drive and edit `/etc/ssh/sshd_config`
 - Change `PasswordAuthentication` back to `yes`
 
-## Alternatively, use a different method to transfer:
+## Alternatively, use a different method to transfer
 
 - USB drive
 - Shared folder
 - Upload to cloud storage and download
 - Use `nc` (netcat) for direct transfer
+
+Use VS Code Remote SSH (recommended)
+
+- On Windows, open VS Code
+- Install "Remote - SSH" extension
+- Press `Ctrl+Shift+P`, type "Remote-SSH: Connect to Host"
+- Add: `ssh://username@ip_address:PORT` (replace PORT)
+- Once connected, open the folder
+
+## Using VS Code Remote-SSH from Windows
+
+- On your Windows machine, open VS Code locally
+- Install extension: "Remote - SSH"
+- Press F1 or Ctrl+Shift+P
+- Type: "Remote-SSH: Connect to Host"
+- Enter: `username@ip_address` (add `-p PORT` in SSH config if not port 22)
+- After connecting, open folder: `/home/BB/Desktop`
+
+This runs VS Code's UI on Windows while editing files directly on the Linux machine.
+
+- Select `C:\Users\Admin\.ssh\config` and add:
+
+```plain
+Host your_alias
+  HostName ip_address
+  User username
+  Port YOUR_PORT_NUMBER
+```
+
+You need to use VS Code Remote-SSH from Windows:
+
+1. On Windows, open VS Code (the local application)
+2. Look at the bottom-left corner - click the green/blue `><` icon
+3. Select "Connect to Host" → choose `your_alias`
+4. Once connected, File → Open Folder → navigate to `/home/BB/Desktop`
+
+This opens VS Code's UI on Windows while editing files on the Linux machine through SSH.
 
 [Back to Top](#ssh)
