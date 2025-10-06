@@ -89,7 +89,11 @@ scp C:\local\file username@ip_address:/remote/path
 scp -r C:\local\folder username@ip_address:/remote/path
 
 # When using custom port
-scp -P 2222 username@ip_address:/path/to/file C:\destination\path
+scp -P PORT_NUMBER username@ip_address:/path/to/file C:\destination\path
+
+C:\Users\Admin> scp -P PORT_NUMBER C:/Users/Admin/Downloads/wordlist_candidates.txt username@ip_address:/home/username/Desktop/UCC/double_trouble/fifth
+# -
+C:\Users\Admin>scp -P PORT_NUMBER C:\Users\Admin\Downloads\wordlist_candidates.txt username@ip_address:/home/username/Desktop/UCC/double_trouble/sixth
 ```
 
 ## Find your IP address
@@ -131,7 +135,7 @@ ssh-keygen -t ed25519 -C "your_email@example.com"
 ssh-copy-id username@ip_address
 
 # With custom port
-ssh-copy-id -p 2222 username@ip_address
+ssh-copy-id -p PORT_NUMBER username@ip_address
 
 # Or manually add to remote ~/.ssh/authorized_keys
 cat ~/.ssh/id_ed25519.pub | ssh username@ip_address "mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys"
@@ -196,7 +200,7 @@ sudo nano /etc/ssh/sshd_config
 Uncomment and modify these lines:
 
 ```plain
-Port 2222
+Port PORT_NUMBER
 PermitRootLogin no
 PasswordAuthentication no
 PubkeyAuthentication yes
@@ -212,13 +216,13 @@ sudo systemctl restart ssh.socket
 
 # Update firewall for new port
 sudo ufw delete allow ssh
-sudo ufw allow 2222/tcp
+sudo ufw allow PORT_NUMBER/tcp
 ```
 
 #### 6. Connect using new port
 
 ```bash
-ssh username@ip_address -p 2222
+ssh username@ip_address -p PORT_NUMBER
 ```
 
 ## If you lock yourself out
