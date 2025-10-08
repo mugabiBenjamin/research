@@ -196,7 +196,24 @@ ssh username@ip_address
 # Should connect without asking for password. If it works, you're safe.
 ```
 
-#### 4. Edit SSH config
+#### 4. Add passphrase to private key (recommended)
+
+```cmd
+ssh-keygen -p -f C:\Users\Admin\.ssh\id_ed25519
+```
+
+Enter new passphrase when prompted. This encrypts your private key file.
+
+#### 5. Test with passphrase
+
+```cmd
+ssh username@ip_address -p PORT_NUMBER
+# Should prompt for key passphrase (not server password), then connect
+```
+
+#### 6. Disable password authentication
+
+Edit SSH config:
 
 ```bash
 sudo nano /etc/ssh/sshd_config
@@ -212,23 +229,29 @@ PubkeyAuthentication yes
 AllowUsers username
 ```
 
-#### 5. Apply changes
+#### 7. Apply changes
 
 ```bash
-# Reload systemd and restart SSH
-sudo systemctl daemon-reload
-sudo systemctl restart ssh.socket
+# Restart SSH service
+sudo systemctl restart ssh
 
 # Update firewall for new port
 sudo ufw delete allow ssh
 sudo ufw allow PORT_NUMBER/tcp
 ```
 
-#### 6. Connect using new port
+#### 8. Test from new terminal
 
 ```bash
 ssh username@ip_address -p PORT_NUMBER
+# Should only accept key authentication, no password fallback
 ```
+
+**Keep private key secure:**
+
+- Never share `id_ed25519` file
+- Don't commit to git repositories  
+- Back it up securely (encrypted drive/password manager)
 
 ## If you lock yourself out
 
