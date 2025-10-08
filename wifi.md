@@ -48,6 +48,19 @@ sudo apt install aircrack-ng -y
 sudo airmon-ng start wlan0
 sudo airodump-ng wlan0mon
 sudo airmon-ng stop wlan0mon
+
+# stop NetworkManager from interfering (airmon-ng will offer 'check kill')
+sudo airmon-ng check kill
+
+# start monitor mode (this typically creates wlp3s0mon)
+sudo airmon-ng start wlp3s0
+
+# ...do your passive captures (airodump-ng, wireshark, etc.)...
+
+# stop monitor mode and restore NetworkManager
+sudo airmon-ng stop wlp3s0mon
+sudo systemctl restart NetworkManager
+
 ```
 
 [Back to top](#wifi-commands)
