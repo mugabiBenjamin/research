@@ -2,6 +2,9 @@
 
 - [To install the SSH server](#to-install-the-ssh-server)
 - [For better security, disable SSH when not in use](#for-better-security-disable-ssh-when-not-in-use)
+- [Keep it running if](#keep-it-running-if)
+- [Disable it if](#disable-it-if)
+- [Compromise approach](#compromise-approach)
 - [SSH connection](#ssh-connection)
 - [Copy files from remote host](#copy-files-from-remote-host)
 - [Find your IP address](#find-your-ip-address)
@@ -21,6 +24,17 @@ sudo systemctl start ssh
 sudo systemctl enable ssh
 ```
 
+```bash
+# Verify SSH is running:
+sudo systemctl status ssh
+
+# Check firewall:
+sudo ufw status
+
+# If firewall is active, allow SSH:
+sudo ufw allow ssh
+```
+
 ## For better security, disable SSH when not in use
 
 ```bash
@@ -28,7 +42,7 @@ sudo systemctl stop ssh
 sudo systemctl disable ssh
 ```
 
-### Keep it running if
+## Keep it running if
 
 - You regularly SSH in remotely
 - You use it for automated tasks/backups
@@ -50,17 +64,6 @@ Keep it enabled but configure /etc/ssh/sshd_config:
 - Enable fail2ban to block brute force attempts
 
 For a personal laptop on home WiFi, the risk is low either way, but disabling when unused is slightly safer.
-
-```bash
-# Verify SSH is running:
-sudo systemctl status ssh
-
-# Check firewall:
-sudo ufw status
-
-# If firewall is active, allow SSH:
-sudo ufw allow ssh
-```
 
 ## SSH connection
 
@@ -241,26 +244,11 @@ ssh username@ip_address -p PORT_NUMBER
 - Upload to cloud storage and download
 - Use `nc` (netcat) for direct transfer
 
-Use VS Code Remote SSH (recommended)
-
-- On Windows, open VS Code
-- Install "Remote - SSH" extension
-- Press `Ctrl+Shift+P`, type "Remote-SSH: Connect to Host"
-- Add: `ssh://username@ip_address:PORT` (replace PORT)
-- Once connected, open the folder
-
 ## Using VS Code Remote-SSH from Windows
 
-- On your Windows machine, open VS Code locally
-- Install extension: "Remote - SSH"
-- Press F1 or Ctrl+Shift+P
-- Type: "Remote-SSH: Connect to Host"
-- Enter: `username@ip_address` (add `-p PORT` in SSH config if not port 22)
-- After connecting, open folder: `/home/BB/Desktop`
+### Setup SSH config
 
-This runs VS Code's UI on Windows while editing files directly on the Linux machine.
-
-- Select `C:\Users\Admin\.ssh\config` and add:
+Select `C:\Users\Admin\.ssh\config` and add:
 
 ```plain
 Host your_alias
@@ -269,13 +257,19 @@ Host your_alias
   Port YOUR_PORT_NUMBER
 ```
 
-You need to use VS Code Remote-SSH from Windows:
+### Connect via VS Code
 
 1. On Windows, open VS Code (the local application)
-2. Look at the bottom-left corner - click the green/blue `><` icon
-3. Select "Connect to Host" → choose `your_alias`
-4. Once connected, File → Open Folder → navigate to `/home/BB/Desktop`
+2. Install extension: "Remote - SSH"
+3. Press F1 or Ctrl+Shift+P
+4. Type: "Remote-SSH: Connect to Host"
+5. Select `your_alias` from the list
+6. Once connected, File → Open Folder → navigate to `/home/BB/Desktop`
 
-This opens VS Code's UI on Windows while editing files on the Linux machine through SSH.
+This runs VS Code's UI on Windows while editing files directly on the Linux machine.
+
+**Alternative method without SSH config:**
+
+- Enter: `username@ip_address` (add `-p PORT` if not using port 22)
 
 [Back to Top](#ssh)
