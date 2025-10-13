@@ -1,7 +1,6 @@
 # Markdown Syntax
 
 - [Headings](#headings)
-- [Heading Alternate Syntax](#heading-alternate-syntax)
 - [Text formattings](#text-formattings)
 - [Unordered lists](#unordered-lists)
 - [Ordered lists](#ordered-lists)
@@ -22,33 +21,38 @@
 
 ```markdown
 # Heading level 1
+
 ## Heading level 2
+
 ### Heading level 3
+
 #### Heading level 4
+
 ##### Heading level 5
+
 ###### Heading level 6
-```
-
-## Heading Alternate Syntax
-
-```markdown
-# Heading level 1
-## Heading level 2
 ```
 
 ## Text formattings
 
 ```markdown
-**Bold text** or **Bold text**
+**Bold text**
 
-_Italic text_ or _Italic text_
+_Italic text_
 
 ~~Strikethrough text~~
 
-**_Bold and Italic text_** or **_Bold and Italic text_** or **_Bold and Italic text_** or **_Bold and Italic text_**
+**_Bold and Italic text_**
 
 > for blockquotes
 ```
+
+- **Bold text**
+- _Italic text_
+- ~~Strikethrough text~~
+- **_Bold and Italic text_**
+
+> for blockquotes
 
 ## Unordered lists
 
@@ -56,15 +60,11 @@ _Italic text_ or _Italic text_
 - First item
 - Second item
 - Third item
-
-* First item
-* Second item
-* Third item
+```
 
 - First item
 - Second item
 - Third item
-```
 
 ## Ordered lists
 
@@ -73,6 +73,10 @@ _Italic text_ or _Italic text_
 2. Second item
 3. Third item
 ```
+
+1. First item
+2. Second item
+3. Third item
 
 ## Links
 
@@ -83,8 +87,13 @@ _Italic text_ or _Italic text_
 
 [JSM PRO](https://jsmasterypro.com "Blog") <!-- When you hover over the link, there's a tooltip -->
 
-[Jump to Installation Section](#installation)
+[Markdown Syntax](#markdown-syntax)
 ```
+
+- <https://jsmasterypro.com>
+- [Visit Google](https://google.com)
+- [JSM PRO](https://jsmasterypro.com "Blog")
+- [Markdown Syntax](#markdown-syntax)
 
 ## Image
 
@@ -108,6 +117,9 @@ _Italic text_ or _Italic text_
 Use single backticks for inline code.
 Run the `npm install` command to install dependencies.
 ```
+
+Use single backticks for inline code.
+Run the `npm install` command to install dependencies.
 
 ## Code blocks
 
@@ -134,6 +146,11 @@ function greet(name) {
 | Row 1    |  Data 1  |   Data 2 |
 | Row 2    |  Data 3  |   Data 4 |
 ```
+
+| Column 1 | Column 2 | Column 3 |
+| -------- | :------: | -------: |
+| Row 1    |  Data 1  |   Data 2 |
+| Row 2    |  Data 3  |   Data 4 |
 
 ## Task List
 
@@ -164,7 +181,7 @@ Hidden content goes here.
 ```markdown
 <!-- Won't italicize -->
 
-\*This will not italicize.\*
+\* This will not italicize.\*
 
 <!--Won't create a header -->
 
@@ -177,10 +194,10 @@ Hidden content goes here.
 Javascript Mastery
 
 ---
+```
 
 Javascript Mastery
 
 ---
-```
 
 [Back to top](#markdown-syntax)
