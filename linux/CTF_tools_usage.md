@@ -171,6 +171,21 @@ steghide info image.jpg
 scalpel disk.img -o output/
 ```
 
+### zsteg
+
+```bash
+# Hide data in image
+zsteg hide -s secret.txt image.jpg
+
+# Extract hidden data
+zsteg extract image.jpg
+
+# zsteg - PNG/BMP steganography detection
+zsteg image.png              # Detect hidden data
+zsteg -a image.png           # All detection methods
+zsteg image.png -E b1,lsb,xy # Extract specific bits
+```
+
 ## Cryptography
 
 ### hashcat

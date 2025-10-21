@@ -61,7 +61,12 @@ if [ "${MINIMAL}" = true ]; then
     nmap tcpdump \
     binwalk strace ltrace radare2 \
     hashcat john \
-    tmux p7zip-full
+    tmux p7zip-full \
+    ruby ruby-dev build-essential
+  
+  # Install zsteg
+  log "Installing zsteg..."
+  sudo gem install zsteg || warn "Failed to install zsteg via gem"
 else
   log "Installing FULL package set..."
 
@@ -89,10 +94,14 @@ else
   # Forensics tools
   log "Installing forensics tools..."
   sudo apt install -y foremost scalpel libimage-exiftool-perl steghide outguess gddrescue
+  sudo apt install -y ruby ruby-dev build-essential
   install_package testdisk
-  install_package photorec
   install_package sleuthkit
   install_package autopsy
+  
+  # Install zsteg
+  log "Installing zsteg..."
+  sudo gem install zsteg || warn "Failed to install zsteg via gem"
 
   # Media analysis
   log "Installing media analysis tools..."
@@ -174,7 +183,7 @@ log "Tools directory: ${TOOLS_DIR}"
 
 # --- Verification ---
 log "Verifying installed commands..."
-for cmd in nmap binwalk radare2 hashcat john jq; do
+for cmd in nmap binwalk radare2 hashcat john jq zsteg; do
   if command -v "${cmd}" >/dev/null 2>&1; then
     printf '  %-12s: installed\n' "${cmd}"
   else

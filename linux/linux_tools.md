@@ -906,6 +906,11 @@ icat disk.img 12345         # Extract file by inode
 
 # autopsy - GUI forensics platform
 autopsy &
+
+# zsteg - PNG/BMP steganography detection
+zsteg image.png              # Detect hidden data
+zsteg -a image.png           # All detection methods
+zsteg image.png -E b1,lsb,xy # Extract specific bits
 ```
 
 ## Web Security
