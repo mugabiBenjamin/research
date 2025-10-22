@@ -770,7 +770,7 @@ wget -i list.txt
 wget -m https://example.com/
 
 # Creates a complete, offline-browsable copy of the website
-wget --mirror --page-requisites --convert-link --no-clobber --no-parent --domains example.com https://example.com/
+wget --mirror --page-requisites --convert-links --no-clobber --no-parent --domains example.com https://example.com/
 
 # short hand version:
 wget -mpkNnp -D example.com --no-clobber https://example.com/
