@@ -156,7 +156,7 @@ strings -e b binary_file  # 16-bit big endian
 
 ```bash
 # Compress executable
-upx program 
+upx program
 
 # Decompress executable
 upx -d program
@@ -429,6 +429,84 @@ iostat -x sda
 
 # Human readable
 iostat -h
+```
+
+## tmux
+
+```bash
+# Lanch tmux
+tmux
+
+# List existing tmux sessions
+tmux ls
+
+# Attach to detached session
+tmux a
+
+# Attach to a specific session by index or name
+tmux a -t <session_index_or_name>
+
+# Start a new tmux session with a name
+tmux new -s <session_name>
+
+# Attach to an existing tmux session
+tmux attach -t <session_name>
+
+# Kill most recent tmux session
+tmux kill-session
+
+# Kill a specific tmux session by name
+tmux kill-session -t <session_name>
+
+# Kill all tmux sessions
+tmux kill-server
+
+# ~/.tmux.conf
+# set -g mouse on
+# setw -g mode-keys vi
+
+# Enter copy mode
+Ctrl + B, then [
+# Move cursor to start of text to copy, press space to start selection
+# Move cursor to end of text to copy, press Enter to copy
+# Paste copied text with
+Ctrl + B, then ]
+
+# Start a new tmux session
+Ctrl + B
+
+# Create a new window
+Ctrl + B, then C
+
+# Detach from the current session
+Ctrl + B, then D
+
+# Split window horizontally
+Ctrl + B, then \"
+
+# Split window vertically
+Ctrl + B, then %
+
+# Navigate between panes
+Ctrl + B, then arrow keys
+
+# Switch to next window
+Ctrl + B, then Q, then plane index
+
+# Resize pane
+Ctrl + B, then hold down Ctrl and use arrow keys to resize pane
+
+# Kill a window with multiple panes
+Ctrl + B, the &
+
+# Rename current window
+Ctrl + B then ,
+
+# List all windows
+Ctrl + B then W
+
+# Close pane
+Ctrl + B, then X
 ```
 
 ## Disk & File Recovery
