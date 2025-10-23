@@ -1,5 +1,24 @@
 # Linux
 
+- [Introduction to Linux Families](#introduction-to-linux-families)
+- [Rebooting and shutting down a Linux system](#rebooting-and-shutting-down-a-linux-system)
+- [Locating applications](#locating-applications)
+- [Getting Help](#getting-help)
+- [Directory Operations](#directory-operations)
+- [File Operations](#file-operations)
+- [File Content Viewing](#file-content-viewing)
+- [File Permissions and Ownership](#file-permissions-and-ownership)
+- [Searching and Text Processing](#searching-and-text-processing)
+- [Archiving and Compression](#archiving-and-compression)
+- [Network and Downloads](#network-and-downloads)
+- [Process Management](#process-management)
+- [System Information](#system-information)
+- [Text Editors](#text-editors)
+- [Environment Variables](#environment-variables)
+- [File Comparison](#file-comparison)
+- [Administrative Commands](#administrative-commands)
+- [Formatting and disk partitioning](#formatting-and-disk-partitioning)
+
 ## Introduction to Linux Families
 
 ### The Red Hat Family (RHEL -> Red Hat Enterprise Linux)
@@ -33,7 +52,7 @@
 - **Shell:** is the CLI interpreter that interpretes the CLI input and instructions the OS to perform actions e.g `Bash`, `tcsh`, `zsh`, etc
 - **Partition** is a container in which a file system resides
 
-## The Command Line
+#### The Command Line
 
 Most input commands entered in the command line are separated by spaces. They have 3 basic elements
 
