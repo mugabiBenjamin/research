@@ -1,6 +1,6 @@
 # Package Managers
 
-- [npm vs Yarn Command Comparison](#npm-vs-yarn-command-comparison)
+- [npm vs yarn vs pnpm](#npm-vs-yarn-vs-pnpm)
 - [pip Command Cheat Sheet](#pip-command-cheat-sheet)
 - [composer Command Cheat Sheet](#composer-command-cheat-sheet)
 - [uv Command Cheat Sheet](#uv-command-cheat-sheet)
@@ -8,26 +8,27 @@
   - [Migrating from `requirements.txt` to `uv`](#migrating-from-requirementstxt-to-uv)
   - [When to use each `sync`](#when-to-use-each-sync)
 
-## npm vs Yarn Command Comparison
+## npm vs yarn vs pnpm
 
-| npm Command               | Yarn Command                    |
-| ------------------------- | ------------------------------- |
-| `npm install <package>`   | `yarn add <package>`            |
-| `npm uninstall <package>` | `yarn remove <package>`         |
-| `npm install`             | `yarn install` (or just `yarn`) |
-| `npm update`              | `yarn upgrade`                  |
-| `npm list`                | `yarn list`                     |
-| **`npm run dev`**         | **`yarn dev`**                  |
-| `npm start`               | `yarn start`                    |
-| `npm run build`           | `yarn build`                    |
-| `npm init`                | `yarn init`                     |
-| `npm update <package>`    | `yarn upgrade <package>`        |
-| `package-lock.json`       | `yarn.lock`                     |
+| npm Command               | Yarn Command                    | pnpm Command                    |
+| ------------------------- | ------------------------------- | ------------------------------- |
+| `npm install <package>`   | `yarn add <package>`            | `pnpm add <package>`            |
+| `npm uninstall <package>` | `yarn remove <package>`         | `pnpm remove <package>`         |
+| `npm install`             | `yarn install` (or just `yarn`) | `pnpm install` (or just `pnpm`) |
+| `npm update`              | `yarn upgrade`                  | `pnpm update`                   |
+| `npm list`                | `yarn list`                     | `pnpm list`                     |
+| **`npm run dev`**         | **`yarn dev`**                  | **`pnpm dev`**                  |
+| `npm start`               | `yarn start`                    | `pnpm start`                    |
+| `npm run build`           | `yarn build`                    | `pnpm build`                    |
+| `npm init`                | `yarn init`                     | `pnpm init`                     |
+| `npm update <package>`    | `yarn upgrade <package>`        | `pnpm update <package>`         |
+| `package-lock.json`       | `yarn.lock`                     | `pnpm-lock.yaml`                |
 
-### Yarn Installation
+### yarn installation
 
 ```bash
-npm install -g yarn  # Install Yarn globally
+npm install -g yarn  # Install yarn globally
+npm update -g yarn  # Update yarn globally
 ```
 
 ### Key Differences
@@ -35,6 +36,20 @@ npm install -g yarn  # Install Yarn globally
 - **Lock Files**: `npm` uses `package-lock.json` to lock down the versions of a package's dependencies, while `yarn` uses `yarn.lock`.
 - **Speed**: Yarn generally performs installations faster than npm because it caches every package it downloads.
 - **Workspaces**: Yarn supports workspaces to manage monorepos, which can simplify the management of multiple packages in a single repository.
+
+### Key pnpm features worth noting
+
+- pnpm uses a content-addressable storage system, making it faster and more disk-space efficient
+- The lockfile format is YAML instead of JSON
+- All commands follow npm's syntax more closely than Yarn does
+- You can also use `pnpm i` as a shorthand for `pnpm install`
+
+### pnpm installation
+
+```bash
+npm install -g pnpm  # Install pnpm globally
+npm update -g pnpm  # Update pnpm globally
+```
 
 ## pip Command Cheat Sheet
 
