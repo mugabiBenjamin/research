@@ -68,14 +68,6 @@ if [ "${MINIMAL}" = true ]; then
 else
   log "Installing FULL package set..."
 
-  log "Installing web/enumeration tools..."
-  install_package dirb
-  install_package gobuster
-  install_package wfuzz
-  install_package sqlmap
-  install_package nikto
-  warn "burpsuite not available in apt - install manually from https://portswigger.net/burp/communitydownload"
-
   log "Installing networking tools..."
   sudo apt install -y nmap tcpdump wireshark tshark
 
@@ -84,12 +76,6 @@ else
 
   log "Installing forensics tools..."
   sudo apt install -y foremost scalpel libimage-exiftool-perl steghide outguess gddrescue ruby ruby-dev build-essential
-  install_package testdisk
-  install_package sleuthkit
-  install_package autopsy
-  
-  log "Installing zsteg..."
-  sudo gem install zsteg || warn "Failed to install zsteg via gem"
 
   log "Installing media analysis tools..."
   sudo apt install -y ffmpeg mediainfo sox imagemagick
@@ -103,11 +89,25 @@ else
   log "Installing text processing tools..."
   sudo apt install -y jq xmlstarlet pandoc
 
-  log "Installing security auditing tools..."
-  install_package chkrootkit
-  install_package rkhunter
-  install_package lynis
-  install_package aide
+  log "Installing optional web/enumeration tools..."
+  for pkg in dirb gobuster wfuzz sqlmap nikto; do
+    install_package "$pkg"
+  done
+
+  log "Installing optional forensics tools..."
+  for pkg in testdisk sleuthkit autopsy; do
+    install_package "$pkg"
+  done
+
+  log "Installing optional security auditing tools..."
+  for pkg in chkrootkit rkhunter lynis aide; do
+    install_package "$pkg"
+  done
+  
+  log "Installing zsteg..."
+  sudo gem install zsteg || warn "Failed to install zsteg via gem"
+
+  warn "burpsuite not available in apt - install manually from https://portswigger.net/burp/communitydownload"
 fi
 
 log "APT install finished."
