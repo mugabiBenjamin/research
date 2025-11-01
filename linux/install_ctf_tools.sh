@@ -56,7 +56,6 @@ sudo apt upgrade -y
 # --- Package Installation ---
 if [ "${MINIMAL}" = true ]; then
   log "Installing MINIMAL package set..."
-  # Core tools not in default Ubuntu
   sudo apt install -y \
     nmap tcpdump \
     binwalk strace ltrace radare2 \
@@ -64,124 +63,58 @@ if [ "${MINIMAL}" = true ]; then
     tmux p7zip-full \
     ruby ruby-dev build-essential
   
-  # Install zsteg
   log "Installing zsteg..."
   sudo gem install zsteg || warn "Failed to install zsteg via gem"
 else
   log "Installing FULL package set..."
 
-  # Web / enumeration tools
   log "Installing web/enumeration tools..."
   install_package dirb
   install_package gobuster
   install_package wfuzz
   install_package sqlmap
   install_package nikto
-  # burpsuite - manual install required
   warn "burpsuite not available in apt - install manually from https://portswigger.net/burp/communitydownload"
 
-  # Networking tools
   log "Installing networking tools..."
   sudo apt install -y nmap tcpdump wireshark tshark
-  # curl, wget, netcat-openbsd, net-tools, iproute2 - already in Ubuntu
 
-  # Binary analysis tools
   log "Installing binary analysis tools..."
   sudo apt install -y radare2 binwalk strace ltrace
-  # gdb, file, xxd, binutils - already in Ubuntu
-  # gcc, g++, make, cmake, git, vim - already in Ubuntu
 
-  # Forensics tools
   log "Installing forensics tools..."
-  sudo apt install -y foremost scalpel libimage-exiftool-perl steghide outguess gddrescue
-  sudo apt install -y ruby ruby-dev build-essential
+  sudo apt install -y foremost scalpel libimage-exiftool-perl steghide outguess gddrescue ruby ruby-dev build-essential
   install_package testdisk
   install_package sleuthkit
   install_package autopsy
   
-  # Install zsteg
   log "Installing zsteg..."
   sudo gem install zsteg || warn "Failed to install zsteg via gem"
 
-  # Media analysis
   log "Installing media analysis tools..."
   sudo apt install -y ffmpeg mediainfo sox imagemagick
 
-  # System monitoring
   log "Installing system monitoring tools..."
   sudo apt install -y tmux p7zip-full iotop sysstat lsof linux-tools-generic valgrind
-  # tree, htop, unzip - already in Ubuntu
 
-  # Password cracking
   log "Installing password cracking tools..."
   sudo apt install -y hashcat john hydra
 
-  # Crypto tools
-  log "Installing crypto tools..."
-  # openssl, gnupg - already in Ubuntu
-
-  # Text processors
   log "Installing text processing tools..."
   sudo apt install -y jq xmlstarlet pandoc
 
-  # Security auditing
   log "Installing security auditing tools..."
   install_package chkrootkit
   install_package rkhunter
   install_package lynis
   install_package aide
-
-  # Runtime
-  # python3, python3-pip, python3-dev, python3-venv, default-jre - already in Ubuntu or manual install
 fi
 
 log "APT install finished."
 
-# Python tools - COMMENTED OUT (install manually in venv)
-# log "Python tools to install manually in virtual environment:"
-# warn "pip install pwntools requests beautifulsoup4 scapy cryptography volatility3"
-
-# --- Tools directory ---
 mkdir -p "${TOOLS_DIR}"
 log "Tools directory: ${TOOLS_DIR}"
 
-# --- GHIDRA (optional download) ---
-# if [ "${INSTALL_GHIDRA}" = true ] && [ "${MINIMAL}" = false ]; then
-#   log "Attempting to download GHIDRA (${GHIDRA_VERSION})..."
-#   if command -v wget >/dev/null 2>&1; then
-#     tmp_zip="$(mktemp --suffix=.zip)"
-#     if wget -q -O "${tmp_zip}" "${GHIDRA_URL}"; then
-#       unzip -q "${tmp_zip}" -d "${TOOLS_DIR}" || warn "Unzip failed"
-#       rm -f "${tmp_zip}"
-#       log "Ghidra downloaded and extracted to ${TOOLS_DIR}."
-#     else
-#       warn "Failed to download GHIDRA from ${GHIDRA_URL}"
-#       rm -f "${tmp_zip}"
-#     fi
-#   else
-#     warn "wget not available for GHIDRA download"
-#   fi
-# else
-#   log "Skipping GHIDRA download"
-# fi
-
-# --- pwndbg (optional git clone) ---
-# if [ "${INSTALL_PWNDDBG}" = true ]; then
-#   log "Installing pwndbg..."
-#   PWNDDBG_DIR="${TOOLS_DIR}/pwndbg"
-#   if [ -d "${PWNDDBG_DIR}" ]; then
-#     git -C "${PWNDDBG_DIR}" pull --ff-only || warn "Failed to update pwndbg"
-#   else
-#     git clone --depth 1 https://github.com/pwndbg/pwndbg "${PWNDDBG_DIR}" || warn "Failed to clone pwndbg"
-#   fi
-#   if [ -f "${PWNDDBG_DIR}/setup.sh" ]; then
-#     (cd "${PWNDDBG_DIR}" && ./setup.sh) || warn "pwndbg setup failed"
-#   fi
-# else
-#   log "Skipping pwndbg"
-# fi
-
-# --- Verification ---
 log "Verifying installed commands..."
 for cmd in nmap binwalk radare2 hashcat john jq zsteg; do
   if command -v "${cmd}" >/dev/null 2>&1; then
