@@ -139,6 +139,20 @@ Host linux_server
 #### Method 2: PowerShell (Admin)**
 
 ```powershell
+# Let PowerShell find the exact name automatically
+Get-WindowsCapability -Online | Where-Object Name -like 'OpenSSH.Server*'
+
+PS C:\WINDOWS\system32> Get-WindowsCapability -Online | Where-Object Name -like 'OpenSSH.Server*'
+
+Name  : OpenSSH.Server~~~~0.0.1.0
+State : Installed
+```
+
+```powershell
+# Then install (PowerShell will auto-complete the version)
+Add-WindowsCapability -Online -Name OpenSSH.Server*
+
+# Or specify full name
 Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0
 ```
 
