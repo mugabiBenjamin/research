@@ -1,227 +1,98 @@
-# ssh
+# SSH Setup Guide - Linux & Windows
 
-- [To install the SSH server](#to-install-the-ssh-server)
-- [For better security, disable SSH when not in use](#for-better-security-disable-ssh-when-not-in-use)
-- [Keep it running if](#keep-it-running-if)
-- [Disable it if](#disable-it-if)
-- [Compromise approach](#compromise-approach)
-- [SSH connection](#ssh-connection)
-- [Copy files from remote host](#copy-files-from-remote-host)
-- [Find your IP address](#find-your-ip-address)
+## Table of Contents
+
+- [Overview](#overview)
+- [Scenario 1: Linux Server + Windows Client](#scenario-1-linux-server--windows-client)
+- [Scenario 2: Windows Server + Linux Client](#scenario-2-windows-server--linux-client)
+- [Common Operations](#common-operations)
+- [Security Best Practices](#security-best-practices)
 - [Troubleshooting](#troubleshooting)
-- [SSH Keys (passwordless login)](#ssh-keys-passwordless-login)
-- [Basic sshd_config hardening](#basic-sshd_config-hardening)
-- [If you lock yourself out](#if-you-lock-yourself-out)
-- [Alternatively, use a different method to transfer](#alternatively-use-a-different-method-to-transfer)
-- [Using VS Code Remote-SSH from Windows](#using-vs-code-remote-ssh-from-windows)
 
-## To install the SSH server
+## Overview
+
+This guide covers SSH setup for both directions:
+
+- **Scenario 1**: Linux machine as SSH server, Windows as client
+- **Scenario 2**: Windows machine as SSH server, Linux as client
+
+## Scenario 1: Linux Server + Windows Client
+
+### Install SSH Server on Linux
 
 ```bash
 sudo apt update
 sudo apt install openssh-server
 sudo systemctl start ssh
 sudo systemctl enable ssh
-```
 
-```bash
-# Verify SSH is running:
+# Verify SSH is running
 sudo systemctl status ssh
 
-# Check firewall:
-sudo ufw status
-
-# If firewall is active, allow SSH:
+# Configure firewall
 sudo ufw allow ssh
 ```
 
-## For better security, disable SSH when not in use
+### Connect from Windows
 
-```bash
-sudo systemctl stop ssh
-sudo systemctl disable ssh
-```
-
-## Keep it running if
-
-- You regularly SSH in remotely
-- You use it for automated tasks/backups
-- Convenience > minimal risk on your home network
-
-## Disable it if
-
-- You rarely use SSH
-- Your laptop travels to untrusted networks
-- You want minimal attack surface
-
-## Compromise approach
-
-Keep it enabled but configure /etc/ssh/sshd_config:
-
-- Disable password auth (use SSH keys only)
-- Change default port 22
-- Use AllowUsers to whitelist specific users
-- Enable fail2ban to block brute force attempts
-
-For a personal laptop on home WiFi, the risk is low either way, but disabling when unused is slightly safer.
-
-## SSH connection
-
-```bash
-# Connect to remote host
+```cmd
+# Basic connection
 ssh username@ip_address
 
-# Connect on custom port
-ssh username@ip_address -p port_number
+# Custom port
+ssh username@ip_address -p PORT_NUMBER
 
-# Test local SSH
+# Test local connection (on Linux)
 ssh username@localhost
 ```
 
-## Copy files from remote host
+### Copy Files (Windows ↔ Linux)
 
-```bash
-# Copy file from remote to local
-scp username@ip_address:/path/to/file C:\destination\path
-
-# Copy directory from remote to local
-scp -r username@ip_address:/path/to/folder C:\destination\path
-
-# Copy file from local to remote
+```cmd
+# From Windows to Linux
 scp C:\local\file username@ip_address:/remote/path
-
-# Copy directory from local to remote
 scp -r C:\local\folder username@ip_address:/remote/path
 
-# When using custom port
-scp -P PORT_NUMBER username@ip_address:/path/to/file C:\destination\path
-
-C:\Users\Admin> scp -P PORT_NUMBER C:/Users/Admin/Downloads/wordlist_candidates.txt username@ip_address:/home/username/Desktop
-# -
-C:\Users\Admin>scp -P PORT_NUMBER C:\Users\Admin\Downloads\wordlist_candidates.txt username@ip_address:/home/username/Desktop
-```
-
-## Find your IP address
-
-```bash
-# Show all network interfaces
-ip address
-
-# Show only IPv4 addresses
-ip address | grep "inet "
-
-# Show specific interface (e.g., wlp3s0)
-ip address show wlp3s0 | grep "inet "
-
-# Extract just the IP
-ip -4 addr show wlp3s0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}'
-```
-
-## Troubleshooting
-
-```bash
-# Verify SSH is listening on port 22
-sudo ss -tlnp | grep :22
-
-# Check SSH service logs
-sudo journalctl -u ssh -n 50
-
-# Test firewall rules
-sudo ufw status numbered
-```
-
-## SSH Keys (passwordless login)
-
-```bash
-# Generate SSH key pair (on client)
-ssh-keygen -t ed25519 -C "your_email@example.com"
-
-# Copy public key to remote host
-ssh-copy-id username@ip_address
+# From Linux to Windows
+scp username@ip_address:/path/to/file C:\destination\path
+scp -r username@ip_address:/path/to/folder C:\destination\path
 
 # With custom port
-ssh-copy-id -p PORT_NUMBER username@ip_address
-
-# Or manually add to remote ~/.ssh/authorized_keys
-cat ~/.ssh/id_ed25519.pub | ssh username@ip_address "mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys"
+scp -P PORT_NUMBER C:\local\file username@ip_address:/remote/path
 ```
 
-## Basic sshd_config hardening
+### Setup Passwordless Login (Windows → Linux)
 
-### Step-by-step to avoid lockout
-
-#### 1. Generate SSH key on Windows
+**1. Generate key on Windows:**
 
 ```cmd
 ssh-keygen -t ed25519 -C "your_email@example.com"
 ```
 
-Output:
-
-```plain
-Generating public/private ed25519 key pair.
-Enter file in which to save the key (C:\Users\YourName/.ssh/id_ed25519): [Press Enter]
-Enter passphrase (optional): [Press Enter or type passphrase]
-```
-
-#### 2. Copy public key to Ubuntu
-
-Option A - One-liner from Windows:
+**2. Copy key to Linux:**
 
 ```cmd
 type C:\Users\YourName\.ssh\id_ed25519.pub | ssh username@ip_address "mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys"
 ```
 
-Option B - Manual method:
+**3. Test before hardening:**
 
 ```cmd
-# View your public key on Windows
-type C:\Users\YourName\.ssh\id_ed25519.pub
-```
-
-Then on Ubuntu:
-
-```bash
-mkdir -p ~/.ssh
-nano ~/.ssh/authorized_keys
-# Paste the key, save with Ctrl+X, Y, Enter
-chmod 700 ~/.ssh
-chmod 600 ~/.ssh/authorized_keys
-```
-
-#### 3. Test key-based login BEFORE disabling passwords
-
-```bash
 ssh username@ip_address
-# Should connect without asking for password. If it works, you're safe.
+# Should connect without password
 ```
 
-#### 4. Add passphrase to private key (recommended)
+### Harden Linux SSH Server
 
-```cmd
-ssh-keygen -p -f C:\Users\Admin\.ssh\id_ed25519
-```
-
-Enter new passphrase when prompted. This encrypts your private key file.
-
-#### 5. Test with passphrase
-
-```cmd
-ssh username@ip_address -p PORT_NUMBER
-# Should prompt for key passphrase (not server password), then connect
-```
-
-#### 6. Disable password authentication
-
-Edit SSH config:
+**1. Edit SSH config:**
 
 ```bash
 sudo nano /etc/ssh/sshd_config
 ```
 
-Uncomment and modify these lines:
+**2. Modify these lines:**
 
-```plain
+```plaintext
 Port PORT_NUMBER
 PermitRootLogin no
 PasswordAuthentication no
@@ -229,70 +100,361 @@ PubkeyAuthentication yes
 AllowUsers username
 ```
 
-#### 7. Apply changes
+**3. Apply changes:**
 
 ```bash
-# Restart SSH service
 sudo systemctl restart ssh
-
-# Update firewall for new port
 sudo ufw delete allow ssh
 sudo ufw allow PORT_NUMBER/tcp
 ```
 
-#### 8. Test from new terminal
+### VS Code Remote-SSH (Windows → Linux)
 
-```bash
-ssh username@ip_address -p PORT_NUMBER
-# Should only accept key authentication, no password fallback
-```
+**1. Create SSH config** (`C:\Users\Admin\.ssh\config`):
 
-**Keep private key secure:**
-
-- Never share `id_ed25519` file
-- Don't commit to git repositories  
-- Back it up securely (encrypted drive/password manager)
-
-## If you lock yourself out
-
-- Physical access required
-- Boot into recovery mode or use live USB
-- Mount your drive and edit `/etc/ssh/sshd_config`
-- Change `PasswordAuthentication` back to `yes`
-
-## Alternatively, use a different method to transfer
-
-- USB drive
-- Shared folder
-- Upload to cloud storage and download
-- Use `nc` (netcat) for direct transfer
-
-## Using VS Code Remote-SSH from Windows
-
-### Setup SSH config
-
-Select `C:\Users\Admin\.ssh\config` and add:
-
-```plain
-Host your_alias
+```plaintext
+Host linux_server
   HostName ip_address
   User username
-  Port YOUR_PORT_NUMBER
+  Port PORT_NUMBER
 ```
 
-### Connect via VS Code
+**2. Connect via VS Code:**
 
-1. On Windows, open VS Code (the local application)
-2. Install extension: "Remote - SSH"
-3. Press F1 or Ctrl+Shift+P
-4. Type: "Remote-SSH: Connect to Host"
-5. Select `your_alias` from the list
-6. Once connected, File → Open Folder → navigate to `/home/BB/Desktop`
+- Install "Remote - SSH" extension
+- Press `Ctrl+Shift+P` → "Remote-SSH: Connect to Host"
+- Select `linux_server`
+- Open folder: `/home/username/Desktop`
 
-This runs VS Code's UI on Windows while editing files directly on the Linux machine.
+## Scenario 2: Windows Server + Linux Client
 
-**Alternative method without SSH config:**
+### Install OpenSSH Server on Windows
 
-- Enter: `username@ip_address` (add `-p PORT` if not using port 22)
+#### Method 1: Settings GUI**
 
-[Back to Top](#ssh)
+1. Settings → Apps → Optional Features
+2. Add a feature → OpenSSH Server
+3. Install
+
+#### Method 2: PowerShell (Admin)**
+
+```powershell
+Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0
+```
+
+### Start and Configure SSH Service
+
+```powershell
+# Start SSH service
+Start-Service sshd
+
+# Set to start automatically
+Set-Service -Name sshd -StartupType 'Automatic'
+
+# Configure firewall
+New-NetFirewallRule -Name sshd -DisplayName 'OpenSSH Server (sshd)' -Enabled True -Direction Inbound -Protocol TCP -Action Allow -LocalPort 22
+```
+
+### Connect from Linux
+
+```bash
+# Basic connection
+ssh username@windows_ip_address
+
+# Custom port
+ssh username@windows_ip_address -p PORT_NUMBER
+
+# First connection will ask to verify host fingerprint
+```
+
+### Copy Files (Linux ↔ Windows)
+
+```bash
+# From Linux to Windows
+scp /local/file username@windows_ip:/C:/destination/path
+scp -r /local/folder username@windows_ip:/C:/Users/username/Desktop
+
+# From Windows to Linux
+scp username@windows_ip:/C:/path/to/file /local/destination
+scp -r username@windows_ip:/C:/path/to/folder /local/destination
+
+# With custom port
+scp -P PORT_NUMBER /local/file username@windows_ip:/C:/destination/path
+```
+
+**Note:** Windows paths in SSH use forward slashes: `/C:/Users/...`
+
+### Setup Passwordless Login (Linux → Windows)
+
+**1. Generate key on Linux:**
+
+```bash
+ssh-keygen -t ed25519 -C "your_email@example.com"
+```
+
+**2. Copy key to Windows:**
+
+Option A - Automated:
+
+```bash
+ssh-copy-id username@windows_ip_address
+```
+
+Option B - Manual:
+
+```bash
+# Display your public key
+cat ~/.ssh/id_ed25519.pub
+
+# On Windows, create .ssh folder if needed
+mkdir C:\Users\username\.ssh
+
+# Add key to authorized_keys
+notepad C:\Users\username\.ssh\authorized_keys
+# Paste the public key, save
+```
+
+**3. Set permissions on Windows (PowerShell Admin):**
+
+```powershell
+icacls C:\Users\username\.ssh\authorized_keys /inheritance:r
+icacls C:\Users\username\.ssh\authorized_keys /grant:r "username:R"
+```
+
+**4. Test connection:**
+
+```bash
+ssh username@windows_ip_address
+# Should connect without password
+```
+
+### Harden Windows SSH Server
+
+**1. Edit SSH config:**
+
+```powershell
+notepad C:\ProgramData\ssh\sshd_config
+```
+
+**2. Modify these lines:**
+
+```plaintext
+Port PORT_NUMBER
+PasswordAuthentication no
+PubkeyAuthentication yes
+```
+
+**3. For admin users, edit:**
+
+```powershell
+notepad C:\ProgramData\ssh\administrators_authorized_keys
+```
+
+Add your public key here (instead of user's .ssh folder).
+
+**4. Apply changes:**
+
+```powershell
+Restart-Service sshd
+
+# Update firewall for new port
+Remove-NetFirewallRule -Name sshd
+New-NetFirewallRule -Name sshd -DisplayName 'OpenSSH Server (sshd)' -Enabled True -Direction Inbound -Protocol TCP -Action Allow -LocalPort PORT_NUMBER
+```
+
+### VS Code Remote-SSH (Linux → Windows)
+
+**1. Create SSH config** (`~/.ssh/config`):
+
+```plaintext
+Host windows_server
+  HostName windows_ip_address
+  User username
+  Port PORT_NUMBER
+```
+
+**2. Connect via VS Code on Linux:**
+
+- Install "Remote - SSH" extension
+- Press `Ctrl+Shift+P` → "Remote-SSH: Connect to Host"
+- Select `windows_server`
+- Open folder: `/C:/Users/username/Desktop`
+
+## Common Operations
+
+### Find IP Address
+
+**Linux:**
+
+```bash
+ip address | grep "inet "
+ip -4 addr show wlp3s0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}'
+```
+
+**Windows:**
+
+```cmd
+ipconfig | findstr IPv4
+```
+
+```powershell
+Get-NetIPAddress -AddressFamily IPv4 | Select-Object IPAddress
+```
+
+### Manage SSH Service
+
+**Linux:**
+
+```bash
+sudo systemctl start ssh      # Start
+sudo systemctl stop ssh       # Stop
+sudo systemctl restart ssh    # Restart
+sudo systemctl status ssh     # Check status
+sudo systemctl enable ssh     # Auto-start on boot
+sudo systemctl disable ssh    # Disable auto-start
+```
+
+**Windows (PowerShell Admin):**
+
+```powershell
+Start-Service sshd           # Start
+Stop-Service sshd            # Stop
+Restart-Service sshd         # Restart
+Get-Service sshd             # Check status
+Set-Service -Name sshd -StartupType 'Automatic'  # Auto-start
+Set-Service -Name sshd -StartupType 'Disabled'   # Disable
+```
+
+### Add Passphrase to Private Key
+
+**Windows:**
+
+```cmd
+ssh-keygen -p -f C:\Users\Admin\.ssh\id_ed25519
+```
+
+**Linux:**
+
+```bash
+ssh-keygen -p -f ~/.ssh/id_ed25519
+```
+
+## Security Best Practices
+
+### When to Disable SSH
+
+**Keep running if:**
+
+- Regular remote access needed
+- Automated tasks/backups configured
+- On trusted home network with good security
+
+**Disable when:**
+
+- Rarely used
+- Laptop on untrusted networks (coffee shops, travel)
+- Maximum security required
+
+### Compromise Approach
+
+Keep enabled but harden configuration:
+
+- ✅ Disable password authentication (keys only)
+- ✅ Change default port 22
+- ✅ Use AllowUsers/DenyUsers whitelist
+- ✅ Install fail2ban (Linux) to block brute force
+- ✅ Use strong passphrases on private keys
+- ✅ Keep SSH software updated
+
+### Key Security
+
+**Private key protection:**
+
+- Never share `id_ed25519` file
+- Don't commit to git repositories
+- Back up securely (encrypted drive/password manager)
+- Use strong passphrase
+
+## Troubleshooting
+
+### Verify SSH is Listening
+
+**Linux:**
+
+```bash
+sudo ss -tlnp | grep :22
+sudo journalctl -u ssh -n 50
+```
+
+**Windows (PowerShell Admin):**
+
+```powershell
+Get-NetTCPConnection | Where-Object LocalPort -eq 22
+Get-EventLog -LogName Application -Source sshd -Newest 50
+```
+
+### Connection Issues
+
+```bash
+# Test with verbose output
+ssh -v username@ip_address
+
+# Test with very verbose output
+ssh -vvv username@ip_address
+```
+
+### Firewall Check
+
+**Linux:**
+
+```bash
+sudo ufw status numbered
+```
+
+**Windows (PowerShell Admin):**
+
+```powershell
+Get-NetFirewallRule -Name sshd
+```
+
+### Locked Out Recovery
+
+**If you lock yourself out:**
+
+**Linux:**
+
+- Physical access required
+- Boot into recovery mode or live USB
+- Mount drive and edit `/etc/ssh/sshd_config`
+- Change `PasswordAuthentication yes`
+
+**Windows:**
+
+- Physical access required
+- Edit `C:\ProgramData\ssh\sshd_config`
+- Change `PasswordAuthentication yes`
+- Restart sshd service
+
+### Alternative File Transfer Methods
+
+If SSH is unavailable:
+
+- USB drive
+- Shared network folder (SMB/CIFS)
+- Cloud storage (Google Drive, Dropbox)
+- Direct transfer with `nc` (netcat)
+- Python HTTP server
+
+## Quick Reference
+
+| Task               | Linux                        | Windows                                             |
+| ------------------ | ---------------------------- | --------------------------------------------------- |
+| Install SSH server | `apt install openssh-server` | Settings → Optional Features                        |
+| Start SSH          | `systemctl start ssh`        | `Start-Service sshd`                                |
+| Config location    | `/etc/ssh/sshd_config`       | `C:\ProgramData\ssh\sshd_config`                    |
+| User keys          | `~/.ssh/authorized_keys`     | `C:\Users\user\.ssh\authorized_keys`                |
+| Admin keys         | N/A                          | `C:\ProgramData\ssh\administrators_authorized_keys` |
+| Restart service    | `systemctl restart ssh`      | `Restart-Service sshd`                              |
+| Default port       | 22                           | 22                                                  |
+
+[Back to Top](#ssh-setup-guide---linux--windows)
