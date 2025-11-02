@@ -294,6 +294,33 @@ Host windows_server
 - Select `windows_server`
 - Open folder: `/C:/Users/username/Desktop`
 
+### Changing port on windows
+
+**1. Edit SSH config:**
+
+```powershell
+notepad C:\ProgramData\ssh\sshd_config
+```
+
+**2. Change/add:**
+
+```powershell
+Port 23456
+```
+
+**3. Restart SSH:**
+
+```powershell
+Restart-Service sshd
+```
+
+**4. Update firewall:**
+
+```powershell
+Remove-NetFirewallRule -Name sshd
+New-NetFirewallRule -Name sshd -DisplayName 'OpenSSH Server (sshd)' -Enabled True -Direction Inbound -Protocol TCP -Action Allow -LocalPort 'PORT_NUMBER'
+```
+
 ## Common Operations
 
 ### Find IP Address
