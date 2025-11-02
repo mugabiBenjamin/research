@@ -121,7 +121,7 @@ Host linux_server
 
 **2. Connect via VS Code:**
 
-- Install "Remote - SSH" extension
+- Install `"Remote - SSH"` extension
 - Press `Ctrl+Shift+P` → "Remote-SSH: Connect to Host"
 - Select `linux_server`
 - Open folder: `/home/username/Desktop`
@@ -368,6 +368,39 @@ ssh-keygen -p -f ~/.ssh/id_ed25519
 - Rarely used
 - Laptop on untrusted networks (coffee shops, travel)
 - Maximum security required
+
+### Ports
+
+You can use any port from `1-65535`, but practical choices:
+
+**Common alternatives:**
+
+- 22 (default)
+- 2222 (common alternative)
+- `22000-22999` (`SSH range`)
+- `Any port above 1024` (doesn't require root/admin)
+
+**Best practices:**
+
+- Avoid ports already in use (80, 443, 3306, etc.)
+- `Use ports above 1024 to avoid permission issues`
+- Pick something memorable: 2222, 8022, etc.
+
+#### Check if port is available
+
+- **Linux**
+
+```bash
+sudo ss -tlnp | grep :PORT_NUMBER
+```
+
+- **Windows (PowerShell Admin)**
+
+```bash
+Get-NetTCPConnection -LocalPort PORT_NUMBER
+```
+
+> No output = port is free.
 
 ### Compromise Approach
 
