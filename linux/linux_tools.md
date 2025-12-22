@@ -5,6 +5,7 @@
 1. [File Analysis & Forensics](#file-analysis--forensics)
 2. [Network Analysis](#network-analysis)
 3. [System Monitoring & Debugging](#system-monitoring--debugging)
+    - [tmux](#tmux)
 4. [Disk & File Recovery](#disk--file-recovery)
 5. [Archive & Compression](#archive--compression)
 6. [Media Analysis](#media-analysis)
