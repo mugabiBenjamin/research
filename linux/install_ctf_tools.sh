@@ -151,6 +151,18 @@ else
     install_package "$pkg"
   done
 
+  log "Installing Metasploit Framework..."
+  if ! command -v msfconsole >/dev/null 2>&1; then
+    curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > /tmp/msfinstall \
+      && chmod +x /tmp/msfinstall \
+      && sudo /tmp/msfinstall \
+      && rm -f /tmp/msfinstall \
+      && log "Metasploit installed" \
+      || warn "Failed to install Metasploit"
+  else
+    warn "Metasploit already installed"
+  fi
+
   warn "sagemath requires manual install - use https://sagecell.sagemath.org for quick crypto or install locally via: conda install sage -c conda-forge"
 
 
@@ -220,7 +232,7 @@ mkdir -p "${TOOLS_DIR}"
 log "Tools directory: ${TOOLS_DIR}"
 
 log "Verifying installed commands..."
-for cmd in nmap binwalk radare2 hashcat john jq zsteg ffuf fcrackzip smbclient zbarimg mat2 ROPgadget xortool; do
+for cmd in nmap binwalk radare2 hashcat john jq zsteg ffuf fcrackzip smbclient zbarimg mat2 ROPgadget xortool msfconsole; do
   if command -v "${cmd}" >/dev/null 2>&1; then
     printf '  %-14s: installed\n' "${cmd}"
   else
