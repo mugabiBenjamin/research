@@ -12,6 +12,7 @@ GHIDRA_VERSION="10.4_PUBLIC_20230928"
 GHIDRA_ZIP="ghidra_${GHIDRA_VERSION}.zip"
 GHIDRA_URL="https://github.com/NationalSecurityAgency/ghidra/releases/download/Ghidra_10.4_build/${GHIDRA_ZIP}"
 TOOLS_DIR="${HOME}/tools"
+mkdir -p "${TOOLS_DIR}"
 INSTALL_PWNDDBG=true
 INSTALL_GHIDRA=true
 MINIMAL=false
@@ -106,19 +107,28 @@ else
       warn "Could not find rizin .deb download URL - install manually from https://github.com/rizinorg/rizin/releases"
     fi
   fi
-  if ! sudo apt install -y cutter 2>/dev/null; then
-    warn "cutter not in apt - installing latest AppImage..."
-    CUTTER_URL=$(wget -qO- https://api.github.com/repos/rizinorg/cutter/releases/latest \
-      2>/dev/null | grep "browser_download_url.*AppImage" | grep -v ".zsync" | head -1 \
-      | cut -d '"' -f 4) || true
-    if [ -n "${CUTTER_URL:-}" ]; then
-      wget -q --show-progress -O "${TOOLS_DIR}/cutter.AppImage" "${CUTTER_URL}" \
-        && chmod +x "${TOOLS_DIR}/cutter.AppImage" \
-        && sudo ln -sf "${TOOLS_DIR}/cutter.AppImage" /usr/local/bin/cutter \
-        && log "cutter AppImage installed to ${TOOLS_DIR}/cutter.AppImage" \
-        || { warn "Failed to download cutter AppImage"; true; }
-    else
-      warn "Could not find cutter AppImage URL - install manually from https://github.com/rizinorg/cutter/releases"
+  
+  log "Installing cutter..."
+  if command -v cutter >/dev/null 2>&1; then
+    warn "cutter already installed, skipping"
+  elif [ -f "${TOOLS_DIR}/cutter.AppImage" ]; then
+    warn "cutter AppImage already exists, linking..."
+    chmod +x "${TOOLS_DIR}/cutter.AppImage"
+    sudo ln -sf "${TOOLS_DIR}/cutter.AppImage" /usr/local/bin/cutter
+  else
+    if ! sudo apt install -y cutter 2>/dev/null; then
+      warn "cutter not in apt - installing latest AppImage..."
+      CUTTER_URL=$(wget -qO- https://api.github.com/repos/rizinorg/cutter/releases/latest \
+        2>/dev/null | grep "browser_download_url.*AppImage" | grep -v ".zsync" | head -1 \
+        | cut -d '"' -f 4) || true
+      if [ -n "${CUTTER_URL:-}" ]; then
+        wget -q --show-progress -O "${TOOLS_DIR}/cutter.AppImage" "${CUTTER_URL}" \
+          && chmod +x "${TOOLS_DIR}/cutter.AppImage" \
+          && sudo ln -sf "${TOOLS_DIR}/cutter.AppImage" /usr/local/bin/cutter \
+          && log "cutter installed"
+      else
+        warn "Could not find cutter AppImage URL"
+      fi
     fi
   fi
 
@@ -215,22 +225,19 @@ else
     warn "Skipping pwndbg (--no-pwndbg flag set)"
   fi
 
-  # --- Ghidra ---
-  if [ "${INSTALL_GHIDRA}" = true ]; then
-    log "Installing Ghidra ${GHIDRA_VERSION}..."
-    sudo apt install -y default-jdk || warn "Failed to install JDK (required for Ghidra)"
-    if [ -d "${TOOLS_DIR}/ghidra_${GHIDRA_VERSION}" ]; then
-      warn "Ghidra directory already exists, skipping download"
-    else
-      wget -q --show-progress -O "/tmp/${GHIDRA_ZIP}" "${GHIDRA_URL}" || warn "Failed to download Ghidra"
-      if [ -f "/tmp/${GHIDRA_ZIP}" ]; then
-        unzip -q "/tmp/${GHIDRA_ZIP}" -d "${TOOLS_DIR}/" || warn "Failed to unzip Ghidra"
-        rm -f "/tmp/${GHIDRA_ZIP}"
-        log "Ghidra extracted to ${TOOLS_DIR}"
-      fi
-    fi
+  log "Installing Ghidra ${GHIDRA_VERSION}..."
+  if [ -d "${TOOLS_DIR}/ghidra_${GHIDRA_VERSION}" ]; then
+    warn "Ghidra already exists, skipping download"
+  elif command -v ghidraRun >/dev/null 2>&1; then
+    warn "Ghidra command already available, skipping"
   else
-    warn "Skipping Ghidra (--no-ghidra flag set)"
+    sudo apt install -y default-jdk || warn "Failed to install JDK (required for Ghidra)"
+    wget -q --show-progress -O "/tmp/${GHIDRA_ZIP}" "${GHIDRA_URL}" || warn "Failed to download Ghidra"
+    if [ -f "/tmp/${GHIDRA_ZIP}" ]; then
+      unzip -q "/tmp/${GHIDRA_ZIP}" -d "${TOOLS_DIR}/" || warn "Failed to unzip Ghidra"
+      rm -f "/tmp/${GHIDRA_ZIP}"
+      log "Ghidra extracted to ${TOOLS_DIR}"
+    fi
   fi
 
   warn "burpsuite not available in apt - install manually from https://portswigger.net/burp/communitydownload"
