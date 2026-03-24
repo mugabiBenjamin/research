@@ -54,6 +54,10 @@ sudo apt update -y
 log "Upgrading packages..."
 sudo apt upgrade -y
 
+# Ensure required tools exist
+command -v wget >/dev/null 2>&1 || sudo apt install -y wget
+command -v unzip >/dev/null 2>&1 || sudo apt install -y unzip
+
 # --- Package Installation ---
 if [ "${MINIMAL}" = true ]; then
   log "Installing MINIMAL package set..."
@@ -225,19 +229,23 @@ else
     warn "Skipping pwndbg (--no-pwndbg flag set)"
   fi
 
-  log "Installing Ghidra ${GHIDRA_VERSION}..."
-  if [ -d "${TOOLS_DIR}/ghidra_${GHIDRA_VERSION}" ]; then
-    warn "Ghidra already exists, skipping download"
-  elif command -v ghidraRun >/dev/null 2>&1; then
-    warn "Ghidra command already available, skipping"
-  else
-    sudo apt install -y default-jdk || warn "Failed to install JDK (required for Ghidra)"
-    wget -q --show-progress -O "/tmp/${GHIDRA_ZIP}" "${GHIDRA_URL}" || warn "Failed to download Ghidra"
-    if [ -f "/tmp/${GHIDRA_ZIP}" ]; then
-      unzip -q "/tmp/${GHIDRA_ZIP}" -d "${TOOLS_DIR}/" || warn "Failed to unzip Ghidra"
-      rm -f "/tmp/${GHIDRA_ZIP}"
-      log "Ghidra extracted to ${TOOLS_DIR}"
+  if [ "${INSTALL_GHIDRA}" = true ]; then
+    log "Installing Ghidra ${GHIDRA_VERSION}..."
+    if [ -d "${TOOLS_DIR}/ghidra_${GHIDRA_VERSION}" ]; then
+      warn "Ghidra already exists, skipping download"
+    elif command -v ghidraRun >/dev/null 2>&1; then
+      warn "Ghidra command already available, skipping"
+    else
+      sudo apt install -y default-jdk || warn "Failed to install JDK (required for Ghidra)"
+      wget -q --show-progress -O "/tmp/${GHIDRA_ZIP}" "${GHIDRA_URL}" || warn "Failed to download Ghidra"
+      if [ -f "/tmp/${GHIDRA_ZIP}" ]; then
+        unzip -q "/tmp/${GHIDRA_ZIP}" -d "${TOOLS_DIR}/" || warn "Failed to unzip Ghidra"
+        rm -f "/tmp/${GHIDRA_ZIP}"
+        log "Ghidra extracted to ${TOOLS_DIR}"
+      fi
     fi
+  else
+    warn "Skipping Ghidra (--no-ghidra flag set)"
   fi
 
   warn "burpsuite not available in apt - install manually from https://portswigger.net/burp/communitydownload"
@@ -245,7 +253,6 @@ fi
 
 log "APT install finished."
 
-mkdir -p "${TOOLS_DIR}"
 log "Tools directory: ${TOOLS_DIR}"
 
 log "Verifying installed commands..."
