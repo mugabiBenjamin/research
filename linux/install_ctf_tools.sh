@@ -246,7 +246,7 @@ else
       fi
     fi
   else
-    warn "Skipping Ghidra (--no-ghidra flag set)" 
+    warn "Skipping Ghidra (--no-ghidra flag set)"
   fi
 
   warn "burpsuite not available in apt - install manually from https://portswigger.net/burp/communitydownload"
