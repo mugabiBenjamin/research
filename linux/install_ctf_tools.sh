@@ -77,6 +77,16 @@ else
   log "Installing web fuzzing and enumeration tools..."
   sudo apt install -y ffuf
 
+  log "Installing feroxbuster..."
+  if ! command -v feroxbuster >/dev/null 2>&1; then
+  curl -sL https://raw.githubusercontent.com/epi052/feroxbuster/main/install-nix.sh \
+    | bash -s -- "${HOME}/.local/bin" \
+    && log "feroxbuster installed to ${HOME}/.local/bin" \
+    || warn "Failed to install feroxbuster"
+  else
+    warn "feroxbuster already installed"
+  fi
+
   log "Installing binary analysis tools..."
   sudo apt install -y radare2 binwalk strace ltrace
 
@@ -232,7 +242,7 @@ mkdir -p "${TOOLS_DIR}"
 log "Tools directory: ${TOOLS_DIR}"
 
 log "Verifying installed commands..."
-for cmd in nmap binwalk radare2 hashcat john jq zsteg ffuf fcrackzip smbclient zbarimg mat2 ROPgadget xortool msfconsole; do
+for cmd in nmap binwalk radare2 hashcat john jq zsteg ffuf feroxbuster fcrackzip smbclient zbarimg mat2 ROPgadget xortool msfconsole; do
   if command -v "${cmd}" >/dev/null 2>&1; then
     printf '  %-14s: installed\n' "${cmd}"
   else
@@ -256,9 +266,6 @@ Manual steps required:
  - Install Responder (not in apt):
    git clone https://github.com/lgandx/Responder.git ~/tools/Responder
    # Run with: sudo python3 ~/tools/Responder/Responder.py -I <interface>
-
- - Install feroxbuster (not in apt):
-   curl -sL https://raw.githubusercontent.com/epi052/feroxbuster/main/install-nix.sh | bash -s $HOME/.local/bin
 
  - Install Python tools in virtual environment:
    python3 -m venv ctf_env
