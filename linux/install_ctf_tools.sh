@@ -126,11 +126,18 @@ else
   sudo apt install -y ffuf
 
   log "Installing feroxbuster..."
+  # Ensure ~/.local/bin exists and is in PATH for this session
+  mkdir -p "${HOME}/.local/bin"
+  case ":${PATH}:" in
+    *":${HOME}/.local/bin:"*) ;;
+    *) export PATH="${HOME}/.local/bin:${PATH}" ;;
+  esac
+
   if ! command -v feroxbuster >/dev/null 2>&1; then
-  curl -sL https://raw.githubusercontent.com/epi052/feroxbuster/main/install-nix.sh \
-    | bash -s -- "${HOME}/.local/bin" \
-    && log "feroxbuster installed to ${HOME}/.local/bin" \
-    || warn "Failed to install feroxbuster"
+    curl -sL https://raw.githubusercontent.com/epi052/feroxbuster/main/install-nix.sh \
+      | bash -s -- "${HOME}/.local/bin" \
+      && log "feroxbuster installed to ${HOME}/.local/bin" \
+      || warn "Failed to install feroxbuster"
   else
     warn "feroxbuster already installed"
   fi
