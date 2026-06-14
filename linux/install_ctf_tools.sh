@@ -115,6 +115,51 @@ else
     warn "feroxbuster already installed"
   fi
 
+log "Installing RustScan..."
+
+if command -v rustscan >/dev/null 2>&1; then
+  warn "rustscan already installed"
+else
+
+  if [ -x /home/linuxbrew/.linuxbrew/bin/brew ]; then
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+  elif [ -x "${HOME}/.linuxbrew/bin/brew" ]; then
+    eval "$("${HOME}/.linuxbrew/bin/brew" shellenv)"
+  fi
+
+  if command -v brew >/dev/null 2>&1; then
+    brew install rustscan
+
+    if command -v rustscan >/dev/null 2>&1; then
+      log "rustscan installed"
+    else
+      warn "RustScan installation completed but command not found"
+    fi
+  else
+    warn "brew not found; cannot install rustscan"
+  fi
+fi
+
+  log "Installing Naabu..."
+  
+  if command -v naabu >/dev/null 2>&1; then
+    warn "naabu already installed"
+  else
+    NAABU_URL=$(wget -qO- https://api.github.com/repos/projectdiscovery/naabu/releases/latest \
+      2>/dev/null | grep "browser_download_url.*linux_amd64.zip" | head -1 | cut -d '"' -f 4) || true
+
+    if [ -n "${NAABU_URL:-}" ]; then
+      wget -q --show-progress -O /tmp/naabu.zip "${NAABU_URL}" \
+        && unzip -o /tmp/naabu.zip -d /tmp/naabu-install \
+        && sudo install /tmp/naabu-install/naabu /usr/local/bin/naabu \
+        && rm -rf /tmp/naabu.zip /tmp/naabu-install \
+        && log "naabu installed" \
+        || { warn "Failed to install naabu"; rm -rf /tmp/naabu.zip /tmp/naabu-install; true; }
+    else
+      warn "Could not find Naabu release"
+    fi
+  fi
+
   log "Installing binary analysis tools..."
   sudo apt install -y radare2 binwalk strace ltrace
 
