@@ -57,6 +57,29 @@ sudo apt upgrade -y
 # Ensure required tools exist
 command -v wget >/dev/null 2>&1 || sudo apt install -y wget
 command -v unzip >/dev/null 2>&1 || sudo apt install -y unzip
+command -v curl >/dev/null 2>&1 || sudo apt install -y curl
+command -v bwrap >/dev/null 2>&1 || sudo apt install -y bubblewrap
+
+log "Installing Homebrew..."
+
+if ! command -v brew >/dev/null 2>&1; then
+  NONINTERACTIVE=1 /bin/bash -c \
+    "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+  if [ -x /home/linuxbrew/.linuxbrew/bin/brew ]; then
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+  elif [ -x "${HOME}/.linuxbrew/bin/brew" ]; then
+    eval "$("${HOME}/.linuxbrew/bin/brew" shellenv)"
+  fi
+
+  if ! grep -q 'brew shellenv' ~/.zshrc 2>/dev/null; then
+    echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.zshrc
+  fi
+
+  log "Homebrew installed"
+else
+  warn "Homebrew already installed"
+fi
 
 # --- Package Installation ---
 if [ "${MINIMAL}" = true ]; then
