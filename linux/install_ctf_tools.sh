@@ -17,6 +17,13 @@ INSTALL_PWNDBG=true
 INSTALL_GHIDRA=true
 MINIMAL=false
 
+# Pull Homebrew into PATH early if it exists from a previous install
+if [ -x /home/linuxbrew/.linuxbrew/bin/brew ]; then
+  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+elif [ -x "${HOME}/.linuxbrew/bin/brew" ]; then
+  eval "$("${HOME}/.linuxbrew/bin/brew" shellenv)"
+fi
+
 # Parse flags
 for arg in "$@"; do
   case "$arg" in
@@ -66,19 +73,32 @@ if ! command -v brew >/dev/null 2>&1; then
   NONINTERACTIVE=1 /bin/bash -c \
     "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
+  # Source brew into current session immediately after install
   if [ -x /home/linuxbrew/.linuxbrew/bin/brew ]; then
     eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
   elif [ -x "${HOME}/.linuxbrew/bin/brew" ]; then
     eval "$("${HOME}/.linuxbrew/bin/brew" shellenv)"
   fi
 
+  # Persist to shell config
   if ! grep -q 'brew shellenv' ~/.zshrc 2>/dev/null; then
     echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.zshrc
   fi
 
-  log "Homebrew installed"
+  if command -v brew >/dev/null 2>&1; then
+    log "Homebrew installed and available in PATH"
+  else
+    warn "Homebrew installed but still not in PATH — subsequent brew installs may fail"
+  fi
+
 else
   warn "Homebrew already installed"
+
+  if [ -x /home/linuxbrew/.linuxbrew/bin/brew ]; then
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+  elif [ -x "${HOME}/.linuxbrew/bin/brew" ]; then
+    eval "$("${HOME}/.linuxbrew/bin/brew" shellenv)"
+  fi
 fi
 
 # --- Package Installation ---
@@ -141,7 +161,7 @@ else
 fi
 
   log "Installing Naabu..."
-  
+
   if command -v naabu >/dev/null 2>&1; then
     warn "naabu already installed"
   else
