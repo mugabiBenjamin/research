@@ -325,7 +325,7 @@ log "APT install finished."
 log "Tools directory: ${TOOLS_DIR}"
 
 log "Verifying installed commands..."
-for cmd in nmap binwalk radare2 hashcat john jq zsteg ffuf feroxbuster fcrackzip smbclient zbarimg mat2 ROPgadget xortool msfconsole; do
+for cmd in brew nmap rustscan naabu binwalk radare2 hashcat john jq zsteg ffuf feroxbuster fcrackzip smbclient zbarimg mat2 ROPgadget xortool msfconsole; do
   if command -v "${cmd}" >/dev/null 2>&1; then
     printf '  %-14s: installed\n' "${cmd}"
   else
