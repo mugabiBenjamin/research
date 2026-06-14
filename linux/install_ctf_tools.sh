@@ -13,7 +13,7 @@ GHIDRA_ZIP="ghidra_${GHIDRA_VERSION}.zip"
 GHIDRA_URL="https://github.com/NationalSecurityAgency/ghidra/releases/download/Ghidra_10.4_build/${GHIDRA_ZIP}"
 TOOLS_DIR="${HOME}/tools"
 mkdir -p "${TOOLS_DIR}"
-INSTALL_PWNDDBG=true
+INSTALL_PWNDBG=true
 INSTALL_GHIDRA=true
 MINIMAL=false
 
@@ -21,7 +21,7 @@ MINIMAL=false
 for arg in "$@"; do
   case "$arg" in
     --no-ghidra) INSTALL_GHIDRA=false ;;
-    --no-pwndbg) INSTALL_PWNDDBG=false ;;
+    --no-pwndbg) INSTALL_PWNDBG=false ;;
     --minimal) MINIMAL=true ;;
     *) ;;
   esac
@@ -280,7 +280,7 @@ fi
   pip3 install xortool --break-system-packages || warn "Failed to install xortool"
 
   # --- pwndbg ---
-  if [ "${INSTALL_PWNDDBG}" = true ]; then
+  if [ "${INSTALL_PWNDBG}" = true ]; then
     log "Installing pwndbg..."
     if [ -d "${TOOLS_DIR}/pwndbg" ]; then
       warn "pwndbg directory already exists, skipping clone"
