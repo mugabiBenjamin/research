@@ -66,6 +66,7 @@ command -v wget >/dev/null 2>&1 || sudo apt install -y wget
 command -v unzip >/dev/null 2>&1 || sudo apt install -y unzip
 command -v curl >/dev/null 2>&1 || sudo apt install -y curl
 command -v bwrap >/dev/null 2>&1 || sudo apt install -y bubblewrap
+command -v gcc >/dev/null 2>&1 || sudo apt install -y build-essential
 
 log "Installing Homebrew..."
 
@@ -155,12 +156,14 @@ else
   fi
 
   if command -v brew >/dev/null 2>&1; then
-    brew install rustscan
-
-    if command -v rustscan >/dev/null 2>&1; then
-      log "rustscan installed"
+    if brew install rustscan; then
+      if command -v rustscan >/dev/null 2>&1; then
+        log "rustscan installed"
+      else
+        warn "RustScan installation completed but command not found"
+      fi
     else
-      warn "RustScan installation completed but command not found"
+      warn "Failed to install rustscan via brew"
     fi
   else
     warn "brew not found; cannot install rustscan"
