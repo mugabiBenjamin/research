@@ -180,20 +180,32 @@ else
     fi
   fi
 
-  if command -v brew >/dev/null 2>&1; then
-    if brew install rustscan; then
-      if command -v rustscan >/dev/null 2>&1; then
-        log "rustscan installed"
+  log "Installing RustScan..."
+
+  if command -v rustscan >/dev/null 2>&1; then
+    warn "rustscan already installed"
+  else
+
+    if [ -x /home/linuxbrew/.linuxbrew/bin/brew ]; then
+      eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+    elif [ -x "${HOME}/.linuxbrew/bin/brew" ]; then
+      eval "$("${HOME}/.linuxbrew/bin/brew" shellenv)"
+    fi
+
+    if command -v brew >/dev/null 2>&1; then
+      if brew install rustscan; then
+        if command -v rustscan >/dev/null 2>&1; then
+          log "rustscan installed"
+        else
+          warn "RustScan installation completed but command not found"
+        fi
       else
-        warn "RustScan installation completed but command not found"
+        warn "Failed to install rustscan via brew"
       fi
     else
-      warn "Failed to install rustscan via brew"
+      warn "brew not found; cannot install rustscan"
     fi
-  else
-    warn "brew not found; cannot install rustscan"
   fi
-fi
 
   log "Installing Naabu..."
 
