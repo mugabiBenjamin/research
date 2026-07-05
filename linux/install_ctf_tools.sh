@@ -150,7 +150,16 @@ else
     warn "feroxbuster already installed"
   fi
 
-log "Installing RustScan..."
+  log "Installing Amass..."
+  if command -v amass >/dev/null 2>&1; then
+    warn "amass already installed"
+  else
+    if command -v brew >/dev/null 2>&1; then
+      brew install amass && log "amass installed" || warn "Failed to install amass via brew"
+    else
+      warn "brew not found; cannot install amass"
+    fi
+  fi
 
 if command -v rustscan >/dev/null 2>&1; then
   warn "rustscan already installed"
