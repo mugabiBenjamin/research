@@ -161,14 +161,23 @@ else
     fi
   fi
 
-if command -v rustscan >/dev/null 2>&1; then
-  warn "rustscan already installed"
-else
+  log "Installing subfinder..."
+  if command -v subfinder >/dev/null 2>&1; then
+    warn "subfinder already installed"
+  else
+    SUBFINDER_URL=$(wget -qO- https://api.github.com/repos/projectdiscovery/subfinder/releases/latest \
+      2>/dev/null | grep "browser_download_url.*linux_amd64.zip" | head -1 | cut -d '"' -f 4) || true
 
-  if [ -x /home/linuxbrew/.linuxbrew/bin/brew ]; then
-    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-  elif [ -x "${HOME}/.linuxbrew/bin/brew" ]; then
-    eval "$("${HOME}/.linuxbrew/bin/brew" shellenv)"
+    if [ -n "${SUBFINDER_URL:-}" ]; then
+      wget -q --show-progress -O /tmp/subfinder.zip "${SUBFINDER_URL}" \
+        && unzip -o /tmp/subfinder.zip -d /tmp/subfinder-install \
+        && sudo install /tmp/subfinder-install/subfinder /usr/local/bin/subfinder \
+        && rm -rf /tmp/subfinder.zip /tmp/subfinder-install \
+        && log "subfinder installed" \
+        || { warn "Failed to install subfinder"; rm -rf /tmp/subfinder.zip /tmp/subfinder-install; true; }
+    else
+      warn "Could not find subfinder release URL"
+    fi
   fi
 
   if command -v brew >/dev/null 2>&1; then
