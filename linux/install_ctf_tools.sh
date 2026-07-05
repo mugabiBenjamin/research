@@ -120,6 +120,13 @@ else
   log "Installing networking tools..."
   sudo apt install -y nmap tcpdump wireshark tshark
 
+  log "Installing masscan..."
+  if ! command -v masscan >/dev/null 2>&1; then
+    sudo apt install -y masscan && log "masscan installed" || warn "Failed to install masscan"
+  else
+    warn "masscan already installed"
+  fi
+
   log "Installing SMB / Windows enumeration tools..."
   sudo apt install -y smbclient
 
