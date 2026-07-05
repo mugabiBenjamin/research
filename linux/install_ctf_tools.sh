@@ -392,7 +392,7 @@ log "APT install finished."
 log "Tools directory: ${TOOLS_DIR}"
 
 log "Verifying installed commands..."
-for cmd in brew nmap rustscan naabu binwalk radare2 hashcat john jq zsteg ffuf feroxbuster fcrackzip smbclient zbarimg mat2 ROPgadget xortool msfconsole; do
+for cmd in brew nmap rustscan naabu masscan amass subfinder binwalk radare2 hashcat john jq zsteg ffuf feroxbuster fcrackzip smbclient zbarimg mat2 ROPgadget xortool msfconsole; do
   if command -v "${cmd}" >/dev/null 2>&1; then
     printf '  %-14s: installed\n' "${cmd}"
   else
@@ -407,6 +407,12 @@ Installation complete.
 
 Manual steps required:
  - Install burpsuite from: https://portswigger.net/burp/communitydownload
+
+ - Install tplmap (SSTI scanner):
+   git clone https://github.com/epinna/tplmap.git ~/tools/tplmap
+   pip3 install -r ~/tools/tplmap/requirements.txt --break-system-packages
+   sudo ln -s ~/tools/tplmap/tplmap.py /usr/local/bin/tplmap
+   chmod +x ~/tools/tplmap/tplmap.py
 
  - Install enum4linux-ng (not in apt):
    git clone https://github.com/cddmp/enum4linux-ng.git ~/tools/enum4linux-ng
