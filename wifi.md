@@ -1,12 +1,18 @@
 # Wifi commands
 
-- [Show all available networks in range](#show-all-available-networks-in-range)
-- [Show active wifi](#show-active-wifi)
-- [Display QR code for active network](#display-qr-code-for-active-network)
-- [Show all coonections whether currently active or not](#show-all-coonections-whether-currently-active-or-not)
-- [Low-level WiFi tools](#low-level-wifi-tools)
+- [Wifi commands](#wifi-commands)
+  - [Show all available networks in range](#show-all-available-networks-in-range)
+  - [Show active wifi](#show-active-wifi)
+  - [Display QR code for active network](#display-qr-code-for-active-network)
+  - [Show all coonections whether currently active or not](#show-all-coonections-whether-currently-active-or-not)
+  - [Low-level WiFi tools](#low-level-wifi-tools)
 
 ## Show all available networks in range
+
+```bash
+# 
+nmcli c show
+```
 
 ```bash
 # show only WiFi networks that are currently broadcasting in range
@@ -20,10 +26,7 @@ sudo nmcli -s -g 802-11-WIRELESS-SECURITY.PSK connection show "SSID"
 
 ```bash
 # show active wifi
-nmcli connection show --active
-
-# alternatively
-nmcli c show --active
+nmcli c show --active || nmcli c show -a
 ```
 
 ## Display QR code for active network
