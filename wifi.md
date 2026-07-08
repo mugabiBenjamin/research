@@ -20,6 +20,8 @@ nmcli dev wifi list
 
 # show wifi password of wifi
 sudo nmcli -s -g 802-11-WIRELESS-SECURITY.PSK connection show "SSID"
+# OR
+sudo nmcli -s -g 802-11-wireless-security.psk c show "SSID"
 ```
 
 ## Show active wifi
