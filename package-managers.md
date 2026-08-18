@@ -1,28 +1,44 @@
 # Package Managers
 
-- [npm vs yarn vs pnpm](#npm-vs-yarn-vs-pnpm)
-- [pip Command Cheat Sheet](#pip-command-cheat-sheet)
-- [composer Command Cheat Sheet](#composer-command-cheat-sheet)
-- [uv Command Cheat Sheet](#uv-command-cheat-sheet)
+- [Package Managers](#package-managers)
+  - [npm vs yarn vs pnpm](#npm-vs-yarn-vs-pnpm)
+    - [yarn installation](#yarn-installation)
+    - [Key Differences](#key-differences)
+    - [Key pnpm features worth noting](#key-pnpm-features-worth-noting)
+    - [pnpm installation](#pnpm-installation)
+  - [bun Command Cheat Sheet](#bun-command-cheat-sheet)
+    - [bun installation](#bun-installation)
+    - [Key bun features worth noting](#key-bun-features-worth-noting)
+    - [Migrating from npm/yarn/pnpm to bun](#migrating-from-npmyarnpnpm-to-bun)
+    - [Using bun as a runtime](#using-bun-as-a-runtime)
+  - [pip Command Cheat Sheet](#pip-command-cheat-sheet)
+    - [Usage Notes](#usage-notes)
+  - [poetry Command Cheat Sheet](#poetry-command-cheat-sheet)
+    - [Poetry Installation](#poetry-installation)
+  - [composer Command Cheat Sheet](#composer-command-cheat-sheet)
+  - [uv Command Cheat Sheet](#uv-command-cheat-sheet)
   - [Cloning a repo that uses uv](#cloning-a-repo-that-uses-uv)
   - [Migrating from `requirements.txt` to `uv`](#migrating-from-requirementstxt-to-uv)
   - [When to use each `sync`](#when-to-use-each-sync)
+    - [`uv sync`](#uv-sync)
+    - [`uv sync --extra dev`](#uv-sync---extra-dev)
+    - [`uv add --editable .`](#uv-add---editable-)
 
 ## npm vs yarn vs pnpm
 
-| npm Command               | Yarn Command                    | pnpm Command                    |
-| ------------------------- | ------------------------------- | ------------------------------- |
-| `npm install <package>`   | `yarn add <package>`            | `pnpm add <package>`            |
-| `npm uninstall <package>` | `yarn remove <package>`         | `pnpm remove <package>`         |
-| `npm install`             | `yarn install` (or just `yarn`) | `pnpm install` (or just `pnpm`) |
-| `npm update`              | `yarn upgrade`                  | `pnpm update`                   |
-| `npm list`                | `yarn list`                     | `pnpm list`                     |
-| **`npm run dev`**         | **`yarn dev`**                  | **`pnpm dev`**                  |
-| `npm start`               | `yarn start`                    | `pnpm start`                    |
-| `npm run build`           | `yarn build`                    | `pnpm build`                    |
-| `npm init`                | `yarn init`                     | `pnpm init`                     |
-| `npm update <package>`    | `yarn upgrade <package>`        | `pnpm update <package>`         |
-| `package-lock.json`       | `yarn.lock`                     | `pnpm-lock.yaml`                |
+| npm Command               | Yarn Command                     | pnpm Command                     |
+| ------------------------- | -------------------------------- | -------------------------------- |
+| `npm install <package>`   | `yarn add <package>`             | `pnpm add <package>`             |
+| `npm uninstall <package>` | `yarn remove <package>`          | `pnpm remove <package>`          |
+| `npm install`             | `yarn install` (or just `yarn`)  | `pnpm install` (or just `pnpm`)  |
+| `npm update`              | `yarn upgrade`                   | `pnpm update`                    |
+| `npm list`                | `yarn list`                      | `pnpm list`                      |
+| **`npm run dev`**         | **`yarn dev`**                   | **`pnpm dev`**                   |
+| `npm start`               | `yarn start`                     | `pnpm start`                     |
+| `npm run build`           | `yarn build`                     | `pnpm build`                     |
+| `npm init`                | `yarn init`                      | `pnpm init`                      |
+| `npm update <package>`    | `yarn upgrade <package>`         | `pnpm update <package>`          |
+| `package-lock.json`       | `yarn.lock`                      | `pnpm-lock.yaml`                 |
 
 ### yarn installation
 
@@ -51,18 +67,100 @@ npm install -g pnpm  # Install pnpm globally
 npm update -g pnpm  # Update pnpm globally
 ```
 
+## bun Command Cheat Sheet
+
+| npm/pnpm Command           | Bun Command                       |
+| -------------------------- | --------------------------------- |
+| `npm install <package>`    | `bun add <package>`               |
+| `npm uninstall <package>`  | `bun remove <package>`            |
+| `npm install`              | `bun install` (or just `bun i`)   |
+| `npm update`               | `bun update`                      |
+| `npm list`                 | `bun pm ls`                       |
+| `npm run dev`              | `bun run dev` (or just `bun dev`) |
+| `npm start`                | `bun start`                       |
+| `npm run build`            | `bun run build`                   |
+| `npm init`                 | `bun init`                        |
+| `npm update <package>`     | `bun update <package>`            |
+| `node file.js`             | `bun file.js`                     |
+| `package-lock.json`        | `bun.lockb` (binary lockfile)     |
+| `npx <package>`            | `bunx <package>`                  |
+| `npm test`                 | `bun test` (built-in test runner) |
+
+### bun installation
+
+```bash
+# macOS / Linux / WSL
+curl -fsSL https://bun.sh/install | bash
+
+# Upgrade bun to the latest version
+bun upgrade
+```
+
+### Key bun features worth noting
+
+- Bun is not just a package manager — it's an all-in-one runtime, bundler, transpiler, and test runner, written in Zig
+- `bun install` uses aggressive binary caching, generally making it faster than npm, yarn, and pnpm for installs
+- The lockfile (`bun.lockb`) is binary, not human-readable YAML/JSON like pnpm/yarn
+- Runs `.ts`/`.tsx` files directly without a separate transpile step
+- Ships a built-in test runner (`bun test`), bundler (`bun build`), and package manager, so it can fully replace Node + pnpm + a separate bundler + a separate test runner
+- Node.js API and npm ecosystem compatibility is strong but not 100% — native addons (`node-gyp`, `.node` files) and some less common built-in modules can have edge cases
+- `bunx` is the equivalent of `npx` for running package binaries without a permanent install
+
+### Migrating from npm/yarn/pnpm to bun
+
+```bash
+# From an existing project using pnpm (or npm/yarn)
+cd your-project
+
+# Remove the old lockfile and node_modules
+rm -rf node_modules pnpm-lock.yaml   # or package-lock.json / yarn.lock
+
+# Install with bun — reads your existing package.json
+bun install
+
+# Run your existing scripts
+bun run dev
+```
+
+Notes when migrating from pnpm specifically:
+
+- `pnpm-workspace.yaml` has no bun equivalent — move workspace globs into the root `package.json` under `"workspaces"`
+- pnpm's strict `node_modules` linking (which blocks importing undeclared dependencies) does not carry over — bun's install behaves more like npm/yarn in this respect
+- Any pnpm-specific `.npmrc` settings won't be read by bun
+
+### Using bun as a runtime
+
+```bash
+# Run a script directly (replaces `node file.js`)
+bun file.js
+bun run file.ts        # TypeScript runs natively, no ts-node needed
+
+# Run the built-in test runner (replaces jest/vitest in simple cases)
+bun test
+
+# Bundle a project (replaces webpack/esbuild in simple cases)
+bun build ./index.ts --outdir ./dist
+```
+
+Before fully removing Node.js from a machine, verify per project:
+
+- Native addons / anything relying on `node-gyp` builds
+- Less common Node built-in modules
+- Framework-specific tooling (some frameworks still expect Node in production even if `bun` runs dev tooling fine)
+- CI/CD and deployment targets (Docker base images, hosting platforms) actually support a bun runtime
+
 ## pip Command Cheat Sheet
 
-| Command                           | Description                                      |
-| --------------------------------- | ------------------------------------------------ |
-| `pip install <package>`           | Install a package                                |
-| `pip uninstall <package>`         | Remove a package                                 |
-| `pip list`                        | List installed packages                          |
-| `pip show <package>`              | Show package details                             |
-| `pip freeze`                      | List installed packages (for `requirements.txt`) |
-| `pip search <package>`            | Search PyPI for packages                         |
-| `pip install --upgrade <package>` | Upgrade a package                                |
-| `pip install -r requirements.txt` | Install from a requirements file                 |
+| Command                            | Description                                      |
+| ---------------------------------- | ------------------------------------------------ |
+| `pip install <package>`            | Install a package                                |
+| `pip uninstall <package>`          | Remove a package                                 |
+| `pip list`                         | List installed packages                          |
+| `pip show <package>`               | Show package details                             |
+| `pip freeze`                       | List installed packages (for `requirements.txt`) |
+| `pip search <package>`             | Search PyPI for packages                         |
+| `pip install --upgrade <package>`  | Upgrade a package                                |
+| `pip install -r requirements.txt`  | Install from a requirements file                 |
 
 ### Usage Notes
 
@@ -102,7 +200,7 @@ curl -sSL https://install.python-poetry.org | python3 -
 | `composer show`                     | Lists all installed packages along with their versions and descriptions.                                                                          |
 | `composer show [package]`           | Provides detailed information about a specific package, including its dependencies.                                                               |
 | `composer dump-autoload`            | Regenerates the list of all classes that need to be included using autoloading.                                                                   |
-| `composer validate`                 | Checks the `composer.json` file for syntax errors and other warnings to ensure it’s valid.                                                        |
+| `composer validate`                 | Checks the `composer.json` file for syntax errors and other warnings to ensure it's valid.                                                        |
 | `composer create-project [package]` | Creates a new project based on an existing package, copying its files and structure.                                                              |
 | `composer global require [package]` | Installs a package globally, making it available for all projects on the system.                                                                  |
 | `composer.lock`                     | This is not a command but refers to the file that locks the project dependencies at specific versions. It should be committed to version control. |
