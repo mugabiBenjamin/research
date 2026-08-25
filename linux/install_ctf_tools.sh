@@ -282,7 +282,37 @@ else
   fi
 
   log "Installing forensics tools..."
-  sudo apt install -y foremost scalpel libimage-exiftool-perl steghide outguess gddrescue ruby ruby-dev build-essential
+  sudo apt install -y foremost scalpel libimage-exiftool-perl steghide gddrescue ruby ruby-dev build-essential
+
+  log "Installing outguess from source..."
+  if ! command -v outguess >/dev/null 2>&1; then
+    sudo apt install -y autoconf libglib2.0-dev \
+      && git clone https://github.com/crorvick/outguess "${TOOLS_DIR}/outguess" \
+      && cd "${TOOLS_DIR}/outguess" \
+      && ./configure && make \
+      && sudo make install \
+      && cd - \
+      && log "outguess installed" \
+      || warn "Failed to install outguess from source"
+  else
+    warn "outguess already installed"
+  fi
+    log "Installing forensics tools..."
+  sudo apt install -y foremost scalpel libimage-exiftool-perl steghide gddrescue ruby ruby-dev build-essential
+
+  log "Installing outguess from source..."
+  if ! command -v outguess >/dev/null 2>&1; then
+    sudo apt install -y autoconf libglib2.0-dev \
+      && git clone https://github.com/crorvick/outguess "${TOOLS_DIR}/outguess" \
+      && cd "${TOOLS_DIR}/outguess" \
+      && ./configure && make \
+      && sudo make install \
+      && cd - \
+      && log "outguess installed" \
+      || warn "Failed to install outguess from source"
+  else
+    warn "outguess already installed"
+  fi
 
   log "Installing steganography extras..."
   sudo apt install -y zbar-tools mat2
