@@ -232,19 +232,29 @@ else
 
   log "Installing reverse engineering extras..."
   if ! sudo apt install -y rizin 2>/dev/null; then
-    warn "rizin not in apt - installing via GitHub release..."
-    RIZIN_URL=$(wget -qO- https://api.github.com/repos/rizinorg/rizin/releases/latest \
-      2>/dev/null | grep "browser_download_url.*amd64.deb" | head -1 | cut -d '"' -f 4) || true
-    if [ -n "${RIZIN_URL:-}" ]; then
-      wget -q --show-progress -O /tmp/rizin.deb "${RIZIN_URL}" \
-        && sudo dpkg -i /tmp/rizin.deb \
-        && sudo apt install -f -y \
-        && rm -f /tmp/rizin.deb \
-        && log "rizin installed" \
-        || { warn "Failed to install rizin"; rm -f /tmp/rizin.deb; true; }
-    else
-      warn "Could not find rizin .deb download URL - install manually from https://github.com/rizinorg/rizin/releases"
-    fi
+    warn "rizin not in apt - installing via install script..."
+    curl -Lo /tmp/rz-install.sh \
+      https://raw.githubusercontent.com/rizinorg/rizin/dev/test/install.sh \
+      && chmod +x /tmp/rz-install.sh \
+      && bash /tmp/rz-install.sh \
+      && log "rizin installed" \
+      || {
+        warn "rizin install script failed - trying .deb fallback..."
+        RIZIN_URL=$(wget -qO- https://api.github.com/repos/rizinorg/rizin/releases/latest \
+          2>/dev/null | grep -i "browser_download_url" \
+          | grep -i "linux" | grep -i "amd64\|x86_64" \
+          | grep "\.deb" | head -1 | cut -d '"' -f 4) || true
+        if [ -n "${RIZIN_URL:-}" ]; then
+          wget -q --show-progress -O /tmp/rizin.deb "${RIZIN_URL}" \
+            && sudo dpkg -i /tmp/rizin.deb \
+            && sudo apt install -f -y \
+            && rm -f /tmp/rizin.deb \
+            && log "rizin installed via .deb" \
+            || { warn "Failed to install rizin"; rm -f /tmp/rizin.deb; true; }
+        else
+          warn "Could not install rizin - install manually from https://github.com/rizinorg/rizin/releases"
+        fi
+      }
   fi
   
   log "Installing cutter..."
