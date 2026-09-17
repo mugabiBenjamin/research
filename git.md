@@ -1,31 +1,32 @@
 # Git commands
 
-- [Cloning and fetching](#cloning-and-fetching)
-- [Stagging and commiting changes](#stagging-and-commiting-changes)
-- [Undoing changes](#undoing-changes)
-- [Branch management](#branch-management)
-- [Configuring the default branch](#configuring-the-default-branch)
-- [SSH key setup](#ssh-key-setup)
-- [Forking and pull requests](#forking-and-pull-requests)
-- [Working with multiple repos](#working-with-multiple-repos)
-- [Different use cases of git add](#different-use-cases-of-git-add)
-- [Cloning and merging repos from a template repo](#cloning-and-merging-repos-from-a-template-repo)
-- [Including file in gitignore that initially wasn't](#including-file-in-gitignore-that-initially-wasnt)
-- [Starting a repo locally](#starting-a-repo-locally)
-- [Undoing things with checkout, revert, reset](#undoing-things-with-checkout-revert-reset)
-- [Cloning more than one branch (main and feature branch)](#cloning-more-than-one-branch-main-and-feature-branch)
-- [Setting new remote urls](#setting-new-remote-urls)
-- [Pulling changes from the repository](#pulling-changes-from-the-repository)
-- [git pull vs git pull --rebase](#git-pull-vs-git-pull---rebase)
-- [Creating, Rebasing, and Syncing a feature branch in git](#creating-rebasing-and-syncing-a-feature-branch-in-git)
-- [Git stash commands](#git-stash-commands)
-- [Git squash](#git-squash)
-- [Git worktree](#git-worktree)
-- [Git diff](#git-diff)
-- [Git patch](#git-patch)
-- [Git cherry-pick](#git-cherry-pick)
-- [Git reflog](#git-reflog)
-- [Git blame](#git-blame)
+- [Git commands](#git-commands)
+  - [Cloning and fetching](#cloning-and-fetching)
+  - [Stagging and commiting changes](#stagging-and-commiting-changes)
+  - [Undoing changes](#undoing-changes)
+  - [Branch management](#branch-management)
+  - [Configuring the default branch](#configuring-the-default-branch)
+  - [SSH key setup](#ssh-key-setup)
+  - [Forking and pull requests](#forking-and-pull-requests)
+  - [Working with multiple repos](#working-with-multiple-repos)
+  - [Different use cases of git add](#different-use-cases-of-git-add)
+  - [Cloning and merging repos from a template repo](#cloning-and-merging-repos-from-a-template-repo)
+  - [Including file in gitignore that initially wasn't](#including-file-in-gitignore-that-initially-wasnt)
+  - [Starting a repo locally](#starting-a-repo-locally)
+  - [Undoing things with checkout, revert, reset](#undoing-things-with-checkout-revert-reset)
+  - [Cloning more than one branch (main and feature branch)](#cloning-more-than-one-branch-main-and-feature-branch)
+  - [Setting new remote urls](#setting-new-remote-urls)
+  - [Pulling changes from the repository](#pulling-changes-from-the-repository)
+  - [git pull vs git pull --rebase](#git-pull-vs-git-pull---rebase)
+  - [Creating, Rebasing, and Syncing a feature branch in git](#creating-rebasing-and-syncing-a-feature-branch-in-git)
+  - [Git stash commands](#git-stash-commands)
+  - [Git squash](#git-squash)
+  - [Git worktree](#git-worktree)
+  - [Git diff](#git-diff)
+  - [Git patch](#git-patch)
+  - [Git cherry-pick](#git-cherry-pick)
+  - [Git reflog](#git-reflog)
+  - [Git blame](#git-blame)
 
 ## Cloning and fetching
 
@@ -110,6 +111,8 @@ git checkout <branch-name>
 
 # Creates and switches to a new branch with the specified <branch-name>
 git checkout -b <branch-name>
+# 0r
+git switch -c <branch-name>
 
 # Rename a branch
 git branch -m <new-branch-name>
@@ -179,6 +182,8 @@ git merge upstream/main
 
 # 4. Create a new branch for the feature
 git checkout -b feature/<feature_branch_name>
+# or
+git switch -c feature/<feature_branch_name>
 
 # 5. Stage and commit changes
 git add .
@@ -656,12 +661,16 @@ git reflog
 
 # Recovering a Lost Commit
 git checkout -b recovered-branch HEAD@{1}
+# or
+git switch -c recovered-branch HEAD@{1}
 
 # Resets your current branch to the state it was in 2 entries ago in the reflog
 git reset --hard HEAD@{2}
 
 # Creates and switches to the feature branch at that commit, effectively branching off from that point in history
 git checkout -b feature-branch bfd054a
+# or
+git switch -c feature-branch bfd054a
 ```
 
 ## Git blame
