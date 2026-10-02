@@ -473,9 +473,9 @@ Manual steps required:
    source ctf_env/bin/activate
    pip install pwntools requests beautifulsoup4 scapy cryptography volatility3
 
-Excluded (already in Ubuntu):
- - curl, wget, netcat, git, vim, gcc, gdb, file, xxd, binutils
- - tree, htop, unzip, openssl, gnupg, python3
+# Excluded (already in Ubuntu):
+#  - curl, wget, netcat, git, gcc, gdb, file, xxd, binutils
+#  - openssl, gnupg, python3
 
 EOF
 
