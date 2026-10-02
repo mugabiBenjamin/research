@@ -67,6 +67,11 @@ command -v unzip >/dev/null 2>&1 || sudo apt install -y unzip
 command -v curl >/dev/null 2>&1 || sudo apt install -y curl
 command -v bwrap >/dev/null 2>&1 || sudo apt install -y bubblewrap
 command -v gcc >/dev/null 2>&1 || sudo apt install -y build-essential
+command -v vim >/dev/null 2>&1 || sudo apt install -y vim
+command -v objdump >/dev/null 2>&1 || sudo apt install -y binutils
+command -v htop >/dev/null 2>&1 || sudo apt install -y htop
+command -v gpg >/dev/null 2>&1 || sudo apt install -y gnupg
+command -v tree >/dev/null 2>&1 || sudo apt install -y tree
 
 log "Installing Homebrew..."
 
