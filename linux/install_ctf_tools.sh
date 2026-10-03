@@ -125,6 +125,12 @@ else
   log "Installing networking tools..."
   sudo apt install -y nmap tcpdump wireshark tshark
 
+  log "Configuring Wireshark packet capture for non-root users..."
+  # Pre-seed the debconf answer so dpkg-reconfigure never prompts
+  echo "wireshark-common wireshark-common/install-setuid boolean true" | sudo debconf-set-selections
+  sudo DEBIAN_FRONTEND=noninteractive dpkg-reconfigure -f noninteractive wireshark-common
+  sudo usermod -aG wireshark "$USER"
+
   log "Installing masscan..."
   if ! command -v masscan >/dev/null 2>&1; then
     sudo apt install -y masscan && log "masscan installed" || warn "Failed to install masscan"
