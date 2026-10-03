@@ -292,6 +292,29 @@ else
     fi
   fi
 
+  log "Installing JD-GUI..."
+  if command -v jd-gui >/dev/null 2>&1; then
+    warn "jd-gui already installed"
+  else
+    mkdir -p "${TOOLS_DIR}"
+    if [ ! -f "${TOOLS_DIR}/jd-gui-1.6.6.jar" ]; then
+      wget -q --show-progress -O "${TOOLS_DIR}/jd-gui-1.6.6.jar" \
+        "https://github.com/java-decompiler/jd-gui/releases/download/v1.6.6/jd-gui-1.6.6.jar" \
+        || { warn "Failed to download JD-GUI"; true; }
+    fi
+
+    if [ -f "${TOOLS_DIR}/jd-gui-1.6.6.jar" ]; then
+      sudo tee /usr/local/bin/jd-gui > /dev/null << EOF
+#!/bin/sh
+exec java -jar ${TOOLS_DIR}/jd-gui-1.6.6.jar "\$@"
+EOF
+      sudo chmod +x /usr/local/bin/jd-gui
+      log "jd-gui installed"
+    else
+      warn "JD-GUI jar not found - install manually"
+    fi
+  fi
+
   log "Installing forensics tools..."
   sudo apt install -y foremost scalpel libimage-exiftool-perl steghide gddrescue ruby ruby-dev build-essential
 
@@ -443,7 +466,7 @@ log "APT install finished."
 log "Tools directory: ${TOOLS_DIR}"
 
 log "Verifying installed commands..."
-for cmd in vim objdump htop gpg tree brew nmap rustscan naabu masscan amass subfinder binwalk radare2 hashcat john jq zsteg ffuf feroxbuster fcrackzip smbclient zbarimg mat2 ROPgadget xortool msfconsole; do
+for cmd in vim objdump htop gpg tree brew nmap rustscan naabu masscan amass subfinder binwalk radare2 hashcat john jq zsteg ffuf feroxbuster fcrackzip smbclient zbarimg mat2 ROPgadget xortool msfconsole upx jd-gui; do
   if command -v "${cmd}" >/dev/null 2>&1; then
     printf '  %-14s: installed\n' "${cmd}"
   else
