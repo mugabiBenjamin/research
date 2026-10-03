@@ -239,7 +239,7 @@ else
   fi
 
   log "Installing binary analysis tools..."
-  sudo apt install -y radare2 binwalk strace ltrace
+  sudo apt install -y radare2 binwalk strace ltrace upx-ucl
 
   log "Installing reverse engineering extras..."
   if ! sudo apt install -y rizin 2>/dev/null; then
