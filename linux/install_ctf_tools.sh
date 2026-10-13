@@ -100,9 +100,15 @@ source_brew() {
 persist_brew() {
   for rc in ~/.zshrc ~/.bashrc; do
     if ! grep -q 'brew shellenv' "${rc}" 2>/dev/null; then
-      echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> "${rc}"
+      echo >> "${rc}"
+      echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv bash)"' >> "${rc}"
+      log "Homebrew shellenv added to ${rc}"
+    else
+      warn "Homebrew shellenv already in ${rc}, skipping"
     fi
   done
+  # Activate for current script session
+  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv bash)"
 }
 
 if ! command -v brew >/dev/null 2>&1; then
