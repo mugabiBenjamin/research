@@ -194,6 +194,7 @@ install_go() {
       && sudo rm -rf /usr/local/go \
       && sudo tar -C /usr/local -xzf /tmp/go.tar.gz \
       && rm -f /tmp/go.tar.gz \
+      && export PATH="/usr/local/go/bin:${HOME}/go/bin:${PATH}" \
       && log "Go ${version} installed" \
       || warn "Failed to install Go"
   fi
