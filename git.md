@@ -5,7 +5,7 @@
   - [Stagging and commiting changes](#stagging-and-commiting-changes)
   - [Undoing changes](#undoing-changes)
   - [Branch management](#branch-management)
-  - [Configuring the default branch](#configuring-the-default-branch)
+  - [Configuring the default settings](#configuring-the-default-settings)
   - [SSH key setup](#ssh-key-setup)
   - [Forking and pull requests](#forking-and-pull-requests)
   - [Working with multiple repos](#working-with-multiple-repos)
@@ -124,33 +124,27 @@ git branch -d <branch-name>
 git push origin --delete <branch-name>
 ```
 
-## Configuring the default branch
+## Configuring the default settings
 
 ```sh
 # Set the default branch to 'main'
 git config --global init.defaultBranch main
 
-# Verify the default branch setting
-git config --global --get init.defaultBranch
-
-# Sets the default text editor for git to VS Code.
-git config --global core.editor "code --wait"
-
-# Sets the default text editor for git to vim
-git config --global core.editor "vim"
-
-# Retrieve the currently configured default text editor for git
-git config --global --get core.editor
-
-# Open your global git configuration file in the default text editor
-git config --global --edit
-
 # Set the user name
 git config --global user.name "Your Name"
 
 # Set the user email
-git config --global user.email example@gmail.com
+git config --global user.email "example@gmail.com"
 
+# Set your GitHub-provided private email to avoid GH007 push rejection
+# Find your private email at https://github.com/settings/emails
+git config --global user.email "YOUR_GITHUB_NOREPLY_EMAIL"
+
+# Update the author information in the most recent commit
+git commit --amend --reset-author --no-edit
+
+# Push your changes to GitHub
+git push origin main
 ```
 
 ## SSH key setup
