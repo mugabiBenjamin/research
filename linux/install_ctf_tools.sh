@@ -221,28 +221,6 @@ go_install() {
   fi
 }
 
-# --- Node / npm ---
-log "Installing Node.js (via NodeSource LTS)..."
-if ! command -v node >/dev/null 2>&1; then
-  curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash - \
-    && sudo apt install -y nodejs \
-    && log "Node.js installed" \
-    || warn "Failed to install Node.js"
-else
-  log "Node.js already installed — $(node --version)"
-fi
-
-npm_install() {
-  local pkg="$1"
-  if command -v npm >/dev/null 2>&1; then
-    npm install -g "$pkg" \
-      && log "npm: $pkg installed/updated" \
-      || warn "npm: failed to install $pkg"
-  else
-    warn "npm not available; skipping $pkg"
-  fi
-}
-
 # --- Mamba (via Miniforge) ---
 log "Installing Mamba (Miniforge)..."
 MINIFORGE_DIR="${HOME}/miniforge3"
@@ -549,17 +527,11 @@ else
 
   # ── Go tools ─────────────────────────────────
   log "Installing Go tools..."
-  go_install github.com/ffuf/ffuf/v2
   go_install github.com/tomnomnom/waybackurls
   go_install github.com/tomnomnom/gf
   go_install github.com/tomnomnom/anew
   go_install github.com/lc/gau/v2/cmd/gau
   go_install github.com/hakluke/hakrawler
-
-  # ── npm tools ────────────────────────────────
-  log "Installing npm tools..."
-  npm_install jwt-cli
-  npm_install retire
 
   # ── Mamba packages ───────────────────────────
   log "Installing Mamba packages..."
@@ -645,7 +617,7 @@ log "Verifying installed commands..."
 for cmd in vim objdump htop gpg tree brew nmap rustscan naabu masscan amass subfinder \
            binwalk radare2 hashcat john jq zsteg ffuf feroxbuster fcrackzip smbclient \
            zbarimg mat2 ROPgadget xortool msfconsole upx jd-gui \
-           cargo rustc go node npm mamba \
+           cargo rustc go mamba \
            rg fd bat hexyl tokei \
            httpx nuclei dnsx waybackurls gau hakrawler; do
   if command -v "${cmd}" >/dev/null 2>&1; then
