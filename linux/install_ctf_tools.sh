@@ -177,7 +177,7 @@ install_go() {
   local latest_url
   latest_url=$(curl -fsSL "https://go.dev/dl/?mode=json" \
     | grep -o '"https://dl.google.com/go/go[^"]*linux-amd64.tar.gz"' \
-    | head -1 | tr -d '"')
+    | head -1 | tr -d '"') || true
   if [ -z "${latest_url:-}" ]; then
     warn "Could not resolve latest Go download URL"
     return
