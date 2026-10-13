@@ -40,10 +40,6 @@ install_package() {
   fi
 }
 
-ensure_pip3() {
-  command -v pip3 >/dev/null 2>&1 || sudo apt install -y python3-pip
-}
-
 # Pull Homebrew into PATH early if it exists from a previous install
 if [ -x /home/linuxbrew/.linuxbrew/bin/brew ]; then
   eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
@@ -284,16 +280,6 @@ gem_install() {
   sudo gem install "$pkg" \
     && log "gem: $pkg installed/updated" \
     || warn "gem: failed to install $pkg"
-}
-
-# --- pip ---
-ensure_pip3
-
-pip_install() {
-  local pkg="$1"
-  pip3 install --upgrade "$pkg" --break-system-packages \
-    && log "pip: $pkg installed/updated" \
-    || warn "pip: failed to install $pkg"
 }
 
 # ─────────────────────────────────────────────
@@ -538,27 +524,15 @@ else
   log "Installing Mamba packages..."
   mamba_install sage
 
-  # ── pip tools ────────────────────────────────
-  log "Installing pip tools..."
-  pip_install pwntools
-  pip_install requests
-  pip_install beautifulsoup4
-  pip_install scapy
-  pip_install cryptography
-  pip_install volatility3
-  pip_install ROPgadget
-  pip_install xortool
-
   # ── gem tools ────────────────────────────────
   log "Installing gem tools..."
   gem_install zsteg
   gem_install one_gadget
 
   log "Installing checksec..."
-  if ! sudo apt install -y checksec 2>/dev/null; then
-    warn "checksec not in apt - trying pip3..."
-    pip_install checksec.sh
-  fi
+    if ! sudo apt install -y checksec 2>/dev/null; then
+      warn "checksec not in apt - see manual steps at end of script"
+    fi
 
   # --- pwndbg ---
   if [ "${INSTALL_PWNDBG}" = true ]; then
