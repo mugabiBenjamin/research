@@ -74,17 +74,21 @@ log "Upgrading packages..."
 sudo apt upgrade -y
 
 # Ensure bootstrap tools exist
-command -v wget  >/dev/null 2>&1 || sudo apt install -y wget
-command -v unzip >/dev/null 2>&1 || sudo apt install -y unzip
-command -v curl  >/dev/null 2>&1 || sudo apt install -y curl
-command -v git   >/dev/null 2>&1 || sudo apt install -y git
-command -v bwrap >/dev/null 2>&1 || sudo apt install -y bubblewrap
-command -v gcc   >/dev/null 2>&1 || sudo apt install -y build-essential
-command -v vim   >/dev/null 2>&1 || sudo apt install -y vim
+command -v wget    >/dev/null 2>&1 || sudo apt install -y wget
+command -v unzip   >/dev/null 2>&1 || sudo apt install -y unzip
+command -v curl    >/dev/null 2>&1 || sudo apt install -y curl
+command -v git     >/dev/null 2>&1 || sudo apt install -y git
+command -v bwrap   >/dev/null 2>&1 || sudo apt install -y bubblewrap
+command -v gcc     >/dev/null 2>&1 || sudo apt install -y build-essential
+command -v vim     >/dev/null 2>&1 || sudo apt install -y vim
 command -v objdump >/dev/null 2>&1 || sudo apt install -y binutils
-command -v htop  >/dev/null 2>&1 || sudo apt install -y htop
-command -v gpg   >/dev/null 2>&1 || sudo apt install -y gnupg
-command -v tree  >/dev/null 2>&1 || sudo apt install -y tree
+command -v htop    >/dev/null 2>&1 || sudo apt install -y htop
+command -v gpg     >/dev/null 2>&1 || sudo apt install -y gnupg
+command -v tree    >/dev/null 2>&1 || sudo apt install -y tree
+
+# ─────────────────────────────────────────────
+# Package manager setup helpers
+# ─────────────────────────────────────────────
 
 # --- Homebrew ---
 log "Installing Homebrew..."
@@ -120,7 +124,203 @@ else
   source_brew
 fi
 
-# --- Package Installation ---
+brew_install() {
+  local pkg="$1"
+  if command -v brew >/dev/null 2>&1; then
+    brew upgrade "$pkg" 2>/dev/null || brew install "$pkg" \
+      && log "brew: $pkg installed/updated" \
+      || warn "brew: failed to install $pkg"
+  else
+    warn "brew not available; skipping $pkg"
+  fi
+}
+
+# --- Rust / Cargo ---
+log "Installing Rust (rustup)..."
+if ! command -v cargo >/dev/null 2>&1; then
+  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs \
+    | sh -s -- -y --no-modify-path
+  log "Rust installed"
+else
+  log "Rust already present — updating..."
+  rustup update stable
+fi
+# Source cargo env for the rest of this script
+# shellcheck source=/dev/null
+[ -f "${HOME}/.cargo/env" ] && source "${HOME}/.cargo/env"
+export PATH="${HOME}/.cargo/bin:${PATH}"
+
+persist_cargo() {
+  for rc in ~/.zshrc ~/.bashrc; do
+    if ! grep -q 'cargo/env' "${rc}" 2>/dev/null; then
+      printf '\n. "%s/.cargo/env"\n' "${HOME}" >> "${rc}"
+    fi
+  done
+}
+persist_cargo
+
+cargo_install() {
+  local pkg="$1"; shift
+  local bin="${1:-$pkg}"
+  if command -v cargo >/dev/null 2>&1; then
+    cargo install "$pkg" --locked 2>/dev/null \
+      && log "cargo: $pkg installed/updated" \
+      || warn "cargo: failed to install $pkg"
+  else
+    warn "cargo not available; skipping $pkg"
+  fi
+}
+
+# --- Go ---
+log "Installing Go (latest)..."
+install_go() {
+  local latest_url
+  latest_url=$(curl -fsSL "https://go.dev/dl/?mode=json" \
+    | grep -o '"https://dl.google.com/go/go[^"]*linux-amd64.tar.gz"' \
+    | head -1 | tr -d '"')
+  if [ -z "${latest_url:-}" ]; then
+    warn "Could not resolve latest Go download URL"
+    return
+  fi
+  local version
+  version=$(basename "${latest_url}" | sed 's/\.linux-amd64\.tar\.gz//')
+  local installed_version=""
+  [ -x /usr/local/go/bin/go ] && installed_version=$(/usr/local/go/bin/go version 2>/dev/null | awk '{print $3}')
+  if [ "${installed_version}" = "${version}" ]; then
+    warn "Go ${version} already installed"
+  else
+    log "Installing Go ${version}..."
+    wget -q --show-progress -O /tmp/go.tar.gz "${latest_url}" \
+      && sudo rm -rf /usr/local/go \
+      && sudo tar -C /usr/local -xzf /tmp/go.tar.gz \
+      && rm -f /tmp/go.tar.gz \
+      && log "Go ${version} installed" \
+      || warn "Failed to install Go"
+  fi
+}
+install_go
+export PATH="/usr/local/go/bin:${HOME}/go/bin:${PATH}"
+
+persist_go() {
+  for rc in ~/.zshrc ~/.bashrc; do
+    if ! grep -q '/usr/local/go/bin' "${rc}" 2>/dev/null; then
+      printf '\nexport PATH="/usr/local/go/bin:${HOME}/go/bin:${PATH}"\n' >> "${rc}"
+    fi
+  done
+}
+persist_go
+
+go_install() {
+  local pkg="$1"
+  if command -v go >/dev/null 2>&1; then
+    go install "${pkg}@latest" \
+      && log "go install: $pkg done" \
+      || warn "go install: failed for $pkg"
+  else
+    warn "go not available; skipping $pkg"
+  fi
+}
+
+# --- Node / npm ---
+log "Installing Node.js (via NodeSource LTS)..."
+if ! command -v node >/dev/null 2>&1; then
+  curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash - \
+    && sudo apt install -y nodejs \
+    && log "Node.js installed" \
+    || warn "Failed to install Node.js"
+else
+  log "Node.js already installed — $(node --version)"
+fi
+
+npm_install() {
+  local pkg="$1"
+  if command -v npm >/dev/null 2>&1; then
+    npm install -g "$pkg" \
+      && log "npm: $pkg installed/updated" \
+      || warn "npm: failed to install $pkg"
+  else
+    warn "npm not available; skipping $pkg"
+  fi
+}
+
+# --- Mamba (via Miniforge) ---
+log "Installing Mamba (Miniforge)..."
+MINIFORGE_DIR="${HOME}/miniforge3"
+
+install_mamba() {
+  local installer_url
+  installer_url=$(curl -fsSL "https://api.github.com/repos/conda-forge/miniforge/releases/latest" \
+    | grep "browser_download_url" \
+    | grep -i "Linux-x86_64.sh" | head -1 | cut -d '"' -f 4)
+  if [ -z "${installer_url:-}" ]; then
+    warn "Could not resolve Miniforge installer URL"
+    return
+  fi
+  wget -q --show-progress -O /tmp/miniforge.sh "${installer_url}" \
+    && bash /tmp/miniforge.sh -b -u -p "${MINIFORGE_DIR}" \
+    && rm -f /tmp/miniforge.sh \
+    && log "Mamba installed at ${MINIFORGE_DIR}" \
+    || warn "Failed to install Mamba"
+}
+
+if [ -x "${MINIFORGE_DIR}/bin/mamba" ]; then
+  log "Mamba already installed — updating..."
+  "${MINIFORGE_DIR}/bin/mamba" update -n base -c conda-forge mamba -y || warn "Mamba update failed"
+else
+  install_mamba
+fi
+
+export PATH="${MINIFORGE_DIR}/bin:${PATH}"
+
+persist_mamba() {
+  for rc in ~/.zshrc ~/.bashrc; do
+    if ! grep -q 'miniforge3/bin' "${rc}" 2>/dev/null; then
+      printf '\nexport PATH="%s/bin:${PATH}"\n' "${MINIFORGE_DIR}" >> "${rc}"
+    fi
+  done
+}
+persist_mamba
+
+mamba_install() {
+  local pkg="$1" channel="${2:-conda-forge}"
+  if command -v mamba >/dev/null 2>&1; then
+    mamba install -n base -c "${channel}" -y "$pkg" \
+      && log "mamba: $pkg installed/updated" \
+      || warn "mamba: failed to install $pkg"
+  else
+    warn "mamba not available; skipping $pkg"
+  fi
+}
+
+# --- Ruby / Gem ---
+ensure_gem() {
+  if ! command -v gem >/dev/null 2>&1; then
+    sudo apt install -y ruby ruby-dev build-essential
+  fi
+}
+
+gem_install() {
+  local pkg="$1"
+  ensure_gem
+  sudo gem install "$pkg" \
+    && log "gem: $pkg installed/updated" \
+    || warn "gem: failed to install $pkg"
+}
+
+# --- pip ---
+ensure_pip3
+
+pip_install() {
+  local pkg="$1"
+  pip3 install --upgrade "$pkg" --break-system-packages \
+    && log "pip: $pkg installed/updated" \
+    || warn "pip: failed to install $pkg"
+}
+
+# ─────────────────────────────────────────────
+# Package Installation
+# ─────────────────────────────────────────────
+
 if [ "${MINIMAL}" = true ]; then
   log "Installing MINIMAL package set..."
   sudo apt install -y \
@@ -130,8 +330,7 @@ if [ "${MINIMAL}" = true ]; then
     tmux p7zip-full \
     ruby ruby-dev build-essential
 
-  log "Installing zsteg..."
-  sudo gem install zsteg || warn "Failed to install zsteg via gem"
+  gem_install zsteg
 
 else
   log "Installing FULL package set..."
@@ -180,63 +379,38 @@ else
   if command -v amass >/dev/null 2>&1; then
     warn "amass already installed"
   else
-    if command -v brew >/dev/null 2>&1; then
-      brew install amass && log "amass installed" || warn "Failed to install amass via brew"
-    else
-      warn "brew not found; cannot install amass"
-    fi
+    brew_install amass
   fi
 
   log "Installing subfinder..."
   if command -v subfinder >/dev/null 2>&1; then
     warn "subfinder already installed"
   else
-    SUBFINDER_URL=$(fetch_latest_github_release \
-      "projectdiscovery/subfinder" "linux_amd64.zip")
-    if [ -n "${SUBFINDER_URL:-}" ]; then
-      wget -q --show-progress -O /tmp/subfinder.zip "${SUBFINDER_URL}" \
-        && unzip -o /tmp/subfinder.zip -d /tmp/subfinder-install \
-        && sudo install /tmp/subfinder-install/subfinder /usr/local/bin/subfinder \
-        && rm -rf /tmp/subfinder.zip /tmp/subfinder-install \
-        && log "subfinder installed" \
-        || { warn "Failed to install subfinder"; rm -rf /tmp/subfinder.zip /tmp/subfinder-install; }
-    else
-      warn "Could not find subfinder release URL"
-    fi
+    go_install github.com/projectdiscovery/subfinder/v2/cmd/subfinder
   fi
 
   log "Installing RustScan..."
   if command -v rustscan >/dev/null 2>&1; then
     warn "rustscan already installed"
   else
-    source_brew
-    if command -v brew >/dev/null 2>&1; then
-      brew install rustscan \
-        && command -v rustscan >/dev/null 2>&1 \
-        && log "rustscan installed" \
-        || warn "Failed to install rustscan via brew"
-    else
-      warn "brew not found; cannot install rustscan"
-    fi
+    brew_install rustscan
   fi
 
   log "Installing Naabu..."
   if command -v naabu >/dev/null 2>&1; then
     warn "naabu already installed"
   else
-    NAABU_URL=$(fetch_latest_github_release \
-      "projectdiscovery/naabu" "linux_amd64.zip")
-    if [ -n "${NAABU_URL:-}" ]; then
-      wget -q --show-progress -O /tmp/naabu.zip "${NAABU_URL}" \
-        && unzip -o /tmp/naabu.zip -d /tmp/naabu-install \
-        && sudo install /tmp/naabu-install/naabu /usr/local/bin/naabu \
-        && rm -rf /tmp/naabu.zip /tmp/naabu-install \
-        && log "naabu installed" \
-        || { warn "Failed to install naabu"; rm -rf /tmp/naabu.zip /tmp/naabu-install; }
-    else
-      warn "Could not find Naabu release"
-    fi
+    go_install github.com/projectdiscovery/naabu/v2/cmd/naabu
   fi
+
+  log "Installing httpx..."
+  go_install github.com/projectdiscovery/httpx/cmd/httpx
+
+  log "Installing nuclei..."
+  go_install github.com/projectdiscovery/nuclei/v3/cmd/nuclei
+
+  log "Installing dnsx..."
+  go_install github.com/projectdiscovery/dnsx/cmd/dnsx
 
   log "Installing binary analysis tools..."
   sudo apt install -y radare2 binwalk strace ltrace upx-ucl
@@ -365,27 +539,53 @@ else
     warn "Metasploit already installed"
   fi
 
-  warn "sagemath requires manual install - use https://sagecell.sagemath.org for quick crypto or install locally via: conda install sage -c conda-forge"
+  # ── Cargo tools ──────────────────────────────
+  log "Installing Cargo tools..."
+  cargo_install ripgrep rg
+  cargo_install fd-find fd
+  cargo_install bat
+  cargo_install hexyl
+  cargo_install tokei
 
-  ensure_pip3
+  # ── Go tools ─────────────────────────────────
+  log "Installing Go tools..."
+  go_install github.com/ffuf/ffuf/v2
+  go_install github.com/tomnomnom/waybackurls
+  go_install github.com/tomnomnom/gf
+  go_install github.com/tomnomnom/anew
+  go_install github.com/lc/gau/v2/cmd/gau
+  go_install github.com/hakluke/hakrawler
+
+  # ── npm tools ────────────────────────────────
+  log "Installing npm tools..."
+  npm_install jwt-cli
+  npm_install retire
+
+  # ── Mamba packages ───────────────────────────
+  log "Installing Mamba packages..."
+  mamba_install sage
+
+  # ── pip tools ────────────────────────────────
+  log "Installing pip tools..."
+  pip_install pwntools
+  pip_install requests
+  pip_install beautifulsoup4
+  pip_install scapy
+  pip_install cryptography
+  pip_install volatility3
+  pip_install ROPgadget
+  pip_install xortool
+
+  # ── gem tools ────────────────────────────────
+  log "Installing gem tools..."
+  gem_install zsteg
+  gem_install one_gadget
 
   log "Installing checksec..."
   if ! sudo apt install -y checksec 2>/dev/null; then
     warn "checksec not in apt - trying pip3..."
-    pip3 install checksec.sh --break-system-packages || warn "Failed to install checksec"
+    pip_install checksec.sh
   fi
-
-  log "Installing zsteg..."
-  sudo gem install zsteg || warn "Failed to install zsteg via gem"
-
-  log "Installing one_gadget via gem..."
-  sudo gem install one_gadget || warn "Failed to install one_gadget via gem"
-
-  log "Installing ROPgadget..."
-  pip3 install ROPgadget --break-system-packages || warn "Failed to install ROPgadget"
-
-  log "Installing xortool..."
-  pip3 install xortool --break-system-packages || warn "Failed to install xortool"
 
   # --- pwndbg ---
   if [ "${INSTALL_PWNDBG}" = true ]; then
@@ -444,9 +644,12 @@ log "Tools directory: ${TOOLS_DIR}"
 log "Verifying installed commands..."
 for cmd in vim objdump htop gpg tree brew nmap rustscan naabu masscan amass subfinder \
            binwalk radare2 hashcat john jq zsteg ffuf feroxbuster fcrackzip smbclient \
-           zbarimg mat2 ROPgadget xortool msfconsole upx jd-gui; do
+           zbarimg mat2 ROPgadget xortool msfconsole upx jd-gui \
+           cargo rustc go node npm mamba \
+           rg fd bat hexyl tokei \
+           httpx nuclei dnsx waybackurls gau hakrawler; do
   if command -v "${cmd}" >/dev/null 2>&1; then
-    printf '  %-14s: installed\n' "${cmd}"
+    printf '  %-16s: installed\n' "${cmd}"
   else
     warn "Command '${cmd}' not found"
   fi
@@ -475,13 +678,12 @@ Manual steps required:
    git clone https://github.com/lgandx/Responder.git ~/tools/Responder
    # Run with: sudo python3 ~/tools/Responder/Responder.py -I <interface>
 
- - Install Python tools in virtual environment:
-   python3 -m venv ctf_env
-   source ctf_env/bin/activate
-   pip install pwntools requests beautifulsoup4 scapy cryptography volatility3
+ - Activate mamba in your shell (first time):
+   ~/miniforge3/bin/conda init bash   # or zsh
+   # then restart your shell
 
 # Excluded (already in Ubuntu):
-#  - curl, wget, netcat, git, gcc, gdb, file, xxd, binutils
+#  - curl, wget, netcat, git, gcc, gdb, file, xxd
 #  - openssl, gnupg, python3
 
 EOF
