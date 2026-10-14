@@ -176,30 +176,34 @@ cargo_install() {
 # --- Go ---
 log "Installing Go (latest)..."
 install_go() {
-  local latest_url
-  latest_url=$(curl -fsSL "https://go.dev/dl/?mode=json" \
-    | grep -o '"https://dl.google.com/go/go[^"]*linux-amd64.tar.gz"' \
-    | head -1 | tr -d '"') || true
-  if [ -z "${latest_url:-}" ]; then
-    warn "Could not resolve latest Go download URL"
+  local version
+  version=$(curl -fsSL "https://go.dev/VERSION?m=text" | head -1) || true
+  if [ -z "${version:-}" ]; then
+    warn "Could not resolve latest Go version"
     return
   fi
-  local version
-  version=$(basename "${latest_url}" | sed 's/\.linux-amd64\.tar\.gz//')
+
+  local latest_url="https://go.dev/dl/${version}.linux-amd64.tar.gz"
+
   local installed_version=""
-  [ -x /usr/local/go/bin/go ] && installed_version=$(/usr/local/go/bin/go version 2>/dev/null | awk '{print $3}')
+  [ -x /usr/local/go/bin/go ] \
+    && installed_version=$(/usr/local/go/bin/go version 2>/dev/null | awk '{print $3}')
+
   if [ "${installed_version}" = "${version}" ]; then
     warn "Go ${version} already installed"
-  else
-    log "Installing Go ${version}..."
-    wget -q --show-progress -O /tmp/go.tar.gz "${latest_url}" \
-      && sudo rm -rf /usr/local/go \
-      && sudo tar -C /usr/local -xzf /tmp/go.tar.gz \
-      && rm -f /tmp/go.tar.gz \
-      && export PATH="/usr/local/go/bin:${HOME}/go/bin:${PATH}" \
-      && log "Go ${version} installed" \
-      || warn "Failed to install Go"
+    # Still ensure PATH is set for this session
+    export PATH="/usr/local/go/bin:${HOME}/go/bin:${PATH}"
+    return
   fi
+
+  log "Installing Go ${version}..."
+  wget -q --show-progress -O /tmp/go.tar.gz "${latest_url}" \
+    && sudo rm -rf /usr/local/go \
+    && sudo tar -C /usr/local -xzf /tmp/go.tar.gz \
+    && rm -f /tmp/go.tar.gz \
+    && export PATH="/usr/local/go/bin:${HOME}/go/bin:${PATH}" \
+    && log "Go ${version} installed" \
+    || warn "Failed to install Go"
 }
 install_go
 export PATH="/usr/local/go/bin:${HOME}/go/bin:${PATH}"
@@ -207,7 +211,12 @@ export PATH="/usr/local/go/bin:${HOME}/go/bin:${PATH}"
 persist_go() {
   for rc in ~/.zshrc ~/.bashrc; do
     if ! grep -q '/usr/local/go/bin' "${rc}" 2>/dev/null; then
-      printf '\nexport PATH="/usr/local/go/bin:${HOME}/go/bin:${PATH}"\n' >> "${rc}"
+      echo >> "${rc}"
+      echo 'export PATH=$PATH:/usr/local/go/bin' >> "${rc}"
+      echo 'export PATH=$PATH:${HOME}/go/bin' >> "${rc}"
+      log "Go PATH added to ${rc}"
+    else
+      warn "Go PATH already in ${rc}, skipping"
     fi
   done
 }
