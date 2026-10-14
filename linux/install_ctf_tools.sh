@@ -393,7 +393,7 @@ else
   go_install github.com/projectdiscovery/dnsx/cmd/dnsx
 
   log "Installing binary analysis tools..."
-  sudo apt install -y radare2 binwalk strace ltrace upx-ucl
+  sudo apt install -y radare2 binwalk strace ltrace upx-ucl ghex
 
   log "Installing reverse engineering extras..."
   if ! sudo apt install -y rizin 2>/dev/null; then
@@ -526,6 +526,7 @@ else
   cargo_install bat
   cargo_install hexyl
   cargo_install tokei
+  cargo_install rsacracker
 
   # ── Go tools ─────────────────────────────────
   log "Installing Go tools..."
@@ -605,7 +606,7 @@ log "Tools directory: ${TOOLS_DIR}"
 
 log "Verifying installed commands..."
 for cmd in vim objdump htop gpg tree brew nmap rustscan naabu masscan amass subfinder \
-           binwalk radare2 hashcat john jq zsteg ffuf feroxbuster fcrackzip smbclient \
+           rsacracker ghex binwalk radare2 hashcat john jq zsteg ffuf feroxbuster fcrackzip smbclient \
            zbarimg mat2 ROPgadget xortool msfconsole upx jd-gui \
            cargo rustc go mamba \
            rg fd bat hexyl tokei \
