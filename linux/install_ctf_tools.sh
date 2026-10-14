@@ -439,19 +439,22 @@ else
   if command -v jd-gui >/dev/null 2>&1; then
     warn "jd-gui already installed"
   else
-    JDGUI_URL=$(fetch_latest_github_release "java-decompiler/jd-gui" "\.jar$")
-    JDGUI_JAR="${TOOLS_DIR}/jd-gui.jar"
-    if [ -n "${JDGUI_URL:-}" ]; then
-      wget -q --show-progress -O "${JDGUI_JAR}" "${JDGUI_URL}" \
-        || warn "Failed to download JD-GUI"
-    fi
-    if [ -f "${JDGUI_JAR}" ]; then
-      printf '#!/bin/sh\nexec java -jar %s "$@"\n' "${JDGUI_JAR}" \
-        | sudo tee /usr/local/bin/jd-gui > /dev/null
+    # Ensure Java runtime is present
+    sudo apt install -y default-jre || warn "Failed to install default-jre (required for JD-GUI)"
+
+    JDGUI_JAR_URL=$(fetch_latest_github_release "java-decompiler/jd-gui" "\.jar$")
+    if [ -n "${JDGUI_JAR_URL:-}" ]; then
+      sudo mkdir -p /opt/jd-gui
+      sudo wget -q --show-progress -O /opt/jd-gui/jd-gui.jar "${JDGUI_JAR_URL}"
+      sudo chmod 644 /opt/jd-gui/jd-gui.jar
+      sudo tee /usr/local/bin/jd-gui > /dev/null <<'JDGUI_WRAPPER'
+#!/bin/sh
+exec java -jar /opt/jd-gui/jd-gui.jar "$@"
+JDGUI_WRAPPER
       sudo chmod +x /usr/local/bin/jd-gui
-      log "jd-gui installed"
+      log "jd-gui installed to /opt/jd-gui"
     else
-      warn "JD-GUI jar not found - install manually"
+      warn "Could not resolve jd-gui .jar URL — install manually from https://github.com/java-decompiler/jd-gui/releases"
     fi
   fi
 
