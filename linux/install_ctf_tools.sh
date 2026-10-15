@@ -192,7 +192,7 @@ install_go() {
   if [ "${installed_version}" = "${version}" ]; then
     warn "Go ${version} already installed"
     # Still ensure PATH is set for this session
-    export PATH="/usr/local/go/bin:${HOME}/go/bin:${PATH}"
+    export PATH="/usr/local/go/bin:$(go env GOPATH)/bin:${PATH}"
     return
   fi
 
@@ -201,19 +201,20 @@ install_go() {
     && sudo rm -rf /usr/local/go \
     && sudo tar -C /usr/local -xzf /tmp/go.tar.gz \
     && rm -f /tmp/go.tar.gz \
-    && export PATH="/usr/local/go/bin:${HOME}/go/bin:${PATH}" \
+    && export PATH="/usr/local/go/bin:$(go env GOPATH)/bin:${PATH}" \
     && log "Go ${version} installed" \
     || warn "Failed to install Go"
 }
 install_go
-export PATH="/usr/local/go/bin:${HOME}/go/bin:${PATH}"
+export PATH="/usr/local/go/bin:$(go env GOPATH)/bin:${PATH}"
 
 persist_go() {
   for rc in ~/.zshrc ~/.bashrc; do
     if ! grep -q '/usr/local/go/bin' "${rc}" 2>/dev/null; then
       echo >> "${rc}"
-      echo 'export PATH=$PATH:/usr/local/go/bin' >> "${rc}"
-      echo 'export PATH=$PATH:${HOME}/go/bin' >> "${rc}"
+      # Prepend both go bin directories so Go tools take priority over
+      # any same-named tools installed by pip/mamba (e.g. httpx)
+      echo 'export PATH="/usr/local/go/bin:$(go env GOPATH)/bin:${PATH}"' >> "${rc}"
       log "Go PATH added to ${rc}"
     else
       warn "Go PATH already in ${rc}, skipping"
@@ -383,7 +384,7 @@ else
     go_install github.com/projectdiscovery/naabu/v2/cmd/naabu
   fi
 
-  log "Installing httpx..."
+  log "Installing httpx (projectdiscovery Go binary)..."
   go_install github.com/projectdiscovery/httpx/cmd/httpx
 
   log "Installing nuclei..."
