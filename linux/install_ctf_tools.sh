@@ -436,43 +436,10 @@ else
     fi
   fi
 
-  log "Installing JD-GUI..."
-  if command -v jd-gui >/dev/null 2>&1; then
-    warn "jd-gui already installed"
-  else
-    # Ensure Java runtime is present
-    sudo apt install -y default-jre || warn "Failed to install default-jre (required for JD-GUI)"
-
-    JDGUI_JAR_URL=$(fetch_latest_github_release "java-decompiler/jd-gui" "\.jar$")
-    if [ -n "${JDGUI_JAR_URL:-}" ]; then
-      sudo mkdir -p /opt/jd-gui
-      sudo wget -q --show-progress -O /opt/jd-gui/jd-gui.jar "${JDGUI_JAR_URL}"
-      sudo chmod 644 /opt/jd-gui/jd-gui.jar
-      sudo tee /usr/local/bin/jd-gui > /dev/null <<'JDGUI_WRAPPER'
-#!/bin/sh
-exec java -jar /opt/jd-gui/jd-gui.jar "$@"
-JDGUI_WRAPPER
-      sudo chmod +x /usr/local/bin/jd-gui
-      log "jd-gui installed to /opt/jd-gui"
-    else
-      warn "Could not resolve jd-gui .jar URL — install manually from https://github.com/java-decompiler/jd-gui/releases"
-    fi
-  fi
-
   log "Installing forensics tools..."
   sudo apt install -y foremost scalpel libimage-exiftool-perl steghide gddrescue \
     ruby ruby-dev build-essential
 
-  log "Installing outguess from source..."
-  if ! command -v outguess >/dev/null 2>&1; then
-    sudo apt install -y autoconf libglib2.0-dev \
-      && git clone https://github.com/crorvick/outguess "${TOOLS_DIR}/outguess" \
-      && ( cd "${TOOLS_DIR}/outguess" && ./configure && make && sudo make install ) \
-      && log "outguess installed" \
-      || warn "Failed to install outguess from source"
-  else
-    warn "outguess already installed"
-  fi
 
   log "Installing steganography extras..."
   sudo apt install -y zbar-tools mat2
@@ -611,7 +578,7 @@ log "Tools directory: ${TOOLS_DIR}"
 log "Verifying installed commands..."
 for cmd in vim objdump htop gpg tree brew nmap rustscan naabu masscan amass subfinder \
            rsacracker ghex binwalk radare2 hashcat john jq zsteg ffuf feroxbuster fcrackzip smbclient \
-           zbarimg mat2 ROPgadget xortool msfconsole upx jd-gui \
+           zbarimg mat2 ROPgadget xortool msfconsole upx \
            cargo rustc go mamba \
            rg fd bat hexyl tokei \
            httpx nuclei dnsx waybackurls gau hakrawler; do
@@ -629,6 +596,10 @@ Installation complete.
 
 Manual steps required:
  - Install burpsuite from: https://portswigger.net/burp/communitydownload
+
+ - Install jd-gui (Java decompiler):
+   Download the latest .jar from: https://github.com/java-decompiler/jd-gui/releases
+   Then run with: java -jar /path/to/jd-gui-<version>.jar
 
  - Install tplmap (SSTI scanner):
    git clone https://github.com/epinna/tplmap.git ~/tools/tplmap
@@ -648,6 +619,11 @@ Manual steps required:
  - Activate mamba in your shell (first time):
    ~/miniforge3/bin/conda init bash   # or zsh
    # then restart your shell
+
+ - Fix PATH ordering in ~/.zshrc to ensure Go tools (e.g. httpx) take
+   priority over same-named mamba/pip tools. Replace any existing Go PATH
+   lines with the following, placed BEFORE the miniforge3 export:
+     export PATH="/usr/local/go/bin:$(go env GOPATH)/bin:${PATH}"
 
 # Excluded (already in Ubuntu):
 #  - curl, wget, netcat, git, gcc, gdb, file, xxd
