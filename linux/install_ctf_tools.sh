@@ -81,7 +81,8 @@ command -v objdump >/dev/null 2>&1 || sudo apt install -y binutils
 command -v htop    >/dev/null 2>&1 || sudo apt install -y htop
 command -v gpg     >/dev/null 2>&1 || sudo apt install -y gnupg
 command -v tree    >/dev/null 2>&1 || sudo apt install -y tree
-command -v locate  >/dev/null 2>&1; || sudo apt install -y plocate
+command -v locate  >/dev/null 2>&1 || sudo apt install -y plocate
+command -v make    >/dev/null 2>&1 || sudo apt install -y make
 
 # ─────────────────────────────────────────────
 # Package manager setup helpers
