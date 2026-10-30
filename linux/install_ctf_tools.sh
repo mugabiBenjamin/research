@@ -508,6 +508,20 @@ else
   go_install github.com/tomnomnom/anew
   go_install github.com/lc/gau/v2/cmd/gau
   go_install github.com/hakluke/hakrawler
+  go_install github.com/projectdiscovery/katana/cmd/katana
+  
+  log "Installing kiterunner..."
+  if command -v kr >/dev/null 2>&1; then
+    warn "kiterunner (kr) already installed"
+  elif [ ! -d "${TOOLS_DIR}/kiterunner" ]; then
+    git clone https://github.com/assetnote/kiterunner.git "${TOOLS_DIR}/kiterunner" \
+      && make -C "${TOOLS_DIR}/kiterunner" build \
+      && sudo ln -sf "${TOOLS_DIR}/kiterunner/dist/kr" /usr/local/bin/kr \
+      && log "kiterunner installed" \
+      || warn "Failed to install kiterunner"
+  else
+    warn "kiterunner source already cloned"
+  fi
 
   # ── Mamba packages ───────────────────────────
   log "Installing Mamba packages..."
@@ -583,7 +597,7 @@ for cmd in vim objdump htop gpg tree brew nmap rustscan naabu masscan amass subf
            zbarimg mat2 ROPgadget xortool msfconsole upx \
            cargo rustc go mamba \
            rg fd bat hexyl tokei \
-           httpx nuclei dnsx waybackurls gau hakrawler; do
+           httpx nuclei dnsx waybackurls gau hakrawler katana kr; do
   if command -v "${cmd}" >/dev/null 2>&1; then
     printf '  %-16s: installed\n' "${cmd}"
   else
