@@ -467,6 +467,25 @@ else
     install_package "$pkg"
   done
 
+  log "Installing theHarvester..."
+  if [ ! -d "${TOOLS_DIR}/theHarvester" ]; then
+    git clone https://github.com/laramies/theHarvester.git \
+      "${TOOLS_DIR}/theHarvester" \
+      || warn "Failed to clone theHarvester"
+  fi
+  if [ -d "${TOOLS_DIR}/theHarvester" ]; then
+    (
+      cd "${TOOLS_DIR}/theHarvester"
+      uv sync
+    ) && {
+      log "theHarvester installed"
+      # Make theHarvester accessible system-wide
+      sudo ln -sf "${TOOLS_DIR}/theHarvester/.venv/bin/theHarvester" \
+        /usr/local/bin/theHarvester
+      log "theHarvester added to system PATH"
+    } || warn "theHarvester installation failed"
+  fi
+
   log "Installing optional forensics tools..."
   for pkg in testdisk sleuthkit autopsy; do
     install_package "$pkg"
