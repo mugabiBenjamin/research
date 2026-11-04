@@ -10,9 +10,9 @@ set -uo pipefail
 # and we prefer warn-and-continue over hard-abort. Critical failures use err().
 
 # Configuration
-TOOLS_DIR="${HOME}/tools"
-OSINT_BIN="${HOME}/.local/bin"
-MINIFORGE_DIR="${HOME}/miniforge3"
+TOOLS_DIR="/opt/tools"
+OSINT_BIN="/usr/local/bin"
+MINIFORGE_DIR="/opt/miniforge3"
 INSTALL_PWNDBG=true
 INSTALL_GHIDRA=true
 MINIMAL=false
@@ -67,18 +67,17 @@ ensure_cmd() {
   "$@"
 }
 
-# Add a line to both ~/.bashrc and ~/.zshrc if not already present
+# Add a line to /etc/profile.d/ctf-tools.sh if not already present
+PROFILE_D="/etc/profile.d/ctf-tools.sh"
 persist_line() {
   local marker="$1" line="$2"
-  for rc in ~/.bashrc ~/.zshrc; do
-    [ -f "$rc" ] || continue
-    if ! grep -qF "$marker" "$rc" 2>/dev/null; then
-      printf '\n%s\n' "$line" >> "$rc"
-      log "Added to $rc: $line"
-    else
-      warn "$marker already in $rc — skipping"
-    fi
-  done
+  sudo touch "${PROFILE_D}"
+  if ! sudo grep -qF "$marker" "${PROFILE_D}" 2>/dev/null; then
+    printf '\n%s\n' "$line" | sudo tee -a "${PROFILE_D}" >/dev/null
+    log "Added to ${PROFILE_D}: $line"
+  else
+    warn "$marker already in ${PROFILE_D} — skipping"
+  fi
 }
 
 # Flag parsing
@@ -98,14 +97,15 @@ if [ ! -f /etc/debian_version ]; then
   warn "This script targets Debian/Ubuntu. Proceeding anyway..."
 fi
 
-mkdir -p "${TOOLS_DIR}" "${OSINT_BIN}"
-
-# Ensure ~/.local/bin is in PATH for this session and persisted
+sudo mkdir -p "${TOOLS_DIR}"
+sudo chown "$USER":"$USER" "${TOOLS_DIR}"
+sudo mkdir -p "${MINIFORGE_DIR}"
+sudo chown "$USER":"$USER" "${MINIFORGE_DIR}"
+# OSINT_BIN (/usr/local/bin) already exists — ensure it's in PATH for this session
 case ":${PATH}:" in
-  *":${OSINT_BIN}:"*) ;;
-  *) export PATH="${OSINT_BIN}:${PATH}" ;;
+  *":/usr/local/bin:"*) ;;
+  *) export PATH="/usr/local/bin:${PATH}" ;;
 esac
-persist_line 'HOME/.local/bin' 'export PATH="${HOME}/.local/bin:${PATH}"'
 
 export DEBIAN_FRONTEND=noninteractive
 
@@ -117,11 +117,8 @@ sudo apt upgrade -y
 
 log "Installing bootstrap dependencies..."
 for pkg in \
-  wget unzip curl git bubblewrap build-essential \
-  vim binutils htop gnupg tree plocate make \
-  python3-venv python3-dev libxml2-dev libxslt1-dev \
-  libffi-dev libssl-dev libxslt-dev; do
-  command -v "${pkg%%-*}" >/dev/null 2>&1 || sudo apt install -y "$pkg"
+  wget unzip curl git bubblewrap build-essential vim binutils htop gnupg tree plocate make python3-venv python3-dev libxml2-dev libxslt1-dev libffi-dev libssl-dev libxslt-dev; do
+  dpkg -l "$pkg" &>/dev/null || sudo apt install -y "$pkg"
 done
 
 # Package manager: Homebrew
@@ -147,15 +144,16 @@ if ! command -v brew >/dev/null 2>&1; then
   NONINTERACTIVE=1 /bin/bash -c \
     "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   source_brew
-  # Persist using the actual resolved path, not a hardcoded one
   brew_line=$(brew_rc_line)
   if [ -n "${brew_line}" ]; then
     persist_line 'brew shellenv' "${brew_line}"
     eval "${brew_line}"
+    command -v brew >/dev/null 2>&1 \
+      && log "Homebrew installed and in PATH" \
+      || warn "Homebrew installed but not yet in PATH — subsequent brew installs may fail"
+  else
+    warn "Could not resolve Homebrew PATH — brew-dependent tools will be skipped"
   fi
-  command -v brew >/dev/null 2>&1 \
-    && log "Homebrew installed and in PATH" \
-    || warn "Homebrew installed but not yet in PATH — subsequent brew installs may fail"
 else
   warn "Homebrew already installed"
   source_brew
@@ -186,11 +184,10 @@ else
   rustup update stable
 fi
 
-# Source cargo env for this session
 # shellcheck source=/dev/null
 [ -f "${HOME}/.cargo/env" ] && source "${HOME}/.cargo/env"
-export PATH="${HOME}/.cargo/bin:${PATH}"
 persist_line 'cargo/env' ". \"${HOME}/.cargo/env\""
+export PATH="${HOME}/.cargo/bin:${PATH}"
 
 cargo_install() {
   local pkg="$1"
@@ -232,17 +229,19 @@ install_go() {
       && log "Go ${version} installed" \
       || warn "Failed to install Go"
   fi
-
-  # Activate for current session regardless
-  export PATH="/usr/local/go/bin:$(go env GOPATH 2>/dev/null || echo "${HOME}/go")/bin:${PATH}"
 }
 
 install_go
+export GOPATH="${HOME}/go"
+mkdir -p "${GOPATH}/bin"
+export PATH="/usr/local/go/bin:${GOPATH}/bin:${PATH}"
 
 # Persist Go PATH — placed BEFORE miniforge so Go tools (e.g. httpx) take priority
 # over same-named mamba/pip tools
+persist_line 'GOPATH=' \
+  'export GOPATH="${HOME}/go"'
 persist_line '/usr/local/go/bin' \
-  'export PATH="/usr/local/go/bin:$(go env GOPATH)/bin:${PATH}"'
+  'export PATH="/usr/local/go/bin:${HOME}/go/bin:${PATH}"'
 
 go_install() {
   local pkg="$1"
@@ -262,10 +261,7 @@ install_mamba() {
   local installer_url
   installer_url=$(curl -fsSL \
     "https://api.github.com/repos/conda-forge/miniforge/releases/latest" \
-    | grep '"browser_download_url"' \
-    | grep -i 'Linux-x86_64\.sh' \
-    | head -1 \
-    | cut -d '"' -f 4)
+    | grep '"browser_download_url"' | grep -i 'Linux-x86_64\.sh' | head -1 | cut -d '"' -f 4)
   if [ -z "${installer_url:-}" ]; then
     warn "Could not resolve Miniforge installer URL — skipping"
     return
@@ -314,25 +310,16 @@ ensure_gem() {
 gem_install() {
   local pkg="$1"
   ensure_gem
-  # Use --user-install to avoid conflicts with the system Ruby on Ubuntu 24.04
-  gem install --user-install "$pkg" \
+  sudo gem install "$pkg" \
     && log "gem: $pkg installed/updated" \
     || warn "gem: failed to install $pkg"
 }
-
-# Ensure gem user bin dir is in PATH
-GEM_USER_BIN="$(ruby -e 'puts Gem.user_dir' 2>/dev/null)/bin" || GEM_USER_BIN=""
-if [ -n "${GEM_USER_BIN}" ]; then
-  export PATH="${GEM_USER_BIN}:${PATH}"
-  persist_line 'gem user_dir' \
-    'export PATH="$(ruby -e '"'"'puts Gem.user_dir'"'"')/bin:${PATH}"'
-fi
 
 # uv (fast Python package / project manager — required by theHarvester)
 log "Installing uv..."
 if ! command -v uv >/dev/null 2>&1; then
   curl -LsSf https://astral.sh/uv/install.sh | sh \
-    && export PATH="${HOME}/.cargo/bin:${PATH}" \
+    && export PATH="${HOME}/.local/bin:${PATH}" \
     && log "uv installed" \
     || warn "Failed to install uv"
 else
@@ -386,15 +373,23 @@ sudo apt install -y ffuf
 
 log "Installing feroxbuster..."
 if ! command -v feroxbuster >/dev/null 2>&1; then
-  local_ferox_script="/tmp/ferox-install.sh"
-  register_tmp "${local_ferox_script}"
-  curl -fsSL https://raw.githubusercontent.com/epi052/feroxbuster/main/install-nix.sh \
-    -o "${local_ferox_script}" \
-    && chmod +x "${local_ferox_script}" \
-    && bash "${local_ferox_script}" "${OSINT_BIN}" \
-    && rm -f "${local_ferox_script}" \
-    && log "feroxbuster installed to ${OSINT_BIN}" \
-    || { warn "Failed to install feroxbuster"; rm -f "${local_ferox_script}"; }
+  FEROX_URL=$(fetch_latest_github_release \
+    "epi052/feroxbuster" \
+    "x86_64-linux-feroxbuster\.zip" \
+    "__NO_EXCLUDE__")
+  if [ -n "${FEROX_URL:-}" ]; then
+    ferox_zip="/tmp/feroxbuster.zip"
+    register_tmp "${ferox_zip}"
+    wget -q --show-progress -O "${ferox_zip}" "${FEROX_URL}" \
+      && unzip -qo "${ferox_zip}" feroxbuster -d /tmp \
+      && sudo mv /tmp/feroxbuster "${OSINT_BIN}/feroxbuster" \
+      && sudo chmod +x "${OSINT_BIN}/feroxbuster" \
+      && rm -f "${ferox_zip}" \
+      && log "feroxbuster installed to ${OSINT_BIN}/feroxbuster" \
+      || { warn "Failed to install feroxbuster"; rm -f "${ferox_zip}"; }
+  else
+    warn "Could not resolve feroxbuster release URL"
+  fi
 else
   warn "feroxbuster already installed — skipping"
 fi
@@ -464,9 +459,6 @@ if [ -d "${TOOLS_DIR}/theHarvester" ]; then
 fi
 
 # ── SpiderFoot ────────────────────────────────────────────────
-sudo apt install -y python3.12 python3.12-venv 2>/dev/null \
-  || warn "python3.12 not available — SpiderFoot venv will use system python3"
-
 log "Installing SpiderFoot..."
 SPIDERFOOT_DIR="${TOOLS_DIR}/spiderfoot"
 if [ ! -d "${SPIDERFOOT_DIR}/.git" ]; then
@@ -478,19 +470,17 @@ fi
 if [ -f "${SPIDERFOOT_DIR}/requirements.txt" ]; then
   (
     cd "${SPIDERFOOT_DIR}"
-    python3 -m venv .venv
-    .venv/bin/python -m pip install --upgrade pip
-    .venv/bin/python -m pip install "lxml>=4.9.2" --only-binary=:all: --no-cache-dir || \
-      warn "lxml binary wheel failed — SpiderFoot XML features may be broken"
-    sed -i 's/lxml<5,>=4\.9\.2/lxml>=4.9.2/' requirements.txt
-    sed -i '/^lxml/d' requirements.txt
-    .venv/bin/python -m pip install -r requirements.txt --no-build-isolation
+    uv venv --clear .venv
+    grep -q '^lxml' requirements.txt && sed -i '/^lxml/d' requirements.txt
+    uv pip install --python .venv/bin/python "lxml>=4.9.2" --only-binary=:all: --no-cache \
+      || warn "lxml binary wheel failed — SpiderFoot XML features may be broken"
+    uv pip install --python .venv/bin/python -r requirements.txt
   ) && {
-    cat > "${OSINT_BIN}/spiderfoot" <<EOF
+    sudo tee "${OSINT_BIN}/spiderfoot" >/dev/null <<EOF
 #!/usr/bin/env bash
 exec "${SPIDERFOOT_DIR}/.venv/bin/python" "${SPIDERFOOT_DIR}/sf.py" "\$@"
 EOF
-    chmod +x "${OSINT_BIN}/spiderfoot"
+    sudo chmod +x "${OSINT_BIN}/spiderfoot"
     log "SpiderFoot installed (${OSINT_BIN}/spiderfoot)"
   } || warn "SpiderFoot: pip install failed"
 fi
@@ -507,15 +497,14 @@ fi
 if [ -f "${RECONNG_DIR}/REQUIREMENTS" ]; then
   (
     cd "${RECONNG_DIR}"
-    python3 -m venv .venv
-    .venv/bin/python -m pip install --upgrade pip
-    .venv/bin/python -m pip install -r REQUIREMENTS
+    uv venv --clear .venv
+    uv pip install --python .venv/bin/python -r REQUIREMENTS
   ) && {
-    cat > "${OSINT_BIN}/recon-ng" <<EOF
+    sudo tee "${OSINT_BIN}/recon-ng" >/dev/null <<EOF
 #!/usr/bin/env bash
 exec "${RECONNG_DIR}/.venv/bin/python" "${RECONNG_DIR}/recon-ng" "\$@"
 EOF
-    chmod +x "${OSINT_BIN}/recon-ng"
+    sudo chmod +x "${OSINT_BIN}/recon-ng"
     log "Recon-ng installed (${OSINT_BIN}/recon-ng)"
   } || warn "Recon-ng: pip install failed"
 fi
@@ -532,12 +521,11 @@ fi
 if [ -f "${SHERLOCK_DIR}/pyproject.toml" ]; then
   (
     cd "${SHERLOCK_DIR}"
-    python3 -m venv .venv
-    .venv/bin/python -m pip install --upgrade pip
-    .venv/bin/python -m pip install .
+    uv venv --clear .venv
+    uv pip install --python .venv/bin/python -e .
   ) && {
     if [ -x "${SHERLOCK_DIR}/.venv/bin/sherlock" ]; then
-      ln -sf "${SHERLOCK_DIR}/.venv/bin/sherlock" "${OSINT_BIN}/sherlock"
+      sudo ln -sf "${SHERLOCK_DIR}/.venv/bin/sherlock" "${OSINT_BIN}/sherlock"
       log "Sherlock installed (${OSINT_BIN}/sherlock)"
     else
       warn "Sherlock executable was not created in .venv/bin"
@@ -572,8 +560,35 @@ ensure_cmd anew        go_install github.com/tomnomnom/anew
 ensure_cmd gau         go_install github.com/lc/gau/v2/cmd/gau
 ensure_cmd hakrawler   go_install github.com/hakluke/hakrawler
 
-# Phase 4: Binary Analysis & Reverse Engineering
+# ── RsaCtfTool ───────────────────────────────────────────────
+log "Installing RsaCtfTool..."
+RSACTF_DIR="${TOOLS_DIR}/RsaCtfTool"
+if [ ! -d "${RSACTF_DIR}/.git" ]; then
+  git clone https://github.com/RsaCtfTool/RsaCtfTool.git "${RSACTF_DIR}" \
+    || warn "Failed to clone RsaCtfTool"
+else
+  git -C "${RSACTF_DIR}" pull || warn "Failed to update RsaCtfTool"
+fi
+if [ -d "${RSACTF_DIR}" ]; then
+  sudo apt install -y libgmp-dev libmpfr-dev libmpc-dev python3-dev \
+    || warn "RsaCtfTool: failed to install system deps"
+  (
+    cd "${RSACTF_DIR}"
+    uv venv --clear .venv
+    uv pip install --python .venv/bin/python gmpy2 --no-binary gmpy2 || \
+      uv pip install --python .venv/bin/python gmpy2
+    uv pip install --python .venv/bin/python -r requirements.txt
+  ) && {
+    sudo tee "${OSINT_BIN}/rsactftool" >/dev/null <<EOF
+#!/usr/bin/env bash
+exec "${RSACTF_DIR}/.venv/bin/python" "${RSACTF_DIR}/RsaCtfTool.py" "\$@"
+EOF
+    sudo chmod +x "${OSINT_BIN}/rsactftool"
+    log "RsaCtfTool installed (${OSINT_BIN}/rsactftool)"
+  } || warn "RsaCtfTool: install failed"
+fi
 
+# Phase 4: Binary Analysis & Reverse Engineering
 log "=== Phase 4: Binary Analysis & Reverse Engineering ==="
 
 log "Installing core binary analysis tools..."
@@ -581,9 +596,10 @@ sudo apt install -y radare2 binwalk strace ltrace upx-ucl ghex
 
 log "Installing checksec..."
 if ! sudo apt install -y checksec 2>/dev/null; then
-  warn "checksec not in apt — installing via pip..."
-  pip3 install checksec --break-system-packages 2>/dev/null \
-    || warn "checksec pip install also failed; see: https://github.com/slimm609/checksec.sh"
+  warn "checksec not in apt — installing via uv tool..."
+  uv tool install checksec \
+  && log "checksec installed via uv tool" \
+  || warn "checksec uv tool install failed; see: https://github.com/slimm609/checksec.sh"
 fi
 
 log "Installing rizin..."
@@ -640,7 +656,6 @@ if [ "${INSTALL_GHIDRA}" = true ]; then
   elif command -v ghidraRun >/dev/null 2>&1; then
     warn "ghidraRun already in PATH — skipping"
   else
-    # Match .zip files that contain "PUBLIC" in the name, exclude debug/source zips
     GHIDRA_URL=$(fetch_latest_github_release \
       "NationalSecurityAgency/ghidra" \
       "_PUBLIC.*\.zip" \
@@ -659,7 +674,6 @@ if [ "${INSTALL_GHIDRA}" = true ]; then
         && log "Ghidra extracted to ${TOOLS_DIR}" \
         || { warn "Failed to download/unzip Ghidra"; rm -f "${local_ghidra}"; }
 
-      # Create a convenience symlink to ghidraRun
       GHIDRA_NEW=$(find "${TOOLS_DIR}" -maxdepth 1 -type d -name 'ghidra_*' | head -1)
       if [ -n "${GHIDRA_NEW}" ] && [ -f "${GHIDRA_NEW}/ghidraRun" ]; then
         sudo ln -sf "${GHIDRA_NEW}/ghidraRun" /usr/local/bin/ghidraRun
@@ -682,7 +696,7 @@ if [ "${INSTALL_PWNDBG}" = true ]; then
     git -C "${TOOLS_DIR}/pwndbg" pull || warn "Failed to update pwndbg"
   fi
   if [ -d "${TOOLS_DIR}/pwndbg" ]; then
-    ( cd "${TOOLS_DIR}/pwndbg" && bash setup.sh ) \
+    ( cd "${TOOLS_DIR}/pwndbg" && echo "y" | bash setup.sh ) \
       && log "pwndbg installed" \
       || warn "pwndbg setup.sh failed"
   fi
@@ -722,16 +736,16 @@ log "=== Phase 7: Exploitation Frameworks ==="
 
 log "Installing Metasploit Framework..."
 if ! command -v msfconsole >/dev/null 2>&1; then
-  local_msf="/tmp/msfinstall"
-  register_tmp "${local_msf}"
+  msf_install_script="/tmp/msfinstall"
+  register_tmp "${msf_install_script}"
   curl -fsSL \
     https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb \
-    -o "${local_msf}" \
-    && chmod +x "${local_msf}" \
-    && sudo "${local_msf}" \
-    && rm -f "${local_msf}" \
+    -o "${msf_install_script}" \
+    && chmod +x "${msf_install_script}" \
+    && sudo "${msf_install_script}" \
+    && rm -f "${msf_install_script}" \
     && log "Metasploit installed" \
-    || { warn "Failed to install Metasploit"; rm -f "${local_msf}"; }
+    || { warn "Failed to install Metasploit"; rm -f "${msf_install_script}"; }
 else
   warn "Metasploit already installed — skipping"
 fi
@@ -756,7 +770,6 @@ cargo_install fd-find
 cargo_install bat
 cargo_install hexyl
 cargo_install tokei
-cargo_install rsacracker
 
 # Phase 10: Mamba packages
 log "=== Phase 10: Mamba packages ==="
@@ -769,14 +782,12 @@ log "=== Phase 11: Gem tools ==="
 gem_install zsteg
 gem_install one_gadget
 
-
 # Phase 12: BurpSuite notice
 warn "BurpSuite not available in apt — install manually from https://portswigger.net/burp/communitydownload"
 
 # Verification
 log "=== Verification: checking installed commands ==="
 
-# Only check commands that are actually installed by this script
 VERIFY_CMDS=(
   # Bootstrap
   vim objdump htop gpg tree brew
@@ -786,10 +797,11 @@ VERIFY_CMDS=(
 
   # Web / fuzzing
   ffuf feroxbuster httpx nuclei dnsx katana kr
-  dirb gobuster sqlmap nikto
+  dirb gobuster wfuzz sqlmap nikto
 
   # Recon / OSINT
   waybackurls gau hakrawler gf anew spiderfoot recon-ng sherlock theHarvester
+  rsactftool
 
   # Binary analysis / RE
   radare2 binwalk upx ghex strace ltrace
@@ -872,10 +884,11 @@ Manual steps required:
    # then restart your shell
 
  ── PATH ordering note ───────────────────────────────────────────
-   Go PATH is persisted BEFORE miniforge in your RC files so that
-   Go-installed tools (e.g. httpx) shadow same-named mamba/pip tools.
-   If you added miniforge manually before running this script, move
-   the Go PATH export above the miniforge export in ~/.bashrc / ~/.zshrc.
+   Go PATH is persisted BEFORE miniforge in /etc/profile.d/ctf-tools.sh
+   so that Go-installed tools (e.g. httpx) shadow same-named mamba/pip tools.
+   If you added miniforge manually before running this script, ensure
+   the Go PATH export appears above the miniforge export in
+   /etc/profile.d/ctf-tools.sh.
 
  ── Excluded (already in Ubuntu) ─────────────────────────────────
    curl, wget, netcat, git, gcc, gdb, file, xxd, openssl, gnupg, python3
