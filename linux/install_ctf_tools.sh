@@ -379,6 +379,9 @@ sudo apt install -y smbclient
 # Phase 2: Web Enumeration & Fuzzing
 log "=== Phase 2: Web Enumeration & Fuzzing ==="
 
+log "Installing WhatWeb..."
+ensure_cmd whatweb sudo apt install -y whatweb
+
 log "Installing ffuf..."
 sudo apt install -y ffuf
 
@@ -790,7 +793,7 @@ VERIFY_CMDS=(
   nmap tcpdump tshark rustscan naabu masscan amass subfinder smbclient
 
   # Web / fuzzing
-  ffuf feroxbuster httpx nuclei dnsx katana kr
+  whatweb ffuf feroxbuster httpx nuclei dnsx katana kr
   dirb gobuster wfuzz sqlmap nikto
 
   # Recon / OSINT
