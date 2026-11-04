@@ -546,25 +546,6 @@ if [ -f "${SHERLOCK_DIR}/pyproject.toml" ]; then
   } || warn "Sherlock: pip install failed"
 fi
 
-# ── Maltego ───────────────────────────────────────────────────
-log "Checking for Maltego installer..."
-MALTEGO_DEB=""
-if [ -d "${HOME}/Downloads" ]; then
-  MALTEGO_DEB=$(find "${HOME}/Downloads" \
-    -maxdepth 1 -type f -name 'Maltego*.deb' -print -quit 2>/dev/null || true)
-fi
-if [ -n "${MALTEGO_DEB}" ]; then
-  sudo apt install -y "${MALTEGO_DEB}" \
-    && log "Maltego installed from ${MALTEGO_DEB}" \
-    || warn "Maltego: dpkg install failed"
-elif command -v maltego >/dev/null 2>&1; then
-  warn "Maltego already installed — skipping"
-else
-  warn "Maltego installer not found. Download from: https://www.maltego.com/downloads/"
-  warn "Place Maltego*.deb in ~/Downloads and re-run this script, or run:"
-  warn "  sudo apt install ~/Downloads/Maltego*.deb"
-fi
-
 # ── Go OSINT / recon helpers ──────────────────────────────────
 log "Installing Go recon tools..."
 ensure_cmd waybackurls go_install github.com/tomnomnom/waybackurls
