@@ -232,6 +232,9 @@ install_go() {
 }
 
 install_go
+if [ ! -x /usr/local/go/bin/go ]; then
+  err "Go installation failed — /usr/local/go/bin/go not found. Cannot continue."
+fi
 export GOPATH="${HOME}/go"
 mkdir -p "${GOPATH}/bin"
 export PATH="/usr/local/go/bin:${GOPATH}/bin:${PATH}"
@@ -288,6 +291,14 @@ export PATH="${MINIFORGE_DIR}/bin:${PATH}"
 # NOTE: Mamba PATH is persisted AFTER Go so Go tools shadow same-named mamba tools
 persist_line 'miniforge3/bin' \
   "export PATH=\"${MINIFORGE_DIR}/bin:\${PATH}\""
+
+# Ensure /etc/profile.d/ctf-tools.sh is sourced in zsh sessions
+if [ -f "${HOME}/.zshrc" ] && ! grep -qF 'ctf-tools.sh' "${HOME}/.zshrc"; then
+  printf '\nsource /etc/profile.d/ctf-tools.sh\n' >> "${HOME}/.zshrc"
+  log "Added ctf-tools.sh source to ~/.zshrc"
+else
+  warn "ctf-tools.sh already sourced in ~/.zshrc — skipping"
+fi
 
 mamba_install() {
   local pkg="$1" channel="${2:-conda-forge}"
@@ -399,9 +410,11 @@ ensure_cmd subfinder \
   go_install github.com/projectdiscovery/subfinder/v2/cmd/subfinder
 
 log "Installing httpx (projectdiscovery)..."
-# Go's httpx installs to GOPATH/bin and takes priority over mamba's httpx
-# due to PATH ordering set above
-ensure_cmd httpx go_install github.com/projectdiscovery/httpx/cmd/httpx
+if [ ! -x "${GOPATH}/bin/httpx" ]; then
+  go_install github.com/projectdiscovery/httpx/cmd/httpx
+else
+  warn "httpx already installed at ${GOPATH}/bin/httpx — skipping"
+fi
 
 log "Installing nuclei..."
 ensure_cmd nuclei go_install github.com/projectdiscovery/nuclei/v3/cmd/nuclei
