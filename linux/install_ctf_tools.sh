@@ -445,7 +445,7 @@ else
 fi
 
 log "Installing optional web/enumeration tools..."
-for pkg in dirb gobuster wfuzz sqlmap nikto; do
+for pkg in sqlmap; do
   install_package "$pkg"
 done
 
@@ -552,10 +552,7 @@ fi
 # ── Go OSINT / recon helpers ──────────────────────────────────
 log "Installing Go recon tools..."
 ensure_cmd waybackurls go_install github.com/tomnomnom/waybackurls
-ensure_cmd gf          go_install github.com/tomnomnom/gf
 ensure_cmd anew        go_install github.com/tomnomnom/anew
-ensure_cmd gau         go_install github.com/lc/gau/v2/cmd/gau
-ensure_cmd hakrawler   go_install github.com/hakluke/hakrawler
 
 # ── RsaCtfTool ───────────────────────────────────────────────
 log "Installing RsaCtfTool..."
@@ -708,9 +705,9 @@ log "Installing forensics tools..."
 sudo apt install -y foremost scalpel libimage-exiftool-perl steghide gddrescue
 
 log "Installing steganography extras..."
-sudo apt install -y zbar-tools mat2
+sudo apt install -y zbar-tools
 
-for pkg in stegseek sonic-visualiser; do
+for pkg in stegseek; do
   install_package "$pkg"
 done
 
@@ -754,11 +751,6 @@ sudo apt install -y tmux p7zip-full iotop sysstat lsof valgrind jq xmlstarlet pa
 
 install_package linux-tools-generic
 
-log "Installing optional security auditing tools..."
-for pkg in chkrootkit rkhunter lynis aide; do
-  install_package "$pkg"
-done
-
 # Phase 9: Cargo tools
 log "=== Phase 9: Cargo tools ==="
 
@@ -794,17 +786,17 @@ VERIFY_CMDS=(
 
   # Web / fuzzing
   whatweb ffuf feroxbuster httpx nuclei dnsx katana kr
-  dirb gobuster wfuzz sqlmap nikto
+  sqlmap
 
   # Recon / OSINT
-  waybackurls gau hakrawler gf anew spiderfoot recon-ng sherlock theHarvester
+  waybackurls spiderfoot recon-ng sherlock theHarvester
   rsactftool
 
   # Binary analysis / RE
   radare2 binwalk upx ghex strace ltrace
 
   # Forensics
-  foremost exiftool steghide zbarimg mat2 ffmpeg mediainfo sox
+  foremost exiftool steghide zbarimg ffmpeg mediainfo sox
 
   # Password cracking
   hashcat john hydra fcrackzip
