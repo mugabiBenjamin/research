@@ -206,6 +206,9 @@ git push origin main
 
 # 12. Delete feature branch remotely
 git push origin --delete <feature_branch_name>
+
+# 13. Optional: Delete all local branches except main
+git branch | grep -v "main" | xargs git branch -d
 ```
 
 ## Working with multiple repos
