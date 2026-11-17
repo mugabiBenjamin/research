@@ -60,3 +60,12 @@ The issue can only be considered complete when:
 ## Definition of Done
 
 The issue is complete when all acceptance criteria are checked, tests pass, the implementation has been reviewed, and changes are merged into the appropriate branch.
+
+## Labels
+
+Assign the appropriate labels to categorise this issue. Common labels include:
+
+- **Type:** `bug`, `feature`, `enhancement`, `chore`, `documentation`
+- **Priority:** `critical`, `high`, `medium`, `low`
+- **Status:** `triage`, in `progress`, `blocked`, `ready for review`
+- **Component:** e.g. `auth`, `api`, `frontend`, `database`
