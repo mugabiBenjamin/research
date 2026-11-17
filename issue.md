@@ -66,5 +66,3 @@ Assign the appropriate labels to categorise this issue. Common labels include:
 
 - **Type:** `bug`, `feature`, `enhancement`, `chore`, `documentation`
 - **Priority:** `critical`, `high`, `medium`, `low`
-- **Status:** `triage`, `in progress`, `blocked`, `ready for review`
-- **Component:** e.g. `auth`, `api`, `frontend`, `database`
